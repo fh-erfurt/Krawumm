@@ -1,7 +1,6 @@
 package de.joemiagroup.krawumm;
 
 public class ExperimentData {
-    public class ExperimentData {
 
 
         private String name;
@@ -112,5 +111,5 @@ public class ExperimentData {
         public void setCreator(RegisteredUser creator) {
             this.creator = creator;
         }
-    }
 }
+
