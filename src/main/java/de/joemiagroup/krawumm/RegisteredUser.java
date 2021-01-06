@@ -2,12 +2,21 @@ package de.joemiagroup.krawumm;
 
 public class RegisteredUser {
 
-    private String      username;
-    private String      email;
-    private String      password;
-    private boolean     iscreator = false;
-    private String[]    uploadedmaterial;
-    private String[]    bookmarks;
+    protected String      username;
+    protected String      email;
+    protected String      password;
+    protected boolean     iscreator;
+    protected String[]    uploadedmaterial;
+    protected String[]    bookmarks;
+
+    public RegisteredUser(String username, String email, String password) {
+        this.username           = username;
+        this.email              = email;
+        this.password           = password;
+        this.iscreator          = false;
+        this.uploadedmaterial   = new String[]{};
+        this.bookmarks          = new String[]{};
+    }
 
     public String getUsername() {
         return username;
@@ -57,13 +66,23 @@ public class RegisteredUser {
         this.bookmarks = bookmarks;
     }
 
-    public void sendForm() {}
+    public void sendForm() {
+        Form newRelease = new Form();
+    }
+
     public void rate() {}
+
     public void comment() {}
+
     public void deleteComment() {}
+
     public void logOut() {}
+
     public void deleteAcc() {}
+
     public void changePassword() {}
+
     public void addToBookmarks() {}
+
     public void removeFromBookmarks () {}
 }
