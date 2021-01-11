@@ -12,6 +12,7 @@ public class Admin extends RegisteredUser {
 
     public void releaseExperiment(Form _data) {
         Experiment newExperiment = new Experiment(_data);
+        //TODO: Check if the user from the form is already a creator, if not change it.
         deleteForm(_data);
     }
 
