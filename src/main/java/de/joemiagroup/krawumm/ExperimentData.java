@@ -2,7 +2,6 @@ package de.joemiagroup.krawumm;
 
 public class ExperimentData {
 
-
         private String name;
         private String[] material;
         private String description;
@@ -38,8 +37,13 @@ public class ExperimentData {
         }
 
         public void setDescription(String description) {
-            this.description = description;
             //max 500 letters
+            if (description.length() <= 500){
+                this.description = description;
+            }
+            else{
+                //exception
+            }
         }
 
 
