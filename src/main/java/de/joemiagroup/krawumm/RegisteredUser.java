@@ -1,21 +1,24 @@
 package de.joemiagroup.krawumm;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class RegisteredUser {
 
     protected String      username;
     protected String      email;
     protected String      password;
     protected boolean     iscreator;
-    protected String[]    uploadedmaterial;
-    protected String[]    bookmarks;
+    protected ArrayList<Experiment> uploadedExperiments;
+    protected ArrayList<Experiment>    bookmarks;
 
     public RegisteredUser(String username, String email, String password) {
         this.username           = username;
         this.email              = email;
         this.password           = password;
         this.iscreator          = false;
-        this.uploadedmaterial   = new String[]{};
-        this.bookmarks          = new String[]{};
+        this.uploadedExperiments= new ArrayList<>();
+        this.bookmarks          = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -50,19 +53,19 @@ public class RegisteredUser {
         this.iscreator = iscreator;
     }
 
-    public String[] getUploadedmaterial() {
-        return uploadedmaterial;
+    public ArrayList<Experiment> getUploadedExperiments() {
+        return uploadedExperiments;
     }
 
-    public void setUploadedmaterial(String[] uploadedmaterial) {
-        this.uploadedmaterial = uploadedmaterial;
+    public void setUploadedExperiments(ArrayList<Experiment> uploadedExperiments) {
+        this.uploadedExperiments = uploadedExperiments;
     }
 
-    public String[] getBookmarks() {
+    public ArrayList<Experiment> getBookmarks() {
         return bookmarks;
     }
 
-    public void setBookmarks(String[] bookmarks) {
+    public void setBookmarks(ArrayList<Experiment> bookmarks) {
         this.bookmarks = bookmarks;
     }
 
@@ -70,21 +73,38 @@ public class RegisteredUser {
         Form newRelease = new Form();
     }
 
-    public void rate(Experiment _experiment) {
-        float currentRating = _experiment.getRating();
-        //TODO: Get input from the user.
-        //TODO: Calculate the new rating.
-        float newRating = 0;
-        _experiment.setRating(newRating);
+    public void rate(Experiment _experiment, int rating) {
+        _experiment.addRating(rating);
+        _experiment.setFinalRating();
     }
 
-    public void comment(Experiment _experimet) {
-        Comment myComment = new Comment();
-        //TODO: Push the Comment in the Comment-Array from Experiments. Need a method.
+    public void comment(Experiment _experiment,String text, String[] pictures) {
+        Comment comment = new Comment(text, pictures, this);
+        _experiment.addComment(comment);
     }
 
-    public void deleteComment() {
-        // ???
+    public Integer searchCommentPosition(Experiment experiment, LocalDateTime date){
+        int position = 0;
+        for (int i=0; i < experiment.getComments().size(); i++){
+            Comment comment = experiment.getSingleComment(i);
+            if(comment.getCommentator() == this){
+                if(comment.getDate() == date){
+                    position = i;
+                    break;
+                }
+            }
+            else position = -1;
+        }
+        return position;
+    }
+
+    public void deleteComment(Experiment experiment, LocalDateTime date) {
+        if(searchCommentPosition(experiment,date) != -1){
+            experiment.removeComment(searchCommentPosition(experiment,date));
+        }
+        else{
+            // TODO:exception
+        }
     }
 
     public void logOut() {}
@@ -99,10 +119,10 @@ public class RegisteredUser {
     }
 
     public void addToBookmarks(Experiment _experiment) {
-        //TODO: Push an Experiment to the Bookmark-Array.
+        this.bookmarks.add(_experiment);
     }
 
     public void removeFromBookmarks (Experiment _experiment) {
-        //TODO: Pop Experiment from the Bookmark-Array.
+        this.bookmarks.remove(_experiment);
     }
 }

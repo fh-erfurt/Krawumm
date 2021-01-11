@@ -12,6 +12,14 @@ public class Comment {
     private RegisteredUser commentator;
     private LocalDateTime date;
 
+    public Comment(String text, String[] pictures, RegisteredUser registeredUser) {
+        this.text = text;
+        this.pictures = pictures;
+        this.commentator=registeredUser;
+        this.date = LocalDateTime.now();
+    }
+
+
     // functions
 
     // getter + setter text

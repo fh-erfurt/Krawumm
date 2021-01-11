@@ -9,7 +9,10 @@ public class Experiment extends ExperimentData{
     private ArrayList<Comment> comments;
 
 
-    public void setFinalRating(float finalRating) {
+    //TODO:Constructor
+
+
+    public void setFinalRating() {
         float totalValue = 0;
         for (int i = 0 ; i < rating.size() ; i++){
             totalValue += rating.get(i);
@@ -25,15 +28,24 @@ public class Experiment extends ExperimentData{
         return rating;
     }
 
-    public void setRating(ArrayList<Integer> rating) {
-        this.rating = rating;
+    public void addRating(int rating) {
+        this.rating.add(rating);
     }
 
     public ArrayList<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
+    public Comment getSingleComment(int position) {
+        return this.comments.get(position);
     }
+
+    public void addComment(Comment _comment){
+        this.comments.add(_comment);
+    }
+
+    public void removeComment(int numberOfComment){
+        this.comments.remove(numberOfComment);
+    }
+
 }
