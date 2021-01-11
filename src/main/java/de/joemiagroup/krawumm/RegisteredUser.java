@@ -70,19 +70,39 @@ public class RegisteredUser {
         Form newRelease = new Form();
     }
 
-    public void rate() {}
+    public void rate(Experiment _experiment) {
+        float currentRating = _experiment.getRating();
+        //TODO: Get input from the user.
+        //TODO: Calculate the new rating.
+        float newRating = 0;
+        _experiment.setRating(newRating);
+    }
 
-    public void comment() {}
+    public void comment(Experiment _experimet) {
+        Comment myComment = new Comment();
+        //TODO: Push the Comment in the Comment-Array from Experiments. Need a method.
+    }
 
-    public void deleteComment() {}
+    public void deleteComment() {
+        // ???
+    }
 
     public void logOut() {}
 
-    public void deleteAcc() {}
+    public void deleteAcc() {
+        // Destructor???
+    }
 
-    public void changePassword() {}
+    public void changePassword() {
+        //TODO: Input new password from the user.
+        //TODO: Set the new password.
+    }
 
-    public void addToBookmarks() {}
+    public void addToBookmarks(Experiment _experiment) {
+        //TODO: Push an Experiment to the Bookmark-Array.
+    }
 
-    public void removeFromBookmarks () {}
+    public void removeFromBookmarks (Experiment _experiment) {
+        //TODO: Pop Experiment from the Bookmark-Array.
+    }
 }
