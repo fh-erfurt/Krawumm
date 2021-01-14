@@ -104,6 +104,7 @@ public class RegisteredUser {
         }
         else{
             // TODO:exception
+            System.out.println("Du kannst das Kommentar nicht löschen.");
         }
     }
 
@@ -113,9 +114,8 @@ public class RegisteredUser {
         // Destructor???
     }
 
-    public void changePassword() {
-        //TODO: Input new password from the user.
-        //TODO: Set the new password.
+    public void changePassword(String _code) {
+        this.password = _code;
     }
 
     public void addToBookmarks(Experiment _experiment) {
