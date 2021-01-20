@@ -5,22 +5,27 @@ import java.util.ArrayList;
 
 public class RegisteredUser {
 
+    // attributes
     protected String      username;
     protected String      email;
     protected String      password;
-    protected boolean     iscreator;
+    protected boolean     isCreator;
     protected ArrayList<Experiment> uploadedExperiments;
     protected ArrayList<Experiment>    bookmarks;
+    protected boolean loggedIn;
 
+    // constructor
     public RegisteredUser(String username, String email, String password) {
         this.username           = username;
         this.email              = email;
         this.password           = password;
-        this.iscreator          = false;
+        this.isCreator          = false;
         this.uploadedExperiments= new ArrayList<>();
         this.bookmarks          = new ArrayList<>();
+        this.loggedIn           = true;
     }
 
+    // Setter and Getter
     public String getUsername() {
         return username;
     }
@@ -45,12 +50,12 @@ public class RegisteredUser {
         this.password = password;
     }
 
-    public boolean isIscreator() {
-        return iscreator;
+    public boolean isIsCreator() {
+        return isCreator;
     }
 
-    public void setIscreator(boolean iscreator) {
-        this.iscreator = iscreator;
+    public void setIsCreator(boolean isCreator) {
+        this.isCreator = isCreator;
     }
 
     public ArrayList<Experiment> getUploadedExperiments() {
@@ -69,20 +74,26 @@ public class RegisteredUser {
         this.bookmarks = bookmarks;
     }
 
-    public void sendForm() {
-        Form newRelease = new Form();
+
+
+    // allows user to send a form which creates an Experiment after the administrator confirmed it
+    public void sendForm(String name,String[] material,String description,String[] pictures,int indoorOutdoor,int age,float duration,int difficulty,String video,String[] instruction,RegisteredUser creator) {
+        Form newRelease = new Form(name,material,description,pictures,indoorOutdoor,age,duration,difficulty,video,instruction,creator);
     }
 
-    public void rate(Experiment _experiment, int rating) {
-        _experiment.addRating(rating);
-        _experiment.setFinalRating();
+    // allows user to rate an Experiment
+    public void rate(Experiment experiment, int rating) {
+        experiment.addRating(rating);
+        experiment.setFinalRating();
     }
 
-    public void comment(Experiment _experiment,String text, String[] pictures) {
+    // allows user to comment on an Experiment
+    public void comment(Experiment experiment,String text, String[] pictures) {
         Comment comment = new Comment(text, pictures, this);
-        _experiment.addComment(comment);
+        experiment.addComment(comment);
     }
 
+    // needed to find the correct comment so it can be deleted by the user
     public Integer searchCommentPosition(Experiment experiment, LocalDateTime date){
         int position = 0;
         for (int i=0; i < experiment.getComments().size(); i++){
@@ -98,31 +109,44 @@ public class RegisteredUser {
         return position;
     }
 
+    // allows user to delete e specific comment which is written by themself
     public void deleteComment(Experiment experiment, LocalDateTime date) {
         if(searchCommentPosition(experiment,date) != -1){
             experiment.removeComment(searchCommentPosition(experiment,date));
         }
         else{
-            // TODO:exception
-            System.out.println("Du kannst das Kommentar nicht löschen.");
+            System.out.println("Du kannst den Kommentar nicht löschen.");
         }
     }
 
-    public void logOut() {}
+    // allows user to log themself out
+    public void logOut() {
+        this.loggedIn = false;
+    }
 
+    // allows user to delete their Account
     public void deleteAcc() {
-        // Destructor???
+        // Apparently gets deleted by garbage collector.
+        this.username = null;
+        this.email = null;
+        this.bookmarks = null;
+        this.password = null;
+        this.isCreator = false;
+        this.uploadedExperiments = null;
     }
 
-    public void changePassword(String _code) {
-        this.password = _code;
+    // allows user to change their password
+    public void changePassword(String code) {
+        this.password = code;
     }
 
-    public void addToBookmarks(Experiment _experiment) {
-        this.bookmarks.add(_experiment);
+    // allows user to add an Experiment to their bookmarks
+    public void addToBookmarks(Experiment experiment) {
+        this.bookmarks.add(experiment);
     }
 
-    public void removeFromBookmarks (Experiment _experiment) {
-        this.bookmarks.remove(_experiment);
+    // allows user to remove an Experiment from their bookmarks
+    public void removeFromBookmarks (Experiment experiment) {
+        this.bookmarks.remove(experiment);
     }
 }

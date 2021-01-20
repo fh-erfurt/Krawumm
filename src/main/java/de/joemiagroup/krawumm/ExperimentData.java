@@ -1,119 +1,120 @@
 package de.joemiagroup.krawumm;
 
+// Class holds attributes needed in Form and Experiment
 public class ExperimentData {
 
-        private String name;
-        private String[] material;
-        private String description;
-        private String[] pictures;
-        private String[] categories;
-        private int age;
-        private float duration;
-        private int difficulty;
-        private String video;
-        private String[] instruction;
-        private RegisteredUser creator;
+    // attributes
+    protected String name;
+    protected String[] material;
+    protected String description;
+    protected String[] pictures;
+    protected int indoorOutdoor;
+    protected int age;
+    protected float duration;
+    protected int difficulty;
+    protected String video;
+    protected String[] instruction;
+    protected RegisteredUser creator;
 
-        public String getName() {
+    // Setter and Getter
+
+    public String getName() {
             return name;
         }
 
-        public void setName(String name) {
+    public void setName(String name) {
             this.name = name;
         }
 
-
-        public String[] getMaterial() {
+    public String[] getMaterial() {
             return material;
         }
 
-        public void setMaterial(String[] material) {
+    public void setMaterial(String[] material) {
             this.material = material;
         }
 
-
-        public String getDescription() {
+    public String getDescription() {
             return description;
         }
 
-        public void setDescription(String description) {
-            //max 500 letters
-            if (description.length() <= 500){
-                this.description = description;
-            }
-            else{
-                //exception
-            }
+    public void setDescription(String description) {
+        //max 500 letters
+        if (description.length() <= 500) {
+            this.description = description;
         }
-
-
-        public String[] getPictures() {
-            return pictures;
+        else{
+            System.out.println("Die Eingabe ist zu lang. Zusammenfassungen dürfen maximal aus 500 Zeichen bestehen.");
         }
-
-        public void setPictures(String[] pictures) {
-            this.pictures = pictures;
-        }
+    }
 
 
-        public String[] getCategories() {
-            return categories;
-        }
+    public int getIndoorOutdoor() {
+        return indoorOutdoor;
+    }
 
-        public void setCategories(String[] categories) {
-            this.categories = categories;
-        }
+    public void setIndoorOutdoor(int indoorOutdoor) {
+        this.indoorOutdoor = indoorOutdoor;
+    }
 
+    public String[] getPictures() {
+        return pictures;
+    }
 
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-
-
-        public float getDuration() {
-            return duration;
-        }
-
-        public void setDuration(float duration) {
-            this.duration = duration;
-        }
+    public void setPictures(String[] pictures) {
+        this.pictures = pictures;
+    }
 
 
-        public int getDifficulty() {
-            return difficulty;
-        }
+    public int getAge() {
+        return age;
+    }
 
-        public void setDifficulty(int difficulty) {
-            this.difficulty = difficulty;
-        }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
 
-        public String getVideo() {
-            return video;
-        }
+    public float getDuration() {
+        return duration;
+    }
 
-        public void setVideo(String video) {
-            this.video = video;
-        }
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
 
-        public String[] getInstruction() {
-            return instruction;
-        }
 
-        public void setInstruction(String[] instruction) {
-            this.instruction = instruction;
-        }
+    public int getDifficulty() {
+        return difficulty;
+    }
 
-        public RegisteredUser getCreator() {
-            return creator;
-        }
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
 
-        public void setCreator(RegisteredUser creator) {
-            this.creator = creator;
-        }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String[] getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String[] instruction) {
+        this.instruction = instruction;
+    }
+
+    public RegisteredUser getCreator() {
+        return creator;
+    }
+
+    public void setCreator(RegisteredUser creator) {
+        this.creator = creator;
+    }
 }
 

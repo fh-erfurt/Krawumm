@@ -12,6 +12,7 @@ public class Comment {
     private RegisteredUser commentator;
     private LocalDateTime date;
 
+    // constructor
     public Comment(String text, String[] pictures, RegisteredUser registeredUser) {
         this.text = text;
         this.pictures = pictures;
@@ -27,11 +28,14 @@ public class Comment {
         return text;
     }
 
+    // sets text if its not longer than 1000 characters(maximum)
     public void setText(String text) {
         if (text.length() <= 1000) {
             this.text = text;
         }
-        // TODO: Fehlermeldung
+        else{
+            System.out.println("Die Eingabe ist zu lang. Kommentare dürfen maximal aus 1000 Zeichen bestehen.");
+        }
     }
 
     // getter + setter pictures

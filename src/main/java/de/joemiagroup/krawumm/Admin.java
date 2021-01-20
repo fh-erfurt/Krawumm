@@ -1,26 +1,31 @@
 package de.joemiagroup.krawumm;
 
+
 public class Admin extends RegisteredUser {
 
+    // Constructor
     public Admin(String username, String email, String password) {
         super(username, email, password);
     }
 
-    public void deleteUser(RegisteredUser _user) {
-        _user = null; //apparently gets delete by garbage collector.
+    // allows admin to delete a user account
+    public void deleteUser(RegisteredUser user) {
+        user = null; // Apparently gets deleted by garbage collector.
     }
 
-    public void releaseExperiment(Form _data, RegisteredUser _uploader) {
-        Experiment newExperiment = new Experiment(_data);
-        if (!_uploader.isIscreator()) {
-            _uploader.setIscreator(true);
-        } else {
-            // Nothing left to do.
+    // method to delete a form used in releaseEsxperiment
+    public void deleteForm(Form form) {
+        form = null; // Apparently gets deleted by garbage collector.
+    }
+
+    // allows admin to confirm a form submitted by a user and turns it into a final Experiment and release it
+    public void releaseExperiment(Form data, RegisteredUser uploader) {
+        Experiment newExperiment = new Experiment(data);
+        main.addExperiment(newExperiment);
+        if (!uploader.isIsCreator()) {
+            uploader.setIsCreator(true);
         }
-        deleteForm(_data);
-    }
-
-    public void deleteForm(Form _form) {
-        _form = null; //apparently gets delete by garbage collector.
+        // deletes form which is not needed anymore
+        deleteForm(data);
     }
 }

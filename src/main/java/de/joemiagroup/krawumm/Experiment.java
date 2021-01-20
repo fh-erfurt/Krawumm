@@ -4,14 +4,31 @@ import java.util.ArrayList;
 
 public class Experiment extends ExperimentData{
 
-    private float finalRating;
-    private ArrayList<Integer> rating;
-    private ArrayList<Comment> comments;
+    // attributes
+    protected float finalRating;
+    protected ArrayList<Integer> rating;
+    protected ArrayList<Comment> comments;
 
+    // Constructor sets variables to values from the form
+    public Experiment(Form form){
+        this.name           = form.name;
+        this.material       = form.material;
+        this.description    = form.description;
+        this.pictures       = form.pictures;
+        this.indoorOutdoor  = form.indoorOutdoor;
+        this.age            = form.age;
+        this.duration       = form.duration;
+        this.difficulty     = form.difficulty;
+        this.video          = form.video;
+        this.instruction    = form.instruction;
+        this.creator        = form.creator;
+        this.rating         = null;
+        this.comments       = null;
+    }
 
-    //TODO:Constructor
+    // Setter and Getter
 
-
+    // sets finalRating to average of all ratings
     public void setFinalRating() {
         float totalValue = 0;
         for (int i = 0 ; i < rating.size() ; i++){
@@ -28,22 +45,24 @@ public class Experiment extends ExperimentData{
         return rating;
     }
 
+    // adds a rating to rating list
     public void addRating(int rating) {
         this.rating.add(rating);
     }
 
-    public ArrayList<Comment> getComments() {
-        return comments;
-    }
+    public ArrayList<Comment> getComments() { return comments; }
 
+    // returns a single comment by their position
     public Comment getSingleComment(int position) {
         return this.comments.get(position);
     }
 
-    public void addComment(Comment _comment){
-        this.comments.add(_comment);
+    // adds a comment to comment list
+    public void addComment(Comment comment){
+        this.comments.add(comment);
     }
 
+    // removes a comment from comment list
     public void removeComment(int numberOfComment){
         this.comments.remove(numberOfComment);
     }
