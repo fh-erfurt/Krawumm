@@ -22,8 +22,8 @@ public class Experiment extends ExperimentData{
         this.video          = form.video;
         this.instruction    = form.instruction;
         this.creator        = form.creator;
-        this.rating         = null;
-        this.comments       = null;
+        this.rating         = new ArrayList<Integer>();
+        this.comments       = new ArrayList<Comment>();
     }
 
     // Setter and Getter
@@ -63,8 +63,8 @@ public class Experiment extends ExperimentData{
     }
 
     // removes a comment from comment list
-    public void removeComment(int numberOfComment){
-        this.comments.remove(numberOfComment);
+    public void removeComment(Comment comment){
+        this.comments.remove(comment);
     }
 
 }

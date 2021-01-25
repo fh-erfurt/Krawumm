@@ -79,6 +79,7 @@ public class RegisteredUser {
     // allows user to send a form which creates an Experiment after the administrator confirmed it
     public void sendForm(String name,String[] material,String description,String[] pictures,int indoorOutdoor,int age,float duration,int difficulty,String video,String[] instruction,RegisteredUser creator) {
         Form newRelease = new Form(name,material,description,pictures,indoorOutdoor,age,duration,difficulty,video,instruction,creator);
+        main.addForm(newRelease);
     }
 
     // allows user to rate an Experiment
@@ -94,25 +95,24 @@ public class RegisteredUser {
     }
 
     // needed to find the correct comment so it can be deleted by the user
-    public Integer searchCommentPosition(Experiment experiment, LocalDateTime date){
-        int position = 0;
+    public Comment searchComment(Experiment experiment, LocalDateTime date){
+        Comment commentResult = null;
         for (int i=0; i < experiment.getComments().size(); i++){
             Comment comment = experiment.getSingleComment(i);
             if(comment.getCommentator() == this){
                 if(comment.getDate() == date){
-                    position = i;
+                    commentResult = comment;
                     break;
                 }
             }
-            else position = -1;
         }
-        return position;
+        return commentResult;
     }
 
     // allows user to delete e specific comment which is written by themself
     public void deleteComment(Experiment experiment, LocalDateTime date) {
-        if(searchCommentPosition(experiment,date) != -1){
-            experiment.removeComment(searchCommentPosition(experiment,date));
+        if(searchComment(experiment,date) != null){
+            experiment.removeComment(searchComment(experiment,date));
         }
         else{
             System.out.println("Du kannst den Kommentar nicht löschen.");
@@ -126,13 +126,7 @@ public class RegisteredUser {
 
     // allows user to delete their Account
     public void deleteAcc() {
-        // Apparently gets deleted by garbage collector.
-        this.username = null;
-        this.email = null;
-        this.bookmarks = null;
-        this.password = null;
-        this.isCreator = false;
-        this.uploadedExperiments = null;
+        main.getUserList().remove(this);
     }
 
     // allows user to change their password

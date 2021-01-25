@@ -7,7 +7,13 @@ import java.util.ArrayList;
 public class main {
 
     // main List which holds all existing Experiments
-    private static ArrayList<Experiment> experimentList = null;
+    private static ArrayList<Experiment> experimentList = new ArrayList<Experiment>();
+
+    //main List which holds all existing users
+    private static ArrayList<RegisteredUser> userList = new ArrayList<RegisteredUser>();
+
+    // main List which holds all existing Experiments
+    private static ArrayList<Form> formsList = new ArrayList<Form>();
 
     // Setter and Getter
     public static ArrayList<Experiment> getExperimentList() {
@@ -19,11 +25,28 @@ public class main {
         experimentList.add(experiment);
     }
 
+    public static ArrayList<RegisteredUser> getUserList() {
+        return userList;
+    }
 
+    public static void addUser(RegisteredUser user){
+        ArrayList<RegisteredUser> userList = getUserList();
+        userList.add(user);
+    }
+
+    public static ArrayList<Form> getFormsList() {
+        return formsList;
+    }
+
+    public static void addForm(Form form){
+        ArrayList<Form> formsList = getFormsList();
+        formsList.add(form);
+    }
 
     // allows new user to create an account
     public void register(String username, String email, String password){
         RegisteredUser user = new RegisteredUser(username, email,password);
+        main.addUser(user);
     }
 
     // allows user to log in to their account

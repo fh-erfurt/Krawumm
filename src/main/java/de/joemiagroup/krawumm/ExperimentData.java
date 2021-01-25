@@ -40,10 +40,10 @@ public class ExperimentData {
 
     public void setDescription(String description) {
         //max 500 letters
+
         if (description.length() <= 500) {
             this.description = description;
-        }
-        else{
+        } else {
             System.out.println("Die Eingabe ist zu lang. Zusammenfassungen dürfen maximal aus 500 Zeichen bestehen.");
         }
     }

@@ -10,12 +10,12 @@ public class Admin extends RegisteredUser {
 
     // allows admin to delete a user account
     public void deleteUser(RegisteredUser user) {
-        user = null; // Apparently gets deleted by garbage collector.
+        main.getUserList().remove(user);
     }
 
-    // method to delete a form used in releaseEsxperiment
+    // method to delete a form used in releaseExperiment
     public void deleteForm(Form form) {
-        form = null; // Apparently gets deleted by garbage collector.
+        main.getFormsList().remove(form);
     }
 
     // allows admin to confirm a form submitted by a user and turns it into a final Experiment and release it

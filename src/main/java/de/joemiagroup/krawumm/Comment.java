@@ -20,6 +20,14 @@ public class Comment {
         this.date = LocalDateTime.now();
     }
 
+    // constructor
+    public Comment(String text, RegisteredUser registeredUser) {
+        this.text = text;
+        this.pictures = null;
+        this.commentator=registeredUser;
+        this.date = LocalDateTime.now();
+    }
+
 
     // functions
 
