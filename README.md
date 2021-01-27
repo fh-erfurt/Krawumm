@@ -1,9 +1,14 @@
 # Krawumm
 Krawumm - Experimente für Kinder
+
 Ein Projekt von:
+
 Marlene Bauch,
+
 Jessica Eckardtsberg,
+
 Johannes Otto und
+
 Michel Rost
 
 ## 1. Einleitung
