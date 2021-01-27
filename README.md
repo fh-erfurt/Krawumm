@@ -1,16 +1,11 @@
 # Krawumm
 Krawumm - Experimente für Kinder
 
-Ein Projekt von:
-
+## Ein Projekt von:
 Marlene Bauch,
-
 Jessica Eckardtsberg,
-
 Johannes Otto und
-
 Michel Rost
-
 ## 1. Einleitung
 Für das Modul Programmierung Java 1 soll in einer Gruppenarbeit die Grundlage für das Projekt in Programmierung Java 2 entstehen. In diesem Semester sollen zunächst die Logik und das Datenmodell für eine Java-basierte Server-Anwendung entwickelt werden. Dazu gehören Klassen und deren Beziehungen, welche die Gegebenheiten der realen Problemwelt modellieren. Die Logik regelt das Zusammenspiel dieser Klassen bzw. bildet die Geschäftsprozesse ab.
 
