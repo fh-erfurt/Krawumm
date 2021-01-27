@@ -18,9 +18,9 @@ Das Programm soll registrierten Usern die Möglichkeit geben, Experimente einzur
 Administratoren sollen zusätzlich die eingereichten Experimente freischalten können.
 
 ## 4. Verwendete Programme und Tools
-IntelliJ      - IDE für Java
-draw.io       - erstellen des Use-Case-Diagramms
-GitHub        - Versionskontrollsystem
-Skype         - Kommunikationstool für regelmäßige Meetings
-WhatsApp      - Kommunikationstool für ausgefallenes Internet und Terminabsprache
-Google Drive  - Dateiaustausch (kein Code) und erstellen von Präsentationen
+* IntelliJ      - IDE für Java
+* draw.io       - erstellen des Use-Case-Diagramms
+* GitHub        - Versionskontrollsystem
+* Skype         - Kommunikationstool für regelmäßige Meetings
+* WhatsApp      - Kommunikationstool für ausgefallenes Internet und Terminabsprache
+* Google Drive  - Dateiaustausch (kein Code) und erstellen von Präsentationen
