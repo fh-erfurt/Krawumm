@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class AdminTest {
 
 
@@ -34,14 +35,14 @@ public class AdminTest {
         main.addUser(badUser);
     }
     @Test
-    void check_if_deletUser_metheod_deltes_the_user_frome_the_users_list() {
+    void check_if_deletUser_method_deletes_the_user_from_the_users_list() {
 
         admin.deleteUser(badUser);
         assertEquals(-1, main.getUserList().indexOf(badUser), "The delivered value should be -1 because the user is deleted and doesn't exists anymore in the list");
     }
 
     @Test
-    void check_if_releaseExperiment_metheod_works_and_cheks_if_deleteForm_works() {
+    void check_if_releaseExperiment_method_works_and_cheks_if_deleteForm_works() {
 
         admin.releaseExperiment(form1, user1);
         assertEquals(1, main.getExperimentList().size(), "The delivered value should be 1 because the admin released one experiment");

@@ -1,5 +1,17 @@
 package de.joemiagroup.krawumm;
 
+/**
+ * This class describes the attributes of a Comment and its functions
+ * <br>
+ *
+ * @author Marlene Bauch
+ *
+ * @param text is the content of the Comment (max 1000 characters)
+ * @param pictures is an array which contains the pictures of the comment
+ * @param commentator is a reference to the RegisteredUser of the Comment
+ * @param date is the current timestamp of the time the comment was posted
+ */
+
 import java.time.LocalDateTime;
 
 public class Comment {
@@ -12,6 +24,7 @@ public class Comment {
     private RegisteredUser commentator;
     private LocalDateTime date;
 
+    // Two constructors for Comment with or without pictures
     // constructor
     public Comment(String text, String[] pictures, RegisteredUser registeredUser) {
         this.text = text;

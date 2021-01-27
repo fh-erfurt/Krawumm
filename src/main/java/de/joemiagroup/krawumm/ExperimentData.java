@@ -1,6 +1,24 @@
 package de.joemiagroup.krawumm;
 
-// Class holds attributes needed in Form and Experiment
+/**
+ * This class describes the attributes used in Form and Experiment and their setter and getter functions
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ * @param name is the name of the experiment
+ * @param material is an array which contains the Materials needed for the experiments
+ * @param description contains a short description text for the experiment (max 500 characters)
+ * @param pictures contains pictures of the experiment
+ * @param indoorOutdoor is 1 for indoor and 2 for outdoor
+ * @param age holds the minimum age the child should be to do the experiment
+ * @param duration holds the estimated time it takes to finish the experiment
+ * @param difficulty holds a difficulty value between 1 and 5 (5 is hardest)
+ * @param video contains vidoes of the experiment
+ * @param instruction contains a instruction of the steps to do the experiment
+ * @param creator holds a reference to the RegisteredUser who uploaded this experiment
+ */
+
 public class ExperimentData {
 
     // attributes
@@ -8,6 +26,7 @@ public class ExperimentData {
     protected String[] material;
     protected String description;
     protected String[] pictures;
+    // 1=indoor 2=outdoor
     protected int indoorOutdoor;
     protected int age;
     protected float duration;
@@ -53,8 +72,7 @@ public class ExperimentData {
         return indoorOutdoor;
     }
 
-    public void setIndoorOutdoor(int indoorOutdoor) {
-        this.indoorOutdoor = indoorOutdoor;
+    public void setIndoorOutdoor(int indoorOutdoor) { this.indoorOutdoor = indoorOutdoor;
     }
 
     public String[] getPictures() {
@@ -89,7 +107,10 @@ public class ExperimentData {
     }
 
     public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
+
+        if((difficulty <= 5) && (difficulty >= 1)){
+            this.difficulty = difficulty;
+        } else {System.out.println("Schwierigkeitswert außerhalb des gültigen Wertes (zwischen 1 und 5)!");}
     }
 
 
