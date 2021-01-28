@@ -31,9 +31,7 @@ public class AdminTest {
 
 
     @BeforeEach
-    void setup(){
-        main.addUser(badUser);
-    }
+
     @Test
     void check_if_deletUser_method_deletes_the_user_from_the_users_list() {
 
