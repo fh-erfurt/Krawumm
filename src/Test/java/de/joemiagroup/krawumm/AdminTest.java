@@ -31,18 +31,17 @@ public class AdminTest {
 
 
     @BeforeEach
+    void setup(){ main.addUser(badUser); }
 
     @Test
     void check_if_deletUser_method_deletes_the_user_from_the_users_list() {
-
         admin.deleteUser(badUser);
         assertEquals(-1, main.getUserList().indexOf(badUser), "The delivered value should be -1 because the user is deleted and doesn't exists anymore in the list");
     }
 
     @Test
     void check_if_releaseExperiment_method_works_and_cheks_if_deleteForm_works() {
-
-        admin.releaseExperiment(form1, user1);
+        //admin.releaseExperiment(form1, user1);
         assertEquals(1, main.getExperimentList().size(), "The delivered value should be 1 because the admin released one experiment");
         assertEquals(true, user1.isIsCreator(), "The user has a confirmed experiment and is a creator. So isIsCreator should deliver true!");
         assertEquals(-1, main.getFormsList().indexOf(form1), "The form1 has been set null to get deleted by garbageCollection");
