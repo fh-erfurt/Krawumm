@@ -41,7 +41,7 @@ public class AdminTest {
 
     @Test
     void check_if_releaseExperiment_method_works_and_cheks_if_deleteForm_works() {
-        //admin.releaseExperiment(form1, user1);
+        admin.releaseExperiment(form1, user1);
         assertEquals(1, main.getExperimentList().size(), "The delivered value should be 1 because the admin released one experiment");
         assertEquals(true, user1.isIsCreator(), "The user has a confirmed experiment and is a creator. So isIsCreator should deliver true!");
         assertEquals(-1, main.getFormsList().indexOf(form1), "The form1 has been set null to get deleted by garbageCollection");
