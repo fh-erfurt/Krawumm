@@ -1,5 +1,7 @@
 package de.joemiagroup.krawumm;
 
+import java.time.LocalDateTime;
+
 /**
  * This class describes the attributes of a Comment and its functions
  * <br>
@@ -11,8 +13,6 @@ package de.joemiagroup.krawumm;
  * @param commentator is a reference to the RegisteredUser of the Comment
  * @param date is the current timestamp of the time the comment was posted
  */
-
-import java.time.LocalDateTime;
 
 public class Comment {
 
