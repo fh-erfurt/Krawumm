@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
+import de.joemiagroup.krawumm.domains.RegisteredUser;
 
-@Slf4j
-public class RatingRepository extends BaseRepository<Rating>{
-    public RatingRepository() {
-        super(H2Controller.getManager().getEntityManager(), Rating.class);
-    }
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(collectionResourceRel = "ratings", path = "ratings")
+public interface RatingRepository extends JpaRepository<Rating, Long> {
+
 }

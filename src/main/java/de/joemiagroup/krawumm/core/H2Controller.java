@@ -21,7 +21,6 @@ import java.util.Objects;
  * <h2>H2Controller</h2>
  * <p>
  *
- * @author Michael Rhöse
  * @version 0.0.0.0 04/25/2021
  */
 @Slf4j
@@ -34,7 +33,7 @@ public class H2Controller {
 
     public static H2Controller getManager() {
         if (Objects.isNull(instance)) {
-            instance = new H2Controller(Persistence.createEntityManagerFactory("de.fherfurt.jpa"));
+            instance = new H2Controller(Persistence.createEntityManagerFactory("de.joemiagroup.krawumm"));
         }
 
         return instance;

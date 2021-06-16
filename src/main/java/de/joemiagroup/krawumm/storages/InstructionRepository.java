@@ -4,6 +4,10 @@ import de.joemiagroup.krawumm.core.H2Controller;
 import de.joemiagroup.krawumm.core.errors.SqlException;
 import de.joemiagroup.krawumm.domains.Comment;
 import de.joemiagroup.krawumm.domains.Instruction;
+import de.joemiagroup.krawumm.domains.RegisteredUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,11 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
+@RepositoryRestResource(collectionResourceRel = "instrtuctions", path = "instrtuctions")
+public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
-@Slf4j
-public class InstructionRepository extends BaseRepository<Instruction>{
-    public InstructionRepository() {
-        super(H2Controller.getManager().getEntityManager(), Instruction.class);
-    }
 }

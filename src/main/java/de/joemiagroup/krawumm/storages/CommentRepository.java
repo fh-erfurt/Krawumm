@@ -13,11 +13,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Slf4j
-public class CommentRepository extends BaseRepository<Comment>{
-    public CommentRepository() {
-        super(H2Controller.getManager().getEntityManager(), Comment.class);
-    }
+@RepositoryRestResource(collectionResourceRel = "comments", path = "comments")
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+
 }

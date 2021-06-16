@@ -3,6 +3,10 @@ package de.joemiagroup.krawumm.storages;
 import de.joemiagroup.krawumm.core.H2Controller;
 import de.joemiagroup.krawumm.core.errors.SqlException;
 import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
+import de.joemiagroup.krawumm.domains.RegisteredUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
+@RepositoryRestResource(collectionResourceRel = "experimentHasMaterials", path = "experimentHasMaterials")
+public interface ExperimentHasMaterialRepository extends JpaRepository<ExperimentHasMaterial, Long> {
 
-@Slf4j
-public class ExperimentHasMaterialRepository extends BaseRepository<ExperimentHasMaterial>{
-    public ExperimentHasMaterialRepository() {
-        super(H2Controller.getManager().getEntityManager(), ExperimentHasMaterial.class);
-    }
 }

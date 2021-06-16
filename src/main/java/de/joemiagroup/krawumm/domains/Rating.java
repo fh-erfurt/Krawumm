@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 public class Rating extends BaseEntity{
-    private int value;
+    private int ratingValue;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Experiment experiment;
 }
