@@ -1,0 +1,38 @@
+<table>
+    <tr>
+        <td>Name</td>
+        <td><!-- name from the database --></td>
+    </tr>
+    <tr>
+        <td>E-Mail</td>
+        <td><!-- email from the database --></td>
+    </tr>
+</table>
+<!-- container for buttons -->
+<div>
+    <button onclick="alert()">Passwort ändern</button> <!-- gives the form to change the password in an alert -->
+    <button onclick="alert()">Konto löschen</button> <!-- asks for confirmation in the alert -->
+</div>
+
+<!-- container for the buttons to switch content -->
+<!-- TODO: function openTab() in JS -->
+<div>
+    <button onclick="openTab(event, 'own')">Eigene Experimente</button>
+    <button onclick="openTab(event, 'toApprove')">Eingereichte Experimente</button>
+    <button onclick="openTab(event, 'bookmarks')">Favoriten</button>
+</div>
+
+<!-- container for the different content -->
+<!-- own experiments -->
+<div id="own">
+    <!-- TODO: button to create an experiment -->
+    <!-- TODO: loop to list the names of the own experiments if there are any -->
+</div>
+<!-- only admin: experiments to be approved -->
+<div id="toApprove">
+    <!-- TODO: loop all forms that need to be approved -->
+</div>
+<!-- bookmarks -->
+<div id="bookmarks">
+    <!-- TODO: loop the bookmarks of the user -->
+</div>
