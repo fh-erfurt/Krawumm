@@ -1,12 +1,24 @@
-<header>
-    <!-- Title. Left bound, with link to home.xhtml. -->
-    <a href=""><img src="" alt="Krawumm" title="Startseite" /></a>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-    <!-- Form. Looks up experiments by name -->
-    <form>
-        <input type="search" name="Suche" id="searchName" />
-    </form>
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <!-- Profile. Right bound, either with link to login.xhtml or account.xhtml -->
-    <!-- TODO: Switching the link with Java or whatever -->
-</header>
+    <div>
+        <h:form id="menuForm">
+            <p:menubar>
+                <!-- Title. Left bound, with link to home.xhtml. -->
+                <p:menuitem value="Startseite" action="#{indexView.load('HOME')}" update=":main" />
+                <!-- Form. Looks up experiments by name -->
+                <p:menuitem />
+                <!-- Profile. Right bound, either with link to login.xhtml or account.xhtml -->
+                <!-- TODO: Switching the link with Java or whatever -->
+                <p:menuitem />
+            </p:menubar>
+        </h:form>
+    </div>
+</ui:composition>
