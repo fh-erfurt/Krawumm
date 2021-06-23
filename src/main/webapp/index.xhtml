@@ -2,25 +2,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html   xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:view>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view contentType="text/html">
         <h:head>
             <!-- Connection to the stylesheet and the JS-files. -->
             <link rel="stylesheet" href=""/> <!-- Stylesheet -->
             
         </h:head>
         <h:body>
+            <p:growl>
+                <p:autoUpdate/>
+            </p:growl>
+
             <p:outputPanel id="main">
                 <ui:include src="menu.xhtml" />
                 <p:outputPanel>
                     <ui:include src="#{indexView.currentContent.toLowerCase()}.xhtml" />
                 </p:outputPanel>
             </p:outputPanel>
-            <!-- TODO: dynamic for the pages sans menu.xhtml -->
         </h:body>
     </f:view>
 </html>
