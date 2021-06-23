@@ -4,8 +4,9 @@ import de.joemiagroup.krawumm.core.UserSessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import java.util.Optional;
+
 
 @ManagedBean("indexView")
 @ViewScoped
