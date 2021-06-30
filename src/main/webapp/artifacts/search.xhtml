@@ -15,15 +15,20 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.
---> <!-- TODO: Datavalidation -->
-<ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:form id="searchForm">
+        <p:inputText id="inputSearch" value="Suche" required="false"/>
+        <p:commandButton
+                id="buttonSearch"
+                icon="pi pi-search"
+                process="@this"
+                ajax="true"
+        ></p:commandButton>
+    </h:form>
 
-    <div>
-        <ui:include src="artifacts/entrySignUp.xhtml"></ui:include>
-    </div>
 </ui:composition>

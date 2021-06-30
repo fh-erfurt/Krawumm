@@ -24,6 +24,22 @@
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <div>
-        <ui:include src="artifacts/entrySignUp.xhtml"></ui:include>
+        <h:form>
+            <p:outputLabel id="labelUsername" for="inputUsername" value="Nutzername"/>
+            <h:inputText id="inputUsername" required="true" requiredMessage="Nutzname muss angegeben werden."/>
+            <p:outputLabel id="labelPassword" for="inputPassword" value="Passwort"/>
+            <p:password
+                    id="inputPassword"
+                    toggleMask="true"
+                    redisplay="true"
+                    required="true"
+                    requiredMessage="Passwort muss angegeben werden."
+            />
+            <p:commandButton
+                id="loginButton"
+                value="Einloggen"
+            >
+            </p:commandButton>
+        </h:form>
     </div>
 </ui:composition>
