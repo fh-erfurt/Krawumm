@@ -26,11 +26,11 @@
         <h:form id="navigationBarForm">
             <p:menubar>
                 <p:menuitem value="Home" actionListener="#{indexView.load('HOME')}"
-                            update=":main"/>
+                            update=":main"></p:menuitem>
                 <p:menuitem><ui:include src="artifacts/search.xhtml"></ui:include></p:menuitem>
                 <p:menuitem value="Login" icon="pi pi-user"
                             actionListener="#{indexView.load('LOGIN')}"
-                            update=":main"/>
+                            update=":main"></p:menuitem>
             </p:menubar>
         </h:form>
     </div>
