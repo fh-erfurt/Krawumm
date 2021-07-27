@@ -16,9 +16,9 @@
             </p:growl>
 
             <p:outputPanel id="main">
-                <ui:include src="menu.xhtml"></ui:include>
+                <ui:include src="menu.xhtml" />
                 <p:outputPanel>
-                    <ui:include src="#{indexView.currentContent.toLowerCase()}"></ui:include>
+                    <ui:include src="#{indexView.currentContent.toLowerCase()}.xhtml" />
                 </p:outputPanel>
             </p:outputPanel>
         </h:body>
