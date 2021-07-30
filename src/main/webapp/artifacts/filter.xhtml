@@ -21,14 +21,28 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:form id="searchForm">
-        <p:inputText id="inputSearch" value="Suche" required="false"/>
-        <p:commandButton
-                id="buttonSearch"
-                icon="pi pi-search"
-                process="@this"
-                ajax="true"
-        />
+    <h:form id="filterForm">
+        <p:outputLabel value="Schwierigkeitsgrad"/>
+        <p:rating id="difficulty1"/>
+        <p:selectOneRadio id="difficulty2">
+            <f:selectItem itemLabel="Sehr einfach" itemValue="sEasy"/>
+            <f:selectItem itemLabel="Einfach" itemValue="easy"/>
+            <f:selectItem itemLabel="Medium" itemValue="middle"/>
+            <f:selectItem itemLabel="Schwer" itemValue="hard"/>
+            <f:selectItem itemLabel="Sehr Schwer" itemValue="sHard"/>
+        </p:selectOneRadio>
+        <p:outputLabel value="Drinnen/Draußen"/>
+        <p:selectOneRadio id="indoorOutdoor">
+            <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
+            <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
+        </p:selectOneRadio>
+        <p:outputLabel value="Mindestalter"/>
+        <p:inputNumber/>
+        <p:outputLabel value="Max. Zeit"/>
+        <p:inputNumber/>
+        <p:outputLabel value="Materialien"/>
+        <p:selectManyCheckbox id="material" layout="grid" columns="3">
+            <f:selectItem itemValue="Irgendwas" itemLabel="Irgendwas"/>
+        </p:selectManyCheckbox>
     </h:form>
-
 </ui:composition>
