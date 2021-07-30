@@ -30,7 +30,8 @@ public class IndexView extends BaseView{
         ACCOUNT,
         LOGIN,
         SIGNUP,
-        VIEW
+        VIEW,
+        CREATE
     }
 
     public void load(String contentType) {

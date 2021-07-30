@@ -16,6 +16,11 @@
     specific language governing permissions and limitations
     under the License.
 -->
+<!--
+    Änderung von Login zu Konto Idee:
+    Variable bei value und load eintragen. Die Variable ändert sich durch das ein- und ausloggen.
+    Änderung wird in einem *.java als Funktion eingetragen. RegisterdUser.java ist am günstigstens, glaube ich.
+-->
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
@@ -30,6 +35,9 @@
                 <p:menuitem><ui:include src="artifacts/search.xhtml"/></p:menuitem>
                 <p:menuitem value="Login" icon="pi pi-user"
                             actionListener="#{indexView.load('LOGIN')}"
+                            update=":main"/>
+                <p:menuitem value="Konto"
+                            actionListener="#{indexView.load('ACCOUNT')}"
                             update=":main"/>
             </p:menubar>
         </h:form>

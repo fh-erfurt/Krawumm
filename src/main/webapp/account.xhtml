@@ -1,38 +1,70 @@
-<table>
-    <tr>
-        <td>Name</td>
-        <td><!-- name from the database --></td>
-    </tr>
-    <tr>
-        <td>E-Mail</td>
-        <td><!-- email from the database --></td>
-    </tr>
-</table>
-<!-- container for buttons -->
-<div>
-    <button onclick="alert()">Passwort ändern</button> <!-- gives the form to change the password in an alert -->
-    <button onclick="alert()">Konto löschen</button> <!-- asks for confirmation in the alert -->
-</div>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+--> <!-- TODO: Datavalidation -->
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <p>Kontoinformationen</p>
+    <p>Name</p>
+    <p:outputLabel value="Michel"/>
+    <p>E-Mail</p>
+    <p:outputLabel value="michel@krawumm.de"/>
 
-<!-- container for the buttons to switch content -->
-<!-- TODO: function openTab() in JS -->
-<div>
-    <button onclick="openTab(event, 'own')">Eigene Experimente</button>
-    <button onclick="openTab(event, 'toApprove')">Eingereichte Experimente</button>
-    <button onclick="openTab(event, 'bookmarks')">Favoriten</button>
-</div>
+    <p:commandButton value="Passwort ändern" type="button" onclick="PF('pwChange').show()"/>
+    <p:commandButton value="Konto löschen" action="#{confirmAccount.delete()}" update="message" type="button">
+        <p:confirm header="Konto löschen?" message="Möchtest du dein Konto löschen?"/>
+    </p:commandButton>
 
-<!-- container for the different content -->
-<!-- own experiments -->
-<div id="own">
-    <!-- TODO: button to create an experiment -->
-    <!-- TODO: loop to list the names of the own experiments if there are any -->
-</div>
-<!-- only admin: experiments to be approved -->
-<div id="toApprove">
-    <!-- TODO: loop all forms that need to be approved -->
-</div>
-<!-- bookmarks -->
-<div id="bookmarks">
-    <!-- TODO: loop the bookmarks of the user -->
-</div>
+    <div>
+        <p:tabView>
+            <p:tab title="Eigene Experimente">
+                <p:commandButton value="Experiment erstellen" actionListener="#{indexView.load('CREATE')}" update=":main"/>
+            </p:tab>
+            <p:tab title="Eingereichte Experimente">Leere Liste</p:tab>
+            <p:tab title="Lesezeichen">Lesezeichen?</p:tab>
+        </p:tabView>
+    </div>
+
+
+    <p:dialog header="Passwort ändern" widgetVar="pwChange" minHeight="100" width="350" showEffect="fade">
+        Bitte gib dein altes Passwort ein:
+        <p:password
+                id="oldPassword"
+                toggleMask="true"
+                redisplay="true"
+                required="true"
+                requiredMessage="Passwort muss angegeben werden."
+        />
+        Bitte gib dein neues Passwort ein:
+        <p:password
+                id="newPassword"
+                toggleMask="true"
+                redisplay="true"
+                required="true"
+                requiredMessage="Passwort muss angegeben werden."
+        />
+    </p:dialog>
+
+    <p:confirmDialog global="true" width="350" responsive="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" />
+    </p:confirmDialog>
+</ui:composition>
