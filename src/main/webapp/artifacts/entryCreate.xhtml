@@ -23,5 +23,56 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form></h:form>
+    <h:form>
+        <p:outputPanel>
+            <p:outputLabel for="title" value="Titel"/>
+            <p:inputText id="title"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="age" value="Alter"/>
+            <p:inputNumber id="age" value="#{inputNumberView.age}" minValue="1"
+                           maxValue="100" decimalPlaces="0" />
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="difficulty" value="Schwierigkeitsgrad"/>
+            <p:rating id="difficulty"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="time" value="Dauer"/>
+            <p:inputNumber id="time" value="#{inputNumberView.time}" minValue="1"
+                           maxValue="480" decimalPlaces="2" />
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="indoorOutdoor" value="Drinnen/Draußem"/>
+            <p:selectOneRadio id="indoorOutdoor">
+                <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
+                <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
+            </p:selectOneRadio>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="text1" value="Schritt 1"/>
+            <p:inputTextarea id="text1" rows="5" cols="30" counter="display1" maxlength="1000"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true" />
+            <h:outputText id="display1"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="text2" value="Schritt 2"/>
+            <p:inputTextarea id="text2" rows="5" cols="30" counter="display2" maxlength="1000"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true" />
+            <h:outputText id="display2"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="text3" value="Schritt 3"/>
+            <p:inputTextarea id="text3" rows="5" cols="30" counter="display3" maxlength="1000"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true" />
+            <h:outputText id="display3"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="text4" value="Schritt 4"/>
+            <p:inputTextarea id="text4" rows="5" cols="30" counter="display4" maxlength="1000"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true" />
+            <h:outputText id="display4"/>
+        </p:outputPanel>
+        <p:button value="Absenden"/>
+    </h:form>
 </ui:composition>
