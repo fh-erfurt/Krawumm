@@ -1,7 +1,7 @@
 package de.joemiagroup.krawumm.controllers;
 
 import de.joemiagroup.krawumm.domains.Experiment;
-import de.joemiagroup.krawumm.storages.ExperimentRepository;
+import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
