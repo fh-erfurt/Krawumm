@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm.storages;
+package de.joemiagroup.krawumm.repositories;
 import de.joemiagroup.krawumm.domains.BaseEntity;
 import lombok.RequiredArgsConstructor;
 

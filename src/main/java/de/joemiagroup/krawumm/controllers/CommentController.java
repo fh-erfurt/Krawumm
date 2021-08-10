@@ -1,7 +1,7 @@
 package de.joemiagroup.krawumm.controllers;
 
 import de.joemiagroup.krawumm.domains.Comment;
-import de.joemiagroup.krawumm.storages.CommentRepository;
+import de.joemiagroup.krawumm.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

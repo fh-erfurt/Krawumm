@@ -2,7 +2,7 @@ package de.joemiagroup.krawumm.controllers;
 
 
 import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
-import de.joemiagroup.krawumm.storages.ExperimentHasMaterialRepository;
+import de.joemiagroup.krawumm.repositories.ExperimentHasMaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

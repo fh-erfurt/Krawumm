@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.joemiagroup.krawumm.storages.errors;
+package de.joemiagroup.krawumm.repositories.errors;
 
 /**
  * <h2>StorageError</h2>

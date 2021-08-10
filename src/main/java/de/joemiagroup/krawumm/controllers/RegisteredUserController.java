@@ -2,7 +2,7 @@ package de.joemiagroup.krawumm.controllers;
 
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
-import de.joemiagroup.krawumm.storages.RegisteredUserRepository;
+import de.joemiagroup.krawumm.repositories.RegisteredUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

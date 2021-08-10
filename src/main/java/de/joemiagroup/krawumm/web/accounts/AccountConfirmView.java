@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm.web.Account;
+package de.joemiagroup.krawumm.web.accounts;
 
 import org.springframework.web.context.annotation.RequestScope;
 
