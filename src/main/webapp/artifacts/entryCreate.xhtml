@@ -26,7 +26,17 @@
     <h:form>
         <p:outputPanel>
             <p:outputLabel for="title" value="Titel"/>
-            <p:inputText id="title"/>
+            <p:inputTextarea rows="1" cols="30" counter="displayTitle" maxlength="255"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true"
+                             id="title"   />
+            <h:outputText id="displayTitle"/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="descrip" value="Beschreibung"/>
+            <p:inputTextarea rows="5" cols="30" counter="displayDescrip" maxlength="500"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true"
+                             id="descrip"   />
+            <h:outputText id="displayDescrip"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="age" value="Alter"/>
@@ -38,7 +48,7 @@
             <p:rating id="difficulty"/>
         </p:outputPanel>
         <p:outputPanel>
-            <p:outputLabel for="time" value="Dauer"/>
+            <p:outputLabel for="time" value="Dauer in Minuten"/>
             <p:inputNumber id="time" value="#{inputNumberView.time}" minValue="1"
                            maxValue="480" decimalPlaces="2" />
         </p:outputPanel>
