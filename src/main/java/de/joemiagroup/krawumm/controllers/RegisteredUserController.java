@@ -1,3 +1,4 @@
+/*
 package de.joemiagroup.krawumm.controllers;
 
 
@@ -40,3 +41,4 @@ public class RegisteredUserController {
         this.registeredUserRepository.deleteById(id);
     }
 }
+*/

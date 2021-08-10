@@ -1,7 +1,6 @@
 package de.joemiagroup.krawumm.repositories.registeredUsers;
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
-import de.joemiagroup.krawumm.storages.RegisteredUserRepository;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
