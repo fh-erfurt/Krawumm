@@ -40,7 +40,7 @@
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="age" value="Alter"/>
-            <p:inputNumber id="age" value="#{inputNumberView.age}" minValue="1"
+            <p:inputNumber id="age" value="#{experimentView.age}" minValue="1"
                            maxValue="100" decimalPlaces="0" />
         </p:outputPanel>
         <p:outputPanel>
@@ -49,7 +49,7 @@
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="time" value="Dauer in Minuten"/>
-            <p:inputNumber id="time" value="#{inputNumberView.time}" minValue="1"
+            <p:inputNumber id="time" value="#{experimentView.time}" minValue="1"
                            maxValue="480" decimalPlaces="2" />
         </p:outputPanel>
         <p:outputPanel>
@@ -59,12 +59,18 @@
                 <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
             </p:selectOneRadio>
         </p:outputPanel>
-        <p:outputPanel>
-            <p:outputLabel for="text1" value="Schritt 1"/>
-            <p:inputTextarea id="text1" rows="5" cols="30" counter="display1" maxlength="1000"
-                             counterTemplate="{0} Zeichen übrig." autoResize="true" />
-            <h:outputText id="display1"/>
-        </p:outputPanel>
+        <p:dataTable    id="instructionTable"
+                        var="entry" value="#{experimentView.instructions}">
+            <p:column>
+                <p:outputLabel for="text" value="Schritt #{entry.position}"/>
+                <p:inputTextarea id="text" rows="5" cols="30"
+                                 counter="display" maxlength="1000"
+                                 counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                 value="#{entry.text}"/>
+                <h:outputText id="display"/>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton value="Schritt hinzufügen" action="#{experimentView.increment}" update="instructionTable"/>
         <p:button value="Absenden"/>
     </h:form>
 </ui:composition>
