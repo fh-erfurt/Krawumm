@@ -10,5 +10,6 @@ import java.util.List;
 public interface RegisteredUserRepository extends PagingAndSortingRepository<RegisteredUser, Long>, RegisteredUserRepositoryCustom {
     List<RegisteredUser> findAllById(Long id);
 
+
     void deleteRegisteredUserById(Long id);
 }

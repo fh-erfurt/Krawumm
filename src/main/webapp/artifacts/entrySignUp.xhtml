@@ -26,12 +26,14 @@
     <h:form>
             <p:outputLabel value="Nutzname"/>
             <h:inputText
+                    id="inputUserName"
                     value="#{personView.lazyDataModel.selected.userName}"
                     required="true"
                     requiredMessage="Bitte gib einen Nutzernamen an."
             />
             <p:outputLabel value="E-Mail"/>
             <h:inputText
+                    id="inputEmail"
                     value="#{personView.lazyDataModel.selected.email}"
                     required="true"
                     requiredMessage="Bitte gib ein E-Mail an."

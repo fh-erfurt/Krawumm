@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
+
+import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepositoryCustom;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.mindrot.jbcrypt.BCrypt;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+
+import javax.faces.application.FacesMessage;
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
@@ -47,15 +53,26 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return String.valueOf(object.getId());
     }
 
+
+    private String hashPassword(String plainTextPassword){
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
+
     public void save() {
+        System.out.println(this.selected);
         if (Objects.isNull(this.getSelected())) {
             return;
         }
 
-/*        if (Objects.nonNull(this.getSelected().getAddress()) && Objects.nonNull(this.getSelected().getAddress().getId())) {
-            Address loaded = addressRepository.findById(this.getSelected().getAddress().getId()).orElse(null);
-            this.getSelected().setAddress(loaded);
-        }*/
+        if (Objects.nonNull(this.getSelected().getUserName())) {
+            boolean loaded = registeredUserRepository.findUserByName(this.getSelected().getUserName());
+            if(loaded){
+                return;
+            }
+        }
+        if (Objects.nonNull(this.getSelected().getPassword())) {
+            this.getSelected().setPassword(hashPassword(this.getSelected().getPassword()));
+        }
 
         this.registeredUserRepository.save(this.getSelected());
     }

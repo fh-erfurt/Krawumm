@@ -24,6 +24,53 @@
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <div>
-        <ui:include src="artifacts/entrySignUp.xhtml"/>
+        <h:form>
+            <p:outputLabel value="Nutzname"/>
+            <h:inputText
+                    id="inputUserName"
+                    value="#{personView.lazyDataModel.selected.userName}"
+                    required="true"
+                    requiredMessage="Bitte gib einen Nutzernamen an."
+            />
+            <p:outputLabel value="E-Mail"/>
+            <h:inputText
+                    id="inputEmail"
+                    value="#{personView.lazyDataModel.selected.email}"
+                    required="true"
+                    requiredMessage="Bitte gib ein E-Mail an."
+            />
+            <p:outputLabel id="labelPassword1" for="inputPassword1" value="Passwort"/>
+            <p:password
+                    value="#{personView.lazyDataModel.selected.password}"
+                    id="inputPassword1"
+                    required="true"
+                    requiredMessage="Du musst ein Passwort angeben."
+                    label="passwort1"
+                    match="inputPassword2"
+                    feedback="true"
+                    toggleMask="true"
+                    redisplay="true"
+                    promptLabel="Bitte gib dein Passwort ein."
+                    weakLabel="Passwort ist schwach."
+                    goodLabel="Passwort ist okay."
+                    strongLabel="Passwort ist stark."
+            />
+            <p:outputLabel value="Passwort wiederholen"/>
+            <p:password
+                    id="inputPassword2"
+                    required="true"
+                    requiredMessage="Bitte Passwort bestätigen."
+                    label="password2"
+            />
+            <p:commandButton
+                    value="Konto erstellen"
+                    action="#{personView.onClickCreateNewEntry}"
+                    process="@form"
+            />
+
+            <p:messages id="messages" showDetail="true">
+                <p:autoUpdate/>
+            </p:messages>
+        </h:form>
     </div>
 </ui:composition>
