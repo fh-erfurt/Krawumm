@@ -219,9 +219,7 @@ public class RegisteredUser {
      * @param experiment is the experiment, that should be added
      *
      */
-    public void addToBookmarks(Experiment experiment) {
-        this.bookmarks.add(experiment);
-    }
+    public void addToBookmarks(Experiment experiment) { this.bookmarks.add(experiment); }
 
     /**
      * This method removes an experiment from the users bookmarkslist
