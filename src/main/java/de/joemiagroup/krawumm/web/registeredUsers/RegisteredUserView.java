@@ -4,9 +4,11 @@ import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import de.joemiagroup.krawumm.web.BaseView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.convert.Converter;
@@ -14,30 +16,34 @@ import javax.faces.view.ViewScoped;
 import javax.transaction.Transactional;
 
 import de.joemiagroup.krawumm.web.BaseView;
+import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @ManagedBean("personView")
 @ViewScoped
-public class RegisteredUserPrimefacesView extends BaseView<RegisteredUser> {
+public class RegisteredUserView extends BaseView<RegisteredUser> {
 
     private static final long serialVersionUID = 4093615052840371924L;
-    List<RegisteredUser> user = new ArrayList<>();
 
+    private final AtomicBoolean loggedIn = new AtomicBoolean(false);
+
+    public boolean isLoggedIn() {return this.loggedIn.get();}
 
     @Autowired
-    public RegisteredUserPrimefacesView(final RegisteredUserRepository repository) {
+    public RegisteredUserView(final RegisteredUserRepository repository) {
         this.lazyDataModel = LazyRegisteredUserDataModel.of(repository);
+        this.lazyDataModel.setSelected(new RegisteredUser());
     }
 
     @Getter
     private final LazyRegisteredUserDataModel lazyDataModel;
 
-    /*@Transactional
+    @Transactional
     public void onClickCreateNewEntry() {
         this.editMode.set(false);
-        this.lazyDataModel.setSelected(new RegisteredUser());
-    }*/
+
+    }
 
     @Transactional
     public void onClickDeleteEntry(RegisteredUser entry) {
@@ -46,13 +52,13 @@ public class RegisteredUserPrimefacesView extends BaseView<RegisteredUser> {
         }
 
         this.lazyDataModel.delete(entry);
-        this.renderMessage(FacesMessage.SEVERITY_ERROR, "User deleted");
+        this.renderMessage(FacesMessage.SEVERITY_ERROR, "Tschüss.");
     }
 
     @Transactional
-    public void onClickCreateNewEntry() {
-        user.add(new RegisteredUser());
-/*        this.lazyDataModel.save();
-        this.renderMessage(FacesMessage.SEVERITY_INFO, "User created");*/
+    public void onClickSaveEntry() {
+        this.lazyDataModel.save();
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "Willkommen bei Krawumm!");
+        this.loggedIn.set(true);
     }
 }
