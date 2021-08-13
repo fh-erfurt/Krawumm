@@ -57,8 +57,9 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
 
     @Transactional
     public void onClickSaveEntry() {
+        this.editMode.set(false);
         this.lazyDataModel.save();
         this.renderMessage(FacesMessage.SEVERITY_INFO, "Willkommen bei Krawumm!");
-        this.loggedIn.set(true);
+        this.lazyDataModel.setSelected(new RegisteredUser());
     }
 }

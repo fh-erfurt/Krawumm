@@ -1,6 +1,7 @@
 package de.joemiagroup.krawumm.web.registeredUsers;
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
+import de.joemiagroup.krawumm.domains.TrueFalse;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,9 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         if (Objects.nonNull(this.getSelected().getPassword())) {
             this.getSelected().setPassword(hashPassword(this.getSelected().getPassword()));
         }
-
+        this.getSelected().setIsAdmin(TrueFalse.F);
+        this.getSelected().setIsCreator(TrueFalse.F);
+        this.getSelected().setLoggedIn(TrueFalse.T);
         this.registeredUserRepository.save(this.getSelected());
     }
 
