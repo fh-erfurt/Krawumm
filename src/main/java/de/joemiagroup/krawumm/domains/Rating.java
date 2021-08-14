@@ -14,4 +14,6 @@ public class Rating extends BaseEntity{
     private int ratingValue;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Experiment experiment;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private RegisteredUser registeredUser;
 }
