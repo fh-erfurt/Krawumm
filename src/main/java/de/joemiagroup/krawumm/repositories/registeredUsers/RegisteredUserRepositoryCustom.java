@@ -15,4 +15,5 @@ public interface RegisteredUserRepositoryCustom {
     long countByParameters(Map<String, FilterMeta> filters);
 
     boolean findUserByName(String userName);
+    RegisteredUser findUserDataByName(String userName);
 }

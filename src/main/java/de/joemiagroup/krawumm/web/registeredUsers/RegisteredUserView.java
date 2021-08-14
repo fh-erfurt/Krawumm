@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.convert.Converter;
@@ -25,10 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RegisteredUserView extends BaseView<RegisteredUser> {
 
     private static final long serialVersionUID = 4093615052840371924L;
-
-    private final AtomicBoolean loggedIn = new AtomicBoolean(false);
-
-    public boolean isLoggedIn() {return this.loggedIn.get();}
+    private static final Pattern EMAIL_REGEX = Pattern.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", Pattern.CASE_INSENSITIVE);
 
     @Autowired
     public RegisteredUserView(final RegisteredUserRepository repository) {
@@ -37,13 +36,7 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     }
 
     @Getter
-    private final LazyRegisteredUserDataModel lazyDataModel;
-
-    @Transactional
-    public void onClickCreateNewEntry() {
-        this.editMode.set(false);
-
-    }
+    private LazyRegisteredUserDataModel lazyDataModel;
 
     @Transactional
     public void onClickDeleteEntry(RegisteredUser entry) {
@@ -55,9 +48,29 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         this.renderMessage(FacesMessage.SEVERITY_ERROR, "Tschüss.");
     }
 
+    public static boolean emailValidate(String email) {
+        Matcher matcher= EMAIL_REGEX.matcher(email);
+        return matcher.find();
+    }
+
+    @Transactional
+    public void onClickLogin() {
+        this.editMode.set(false);
+        String loginMessage = this.lazyDataModel.checkLogin();
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "" + loginMessage);
+        this.lazyDataModel.setSelected(new RegisteredUser());
+    }
+
     @Transactional
     public void onClickSaveEntry() {
         this.editMode.set(false);
+
+        if(!emailValidate(this.lazyDataModel.getSelected().getEmail())) {
+            this.renderMessage(FacesMessage.SEVERITY_ERROR, "Email hat falsches Format");
+            this.lazyDataModel.setSelected(new RegisteredUser());
+            return;
+        }
+
         this.lazyDataModel.save();
         this.renderMessage(FacesMessage.SEVERITY_INFO, "Willkommen bei Krawumm!");
         this.lazyDataModel.setSelected(new RegisteredUser());

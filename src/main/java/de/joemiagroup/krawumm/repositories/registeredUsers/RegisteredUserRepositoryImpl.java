@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,27 +56,30 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
 
 
      public boolean findUserByName(String username) {
-/*        CriteriaBuilder builder = this.em.getCriteriaBuilder();
-
-        CriteriaQuery<RegisteredUser> user = builder.createQuery(RegisteredUser.class);
-        Root<RegisteredUser> c = user.from(RegisteredUser.class);
-        user.select(c);
-
-        TypedQuery<RegisteredUser> query = em.createQuery(user);
-        List<RegisteredUser> results = query.getResultList();*/
-
-        TypedQuery<RegisteredUser> query =
+         TypedQuery<RegisteredUser> query =
                 em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
         List<RegisteredUser> results = query.getResultList();
 
-        for(int i = 0; i < results.size(); i++){
-            if(results.get(i).getUserName() == username){
+        for(RegisteredUser i : results){
+            if(i.getUserName().equals(username)){
                 return true;
             }
         }
         return false;
     }
 
+    public RegisteredUser findUserDataByName(String username) {
+        TypedQuery<RegisteredUser> query =
+                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
+        List<RegisteredUser> results = query.getResultList();
+
+        for(int i = 0; i < results.size(); i++){
+            if(results.get(i).getUserName().equals(username)){
+                return results.get(i);
+            }
+        }
+        return null;
+    }
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<RegisteredUser> registeredUser, final Map<String, FilterMeta> filters){
         return filters.values().stream()

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepositoryCustom;
 import lombok.Getter;
@@ -76,8 +78,25 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         }
         this.getSelected().setIsAdmin(TrueFalse.F);
         this.getSelected().setIsCreator(TrueFalse.F);
-        this.getSelected().setLoggedIn(TrueFalse.T);
         this.registeredUserRepository.save(this.getSelected());
+    }
+
+    public String checkLogin() {
+        if (Objects.isNull(this.getSelected())) {
+            return "Benutzername oder Passwort falsch";
+        }
+        RegisteredUser user = null;
+        if (Objects.nonNull(this.getSelected().getUserName())) {
+            boolean userExists = registeredUserRepository.findUserByName(this.getSelected().getUserName());
+            if(userExists) user = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
+            else return "Benutzername oder Passwort falsch";
+        }
+        if (Objects.nonNull(this.getSelected().getPassword()) && user != null) {
+            if (BCrypt.checkpw(this.getSelected().getPassword(), user.getPassword())) return "Login erfolgreich";
+            else return "Benutzername oder Passwort falsch";
+        }
+        return "Benutzername oder Passwort falsch";
+        /*      this.registeredUserRepository.save(this.getSelected());*/
     }
 
     public void delete(RegisteredUser registeredUser) {

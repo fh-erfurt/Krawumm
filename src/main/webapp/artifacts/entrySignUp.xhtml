@@ -60,11 +60,14 @@
                 required="true"
                 requiredMessage="Bitte Passwort bestätigen."
                 label="password2"
+                promptLabel="Bitte Passwort bestätigen."
         />
         <p:commandButton
                 value="Konto erstellen"
                 action="#{personView.onClickSaveEntry}"
                 process="@form"
+                actionListener="#{indexView.load('LOGIN')}"
+                update=":main"
         />
     </h:form>
 </ui:composition>
