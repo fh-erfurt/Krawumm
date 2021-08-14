@@ -26,10 +26,11 @@
     <div>
         <h:form>
             <p:outputLabel id="labelUsername" for="inputUsername" value="Nutzername"/>
-            <h:inputText id="inputUsername" required="true" requiredMessage="Nutzname muss angegeben werden."/>
+            <h:inputText id="inputUsername" value="#{personView.lazyDataModel.selected.userName}" required="true" requiredMessage="Nutzname muss angegeben werden."/>
             <p:outputLabel id="labelPassword" for="inputPassword" value="Passwort"/>
             <p:password
                     id="inputPassword"
+                    value="#{personView.lazyDataModel.selected.password}"
                     toggleMask="true"
                     redisplay="true"
                     required="true"
@@ -38,6 +39,8 @@
             <p:commandButton
                 id="loginButton"
                 value="Einloggen"
+                action="#{personView.onClickLogin}"
+                process="@form"
             >
             </p:commandButton>
         </h:form>

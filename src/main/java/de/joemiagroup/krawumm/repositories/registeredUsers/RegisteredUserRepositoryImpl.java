@@ -54,6 +54,19 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return em.createQuery(query).getSingleResult();
     }
 
+    public RegisteredUser findUserDataByName(String username) {
+        TypedQuery<RegisteredUser> query =
+                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
+        List<RegisteredUser> results = query.getResultList();
+
+        for(int i = 0; i < results.size(); i++){
+            if(results.get(i).getUserName().equals(username)){
+                return results.get(i);
+            }
+        }
+        return null;
+    }
+
 
      public boolean findUserByName(String username) {
          TypedQuery<RegisteredUser> query =
@@ -68,18 +81,6 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return false;
     }
 
-    public RegisteredUser findUserDataByName(String username) {
-        TypedQuery<RegisteredUser> query =
-                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
-        List<RegisteredUser> results = query.getResultList();
-
-        for(int i = 0; i < results.size(); i++){
-            if(results.get(i).getUserName().equals(username)){
-                return results.get(i);
-            }
-        }
-        return null;
-    }
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<RegisteredUser> registeredUser, final Map<String, FilterMeta> filters){
         return filters.values().stream()

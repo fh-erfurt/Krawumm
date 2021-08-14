@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import java.sql.Timestamp;
+
 @MappedSuperclass
 @Getter
 @Setter
@@ -17,4 +19,9 @@ public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
+    private Timestamp CreatedAt = new Timestamp(System.currentTimeMillis());
+
+    private Timestamp UpdatedAt;
+
 }

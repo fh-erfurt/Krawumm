@@ -56,6 +56,23 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return String.valueOf(object.getId());
     }
 
+    public String checkLogin() {
+        if (Objects.isNull(this.getSelected())) {
+            return "Benutzername oder Passwort falsch";
+        }
+        RegisteredUser user = null;
+        if (Objects.nonNull(this.getSelected().getUserName())) {
+            boolean userExists = registeredUserRepository.findUserByName(this.getSelected().getUserName());
+            if(userExists) user = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
+            else return "Benutzername oder Passwort falsch";
+        }
+        if (Objects.nonNull(this.getSelected().getPassword()) && user != null) {
+            if (BCrypt.checkpw(this.getSelected().getPassword(), user.getPassword())) return "Login erfolgreich";
+            else return "Benutzername oder Passwort falsch";
+        }
+        return "Benutzername oder Passwort falsch";
+/*      this.registeredUserRepository.save(this.getSelected());*/
+    }
 
     private String hashPassword(String plainTextPassword){
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
@@ -81,23 +98,6 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         this.registeredUserRepository.save(this.getSelected());
     }
 
-    public String checkLogin() {
-        if (Objects.isNull(this.getSelected())) {
-            return "Benutzername oder Passwort falsch";
-        }
-        RegisteredUser user = null;
-        if (Objects.nonNull(this.getSelected().getUserName())) {
-            boolean userExists = registeredUserRepository.findUserByName(this.getSelected().getUserName());
-            if(userExists) user = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
-            else return "Benutzername oder Passwort falsch";
-        }
-        if (Objects.nonNull(this.getSelected().getPassword()) && user != null) {
-            if (BCrypt.checkpw(this.getSelected().getPassword(), user.getPassword())) return "Login erfolgreich";
-            else return "Benutzername oder Passwort falsch";
-        }
-        return "Benutzername oder Passwort falsch";
-        /*      this.registeredUserRepository.save(this.getSelected());*/
-    }
 
     public void delete(RegisteredUser registeredUser) {
         this.registeredUserRepository.deleteRegisteredUserById(registeredUser.getId());
