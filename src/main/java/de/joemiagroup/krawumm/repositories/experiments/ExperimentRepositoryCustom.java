@@ -1,6 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
-import de.joemiagroup.krawumm.Experiment;
+import de.joemiagroup.krawumm.domains.Experiment;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 

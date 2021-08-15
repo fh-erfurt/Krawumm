@@ -1,6 +1,6 @@
-package de.joemiagroup.krawumm.repositories.experiments;
+package de.joemiagroup.krawumm.repositories.ratings;
 
-import de.joemiagroup.krawumm.domains.Experiment;
+import de.joemiagroup.krawumm.domains.Rating;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
@@ -13,22 +13,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
+public class RatingRepositoryImpl implements RatingRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<Experiment> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
+    public List<Rating> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
-        final CriteriaQuery<Experiment> query = builder.createQuery(Experiment.class);
+        final CriteriaQuery<Rating> query = builder.createQuery(Rating.class);
 
-        final Root<Experiment> experiment = query.from(Experiment.class);
+        final Root<Rating> rating = query.from(Rating.class);
 
-        final List<Predicate> predicates = convertToPredicates(builder, experiment, filters);
+        final List<Predicate> predicates = convertToPredicates(builder, rating, filters);
         query.where(predicates.toArray(new Predicate[0]));
 
         final List<Order> orderList = sorts.entrySet().stream()
-                .map(sort -> sort.getValue().getOrder().isAscending() ? builder.asc(experiment.get(sort.getKey())) : builder.desc(experiment.get(sort.getKey())))
+                .map(sort -> sort.getValue().getOrder().isAscending() ? builder.asc(rating.get(sort.getKey())) : builder.desc(rating.get(sort.getKey())))
                 .collect(Collectors.toList());
         query.orderBy(orderList);
 
@@ -40,18 +40,18 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
         final CriteriaQuery<Long> query = builder.createQuery(Long.class);
 
-        final Root<Experiment> experiment = query.from(Experiment.class);
-        query.select(builder.count(experiment));
+        final Root<Rating> rating = query.from(Rating.class);
+        query.select(builder.count(rating));
 
-        final List<Predicate> predicates = convertToPredicates(builder, experiment, filters);
+        final List<Predicate> predicates = convertToPredicates(builder, rating, filters);
         query.where(predicates.toArray(new Predicate[0]));
 
         return em.createQuery(query).getSingleResult();
     }
 
-    private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<Experiment> experiment, final Map<String, FilterMeta> filters){
+    private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<Rating> rating, final Map<String, FilterMeta> filters){
         return filters.values().stream()
-                .map(parameter -> builder.equal(experiment.get(parameter.getField()), parameter.getFilterValue()))
+                .map(parameter -> builder.equal(rating.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
     }
 }

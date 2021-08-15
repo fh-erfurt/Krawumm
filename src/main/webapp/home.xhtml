@@ -25,5 +25,39 @@
     <div>
         <ui:include src="artifacts/filter.xhtml"/>
     </div>
-    <div><ui:include src="view.xhtml"/></div>
+    <div>
+        <h:form>
+            <p:dataTable
+                    id="experimentTable"
+                    var="entry" value="#{experimentView.lazyExperimentDataModel}"
+                    paginator="true"
+                    rows="5"
+                    paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                    rowsPerPageTemplate="5,10,{ShowAll|'Alle'}"
+                    paginatorPosition="bottom"
+            >
+                <p:column id="columnPic">
+                    Bild
+                </p:column>
+                <p:column id="columnData">
+                    <table>
+                        <tr>
+                            <th colspan="2">#{entry.experimentName}</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">#{entry.description}</td>
+                        </tr>
+                        <tr>
+                            <td>#{entry.age}</td>
+                            <td>#{entry.difficulty}</td>
+                        </tr>
+                        <tr>
+                            <td>#{entry.duration}</td>
+                            <td>#{entry.indoorOutdoor}</td>
+                        </tr>
+                    </table>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
 </ui:composition>

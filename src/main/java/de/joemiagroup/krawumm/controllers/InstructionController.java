@@ -2,7 +2,7 @@ package de.joemiagroup.krawumm.controllers;
 
 
 import de.joemiagroup.krawumm.domains.Instruction;
-import de.joemiagroup.krawumm.repositories.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

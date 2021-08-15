@@ -2,7 +2,7 @@ package de.joemiagroup.krawumm.controllers;
 
 
 import de.joemiagroup.krawumm.domains.Pictures;
-import de.joemiagroup.krawumm.repositories.PicturesRepository;
+import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

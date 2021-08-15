@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm.repositories;
+package de.joemiagroup.krawumm.repositories.comments;
 
 import de.joemiagroup.krawumm.domains.Comment;
 
@@ -7,5 +7,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "comments", path = "comments")
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-
+    void deleteCommentById(Long id);
 }
