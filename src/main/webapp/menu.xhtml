@@ -30,8 +30,8 @@
     <div class="ui-g-12">
         <h:form id="navigationBarForm">
             <p:menubar>
-                <p:menuitem value="Home" actionListener="#{indexView.load('HOME')}"
-                            update=":main"/>
+                <p:menuitem actionListener="#{indexView.load('HOME')}"
+                            update=":main"><p:graphicImage value="images/Logo Krawumm mit Fenster.png" height="50px"/></p:menuitem>
                 <p:menuitem><ui:include src="artifacts/search.xhtml"/></p:menuitem>
                 <p:menuitem value="Login" icon="pi pi-user"
                             actionListener="#{indexView.load('LOGIN')}"
