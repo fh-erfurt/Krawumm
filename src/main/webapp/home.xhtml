@@ -26,7 +26,7 @@
         <ui:include src="artifacts/filter.xhtml"/>
     </div>
     <div>
-        <h:form>
+        <h:form id="experimentTableForm">
             <p:dataTable
                     id="experimentTable"
                     var="entry" value="#{experimentView.data}"
@@ -35,7 +35,12 @@
                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                     rowsPerPageTemplate="5,10,{ShowAll|'Alle'}"
                     paginatorPosition="bottom"
+                    lazy="true"
+                    selectionMode="single"
+                    selection="#{experimentView.lazyExperimentDataModel.selected}"
+                    rowKey="#{entry.id}"
             >
+                <p:ajax event="rowSelect" listener="#{indexView.load('VIEW')}" update=":main"/>
                 <p:column id="columnPic">
                     <p:graphicImage value="#{entry.picture}" height="100" width="100"/>
                 </p:column>

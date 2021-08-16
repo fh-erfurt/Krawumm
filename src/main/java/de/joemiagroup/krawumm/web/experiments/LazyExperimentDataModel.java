@@ -2,12 +2,13 @@ package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.IndoorOutdoor;
-import de.joemiagroup.krawumm.domains.Rating;
 import de.joemiagroup.krawumm.domains.TrueFalse;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
@@ -23,6 +24,10 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final PicturesRepository picturesRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private ExperimentDataView selected;
 
     @Override
     public List<Experiment> load(int page, int size, Map<String, SortMeta> sorts, Map<String, FilterMeta> filters) {
@@ -56,7 +61,8 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
             float rating = ratingRepository.getRatingForExperiment(e);
             List<String> picturesNameList = picturesRepository.getPicturesForExperiment(e);
 
-            results.add(new ExperimentDataView(e.getExperimentName(),
+            results.add(new ExperimentDataView(e.getId(),
+                                               e.getExperimentName(),
                                                e.getRegisteredUser().getUserName(),
                                                e.getDescription(),
                                                e.getAge(),

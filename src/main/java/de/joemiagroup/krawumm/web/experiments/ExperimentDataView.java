@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExperimentDataView {
+    long id;
     public String title;
     public String creator;
     public String description;
