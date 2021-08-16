@@ -2,13 +2,18 @@ package de.joemiagroup.krawumm.repositories.comments;
 
 
 import de.joemiagroup.krawumm.domains.Comment;
+import de.joemiagroup.krawumm.domains.Experiment;
+import de.joemiagroup.krawumm.domains.Pictures;
+import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,4 +60,6 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
                 .map(parameter -> builder.equal(comment.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
     }
+
+    //Own methods
 }

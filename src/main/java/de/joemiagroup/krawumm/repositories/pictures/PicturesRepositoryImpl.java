@@ -2,13 +2,16 @@ package de.joemiagroup.krawumm.repositories.pictures;
 
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Pictures;
+import de.joemiagroup.krawumm.domains.TrueFalse;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,5 +57,21 @@ public class PicturesRepositoryImpl implements PicturesRepositoryCustom {
         return filters.values().stream()
                 .map(parameter -> builder.equal(pictures.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
+    }
+
+    //Own methods
+    public List<String> getPicturesForExperiment(Experiment data) {
+        List<String> results = new ArrayList<>();
+
+        TypedQuery<Pictures> query =
+                em.createQuery("SELECT c FROM Pictures c WHERE c.experiment.id = ?1", Pictures.class);
+        query.setParameter(1, data.getId());
+        List<Pictures> picturesList = query.getResultList();
+
+        for (Pictures p : picturesList) {
+            results.add(p.getPictureName());
+        }
+
+        return results;
     }
 }

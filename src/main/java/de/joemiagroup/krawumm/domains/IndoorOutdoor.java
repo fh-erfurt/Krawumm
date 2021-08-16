@@ -1,6 +1,6 @@
 package de.joemiagroup.krawumm.domains;
 
-enum IndoorOutdoor {
+public enum IndoorOutdoor {
     I,
     O
 }

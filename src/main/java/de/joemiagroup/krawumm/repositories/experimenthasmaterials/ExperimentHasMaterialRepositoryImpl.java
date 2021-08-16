@@ -1,13 +1,17 @@
 package de.joemiagroup.krawumm.repositories.experimenthasmaterials;
 
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
+import de.joemiagroup.krawumm.domains.Material;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

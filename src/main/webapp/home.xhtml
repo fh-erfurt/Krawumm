@@ -29,7 +29,7 @@
         <h:form>
             <p:dataTable
                     id="experimentTable"
-                    var="entry" value="#{experimentView.lazyExperimentDataModel}"
+                    var="entry" value="#{experimentView.data}"
                     paginator="true"
                     rows="5"
                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -37,12 +37,12 @@
                     paginatorPosition="bottom"
             >
                 <p:column id="columnPic">
-                    Bild
+                    <p:graphicImage value="#{entry.picture}" height="100" width="100"/>
                 </p:column>
                 <p:column id="columnData">
                     <table>
                         <tr>
-                            <th colspan="2">#{entry.experimentName}</th>
+                            <th colspan="2">#{entry.title}</th>
                         </tr>
                         <tr>
                             <td colspan="2">#{entry.description}</td>
@@ -53,7 +53,12 @@
                         </tr>
                         <tr>
                             <td>#{entry.duration}</td>
-                            <td>#{entry.indoorOutdoor}</td>
+                            <td>#{entry.location}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                #{entry.rating}
+                            </td>
                         </tr>
                     </table>
                 </p:column>

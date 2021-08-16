@@ -1,13 +1,17 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
-import de.joemiagroup.krawumm.domains.Experiment;
+import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
+import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,5 +57,15 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return filters.values().stream()
                 .map(parameter -> builder.equal(experiment.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
+    }
+
+    //Own methods
+    public List<Experiment> getAllExperiments(TrueFalse released) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT c FROM Experiment c WHERE c.isReleased = ?1", Experiment.class);
+        query.setParameter(1, released);
+        List<Experiment> results = query.getResultList();
+
+        return results;
     }
 }

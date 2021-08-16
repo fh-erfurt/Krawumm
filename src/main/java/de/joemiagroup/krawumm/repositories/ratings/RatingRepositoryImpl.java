@@ -1,12 +1,15 @@
 package de.joemiagroup.krawumm.repositories.ratings;
 
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Rating;
+import de.joemiagroup.krawumm.domains.TrueFalse;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
@@ -53,5 +56,22 @@ public class RatingRepositoryImpl implements RatingRepositoryCustom {
         return filters.values().stream()
                 .map(parameter -> builder.equal(rating.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
+    }
+
+    //Own methods
+    public float getRatingForExperiment(Experiment data) {
+        float results = 0.0f;
+
+        TypedQuery<Rating> query =
+                em.createQuery("SELECT c FROM Rating c WHERE c.experiment.id = ?1", Rating.class);
+        query.setParameter(1, data.getId());
+        List<Rating> ratingList = query.getResultList();
+
+        for (Rating r : ratingList) {
+            results = r.getRatingValue() + results;
+        }
+        results = results/ratingList.size();
+
+        return results;
     }
 }

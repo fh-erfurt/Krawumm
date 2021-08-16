@@ -1,9 +1,14 @@
 package de.joemiagroup.krawumm.web.experiments;
 
-import de.joemiagroup.krawumm.domains.Experiment;
-import de.joemiagroup.krawumm.domains.Instruction;
+import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
+import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
+import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.web.BaseView;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +17,24 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean("experimentView")
 @ViewScoped
+@Getter
+@Setter
 public class ExperimentView extends BaseView<Experiment> {
     @Autowired
-    public ExperimentView(final ExperimentRepository repository) {
-        this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository);
+    public ExperimentView(final ExperimentRepository repository, final RatingRepository ratingRepository,
+                          final PicturesRepository picturesRepository) {
+        this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository);
+        this.data = lazyExperimentDataModel.gatherData();
     }
 
     //Creating an inner class for the instruction set-up
-    public class Layout {
-        @Getter
+    public static class Layout {
         public int position;
-        @Getter
-        @Setter
         public String text;
 
         public Layout(int position, String text) {
@@ -40,15 +47,10 @@ public class ExperimentView extends BaseView<Experiment> {
     private String newText;
     private Instruction instruction = new Instruction();
 
-    private int number = 1;
-    @Getter
-    @Setter
-    private int age;
-    @Getter
-    @Setter
-    private int time;
+    private List<ExperimentDataView> data;
 
-    @Getter
+    private int number = 1;
+
     private final LazyExperimentDataModel lazyExperimentDataModel;
 
     @PostConstruct
@@ -60,9 +62,5 @@ public class ExperimentView extends BaseView<Experiment> {
     public void increment() {
         number++;
         instructions.add(new Layout(number, newText));
-    }
-
-    public List<Layout> getInstructions() {
-        return instructions;
     }
 }

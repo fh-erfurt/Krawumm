@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experimenthasmaterials;
 
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;

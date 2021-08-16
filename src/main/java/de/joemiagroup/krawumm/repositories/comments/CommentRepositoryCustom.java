@@ -1,6 +1,8 @@
 package de.joemiagroup.krawumm.repositories.comments;
 
 import de.joemiagroup.krawumm.domains.Comment;
+import de.joemiagroup.krawumm.domains.Experiment;
+import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
@@ -11,4 +13,5 @@ public interface CommentRepositoryCustom {
     List<Comment> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);
 
     long countByParameters(Map<String, FilterMeta> filters);
+
 }
