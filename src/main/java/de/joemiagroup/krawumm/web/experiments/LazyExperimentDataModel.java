@@ -18,7 +18,7 @@ import org.springframework.web.servlet.support.RequestContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.math.*;
+import java.lang.Math;
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
@@ -78,7 +78,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
                                                e.getDuration(),
                                                loc,
                                                rating,
-                                               ((int) rating),
+                                               Math.round(rating),
                                                picturesNameList,
                                                e.getVideo(),
                                                instructions,
