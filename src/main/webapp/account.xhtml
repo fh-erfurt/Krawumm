@@ -22,27 +22,31 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
-    <p>Kontoinformationen</p>
-    <p>Name</p>
-    <p:outputLabel value="Michel"/>
-    <p>E-Mail</p>
-    <p:outputLabel value="michel@krawumm.de"/>
 
-    <p:commandButton value="Passwort ändern" type="button" onclick="PF('pwChange').show()"/>
-    <p:commandButton value="Konto löschen" action="#{confirmAccount.delete()}" update="message" type="button">
-        <p:confirm header="Konto löschen?" message="Möchtest du dein Konto löschen?"/>
-    </p:commandButton>
+    <div class="account-page">
 
-    <div>
-        <p:tabView>
-            <p:tab title="Eigene Experimente">
-                <p:commandButton value="Experiment erstellen" actionListener="#{indexView.load('CREATE')}" update=":main"/>
-            </p:tab>
-            <p:tab title="Eingereichte Experimente">Leere Liste</p:tab>
-            <p:tab title="Lesezeichen">Lesezeichen?</p:tab>
-        </p:tabView>
+        <h3>Kontoinformationen</h3>
+        <p:outputLabel value="Name"/>
+        <p:outputLabel value="Michel"/>
+        <p:outputLabel value="E-Mail"/>
+        <p:outputLabel value="michel@krawumm.de"/>
+
+        <p:commandButton value="Passwort ändern" type="button" onclick="PF('pwChange').show()"/>
+        <p:commandButton value="Konto löschen" action="#{confirmAccount.delete()}" update="message" type="button">
+            <p:confirm header="Konto löschen?" message="Möchtest du dein Konto löschen?"/>
+        </p:commandButton>
+
+        <div>
+            <p:tabView>
+                <p:tab title="Eigene Experimente">
+                    <p:commandButton value="Experiment erstellen" actionListener="#{indexView.load('CREATE')}" update=":main"/>
+                </p:tab>
+                <p:tab title="Eingereichte Experimente">Leere Liste</p:tab>
+                <p:tab title="Lesezeichen">Lesezeichen?</p:tab>
+            </p:tabView>
+        </div>
+
     </div>
-
 
     <p:dialog header="Passwort ändern" widgetVar="pwChange" minHeight="100" width="350" showEffect="fade">
         Bitte gib dein altes Passwort ein:

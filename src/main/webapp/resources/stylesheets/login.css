@@ -11,7 +11,8 @@
 }
 
 .login-page .ui-outputlabel,
-.signup-page .ui-outputlabel {
+.signup-page .ui-outputlabel,
+.account-page .ui-outputlabel {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--blue);
@@ -34,11 +35,24 @@ button.ui-button:hover {
 
 /* buttons for login and signup */
 .login-page button.ui-button,
-.signup-page button.ui-button {
+.signup-page button.ui-button,
+.account-page button.ui-button {
     margin: 4px 10px;
 }
 
-.login-page button.ui-button:hover,
-.signup-page button.ui-button:hover {
-    margin: 4px 10px;
+/* account tabs */
+body .ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active a {
+    color: var(--red);
+}
+
+body .ui-tabs.ui-tabs-top .ui-tabs-nav li a {
+    color: var(--blue);
+}
+
+body .ui-tabs.ui-tabs-top .ui-tabs-nav li a:hover {
+    color: var(--red);
+}
+
+body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active {
+    border-color: var(--blue);
 }
