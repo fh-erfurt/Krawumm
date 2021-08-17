@@ -23,21 +23,32 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <div>
+    <div class="login">
         <h:form>
-            <p:outputLabel id="labelUsername" for="inputUsername" value="Nutzername"/>
-            <h:inputText id="inputUsername" value="#{personView.lazyDataModel.selected.userName}" required="true" requiredMessage="Nutzname muss angegeben werden."/>
-            <p:outputLabel id="labelPassword" for="inputPassword" value="Passwort"/>
-            <p:password
+            <div class="username">
+                <p:outputLabel id="labelUsername" for="inputUsername" value="Nutzername"/>
+                <p:inputText
+                        id="inputUsername"
+                        value="#{personView.lazyDataModel.selected.userName}"
+                        required="true"
+                        requiredMessage="Nutzername muss angegeben werden."
+                />
+            </div>
+            <div class="password">
+                <p:outputLabel id="labelPassword" for="inputPassword" value="Passwort"/>
+                <p:password
                     id="inputPassword"
                     value="#{personView.lazyDataModel.selected.password}"
                     toggleMask="true"
                     redisplay="true"
                     required="true"
                     requiredMessage="Passwort muss angegeben werden."
-            />
+                />
+            </div>
             <p:commandButton
+                style="margin-top: 10px;"
                 id="loginButton"
+                type="button"
                 value="Einloggen"
                 action="#{personView.onClickLogin}"
                 process="@form"

@@ -37,10 +37,10 @@
             <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
             <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
         </p:selectOneRadio>
-        <p:outputLabel for="age" value="Alter"/>
+        <p:outputLabel for="age" value="Mindestalter in Jahren"/>
         <p:inputNumber id="age" value="#{inputNumberView.age}" minValue="1"
                        maxValue="100" decimalPlaces="0" />
-        <p:outputLabel value="Max. Zeit in min."/>
-        <p:inputNumber/>
+        <p:outputLabel value="Maximale Zeit in Minuten"/>
+        <p:inputNumber id="duration" value="#{inputNumberView.duration}" decimalPlaces="0"/>
     </h:form>
 </ui:composition>

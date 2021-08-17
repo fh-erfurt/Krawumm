@@ -23,8 +23,8 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <div>
+    <div class="login-page">
         <ui:include src="artifacts/entryLogIn.xhtml"/>
-        <p:commandButton value="Konto erstellen" actionListener="#{indexView.load('SIGNUP')}" update=":main"/>
+        <p:commandButton style="margin-top: 15px;" value="Konto erstellen" actionListener="#{indexView.load('SIGNUP')}" update=":main"/>
     </div>
 </ui:composition>

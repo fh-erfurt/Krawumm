@@ -1,0 +1,65 @@
+@import "variables.css";
+@import "login.css";
+
+* {
+  font-family: Roboto, sans-serif;
+  font-size: 1rem;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-align: center;
+  /*color: var(--neutral);*/
+}
+
+/* filter */
+#filterForm .ui-outputlabel {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--blue);
+  margin-top: 10px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* rating */
+body .ui-rating .ui-rating-star-on a {
+  color: var(--red);
+}
+
+body .ui-rating .ui-rating-star-on a:hover {
+  color: var(--red);
+}
+
+/* headlines */
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--red);
+  padding: 10px;
+}
+
+h2 {
+  font-size: 2rem;
+  color: var(--red);
+  padding: 10px;
+}
+
+h3 {
+  font-size: 1.75rem;
+  color: var(--red);
+  padding: 10px;
+}
+
+h4 {
+  font-size: 1.4rem;
+  color: var(--red);
+  padding: 10px;
+}
+
+h6 {
+  font-size: 1.2rem;
+  color: var(--blue);
+  padding: 10px;
+}

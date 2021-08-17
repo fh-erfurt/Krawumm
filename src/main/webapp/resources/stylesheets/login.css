@@ -1,0 +1,44 @@
+@import "variables.css";
+
+.login-page, .signup-page {
+    background-color: #eee;
+    margin: auto;
+    padding: 10px;
+}
+
+.username, .mail, .password {
+    padding: 10px;
+}
+
+.login-page .ui-outputlabel,
+.signup-page .ui-outputlabel {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* all buttons */
+button.ui-button {
+    background-color: var(--blue);
+    border: 0;
+    color: white;
+}
+
+button.ui-button:hover {
+    background-color: var(--red);
+    border: 0;
+    color: white;
+}
+
+/* buttons for login and signup */
+.login-page button.ui-button,
+.signup-page button.ui-button {
+    margin: 4px 10px;
+}
+
+.login-page button.ui-button:hover,
+.signup-page button.ui-button:hover {
+    margin: 4px 10px;
+}
