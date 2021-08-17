@@ -1,23 +1,20 @@
 package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.*;
-import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
-import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
-import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.web.BaseView;
-import lombok.AllArgsConstructor;
+import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @ManagedBean("experimentView")
@@ -62,5 +59,10 @@ public class ExperimentView extends BaseView<Experiment> {
     public void increment() {
         number++;
         instructions.add(new Layout(number, newText));
+    }
+
+    public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
+        this.lazyExperimentDataModel.setNewData(event.getObject());
+        System.out.println(event.getObject());
     }
 }

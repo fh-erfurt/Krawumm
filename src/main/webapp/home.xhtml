@@ -21,7 +21,8 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsf/core">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsf/core">
     <div>
         <ui:include src="artifacts/filter.xhtml"/>
     </div>
@@ -36,11 +37,17 @@
                     rowsPerPageTemplate="5,10,{ShowAll|'Alle'}"
                     paginatorPosition="bottom"
                     lazy="true"
-                    selectionMode="single"
                     selection="#{experimentView.lazyExperimentDataModel.selected}"
                     rowKey="#{entry.id}"
+                    selectionMode="single"
             >
-                <p:ajax event="rowSelect" listener="#{indexView.load('VIEW')}" update=":main"/>
+                <p:ajax
+                        id="selectData"
+                        event="rowSelect"
+                        listener="#{experimentView.onExperimentSelect}"
+                        process="@all"
+                        oncomplete="#{indexView.load('VIEW')}"
+                />
                 <p:column id="columnPic">
                     <p:graphicImage value="#{entry.picture}" height="100" width="100"/>
                 </p:column>
@@ -62,12 +69,14 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                #{entry.rating}
+                                <p:rating value="#{entry.rating2}" readonly="true"/>
+                                #{entry.rating1}
                             </td>
                         </tr>
                     </table>
                 </p:column>
             </p:dataTable>
+            <h:outputLabel id="expID" value="#{experimentView.lazyExperimentDataModel.newData.id}"/>
         </h:form>
     </div>
 </ui:composition>

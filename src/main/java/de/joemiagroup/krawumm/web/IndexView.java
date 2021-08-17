@@ -1,6 +1,10 @@
 package de.joemiagroup.krawumm.web;
 
 import de.joemiagroup.krawumm.core.UserSessionContext;
+import de.joemiagroup.krawumm.domains.BaseEntity;
+import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
+import de.joemiagroup.krawumm.web.experiments.ExperimentView;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;

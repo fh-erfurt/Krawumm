@@ -41,8 +41,9 @@
                 value="Einloggen"
                 action="#{personView.onClickLogin}"
                 process="@form"
-            >
-            </p:commandButton>
+                oncomplete="redirect()"
+            />
+            <p:remoteCommand name="redirect" action="#{indexView.load('HOME')}" update=":main"/>
         </h:form>
     </div>
 </ui:composition>

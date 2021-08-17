@@ -16,6 +16,7 @@ public class ExperimentDataView {
     public int difficulty;
     public float duration;
     public String location;
-    public float rating;
+    public float rating1;
+    public int rating2;
     public String picture;
 }

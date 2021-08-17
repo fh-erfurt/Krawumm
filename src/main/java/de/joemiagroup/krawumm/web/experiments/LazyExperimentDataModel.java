@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.web.experiments;
 
+import de.joemiagroup.krawumm.domains.BaseEntity;
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.IndoorOutdoor;
 import de.joemiagroup.krawumm.domains.TrueFalse;
@@ -9,13 +10,17 @@ import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.http.protocol.RequestContent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+import org.springframework.web.servlet.support.RequestContext;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.math.*;
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
@@ -24,10 +29,6 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final PicturesRepository picturesRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
-
-    @Getter
-    @Setter
-    private ExperimentDataView selected;
 
     @Override
     public List<Experiment> load(int page, int size, Map<String, SortMeta> sorts, Map<String, FilterMeta> filters) {
@@ -38,6 +39,14 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return cache;
     }
 
+    @Getter
+    @Setter
+    private ExperimentDataView selected;
+    @Getter
+    @Setter
+    private ExperimentDataView newData;
+
+    //Own methods
     public List<Experiment> loadAllExperiments() {
         List<Experiment> experiments = experimentRepository.getAllExperiments(TrueFalse.T);
 
@@ -70,6 +79,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
                                                e.getDuration(),
                                                loc,
                                                rating,
+                                               ((int) rating),
                                                picturesNameList.get(0) ));
         }
 

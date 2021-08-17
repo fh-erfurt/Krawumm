@@ -15,53 +15,84 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.
---> <!-- TODO: Datavalidation -->
+-->
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
-    <p:outputLabel value="Bombenfischen für kleine Kinder"/>
+    <h:form id="experimentInfoTableForm">
+        <p:dataTable
+                id="experimentInfoTable"
+                var="info" value="#{experimentView.lazyExperimentDataModel.newData}"
+                rows="5"
+        >
+            <p:column>
+                <h:outputText value="#{info.title}"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
     <p:selectBooleanButton onIcon="pi pi-heart" offIcon="pi pi-heart" onLabel="" offLabel=""/>
-    <p:outputLabel value="Michel"/>
-    <div id="dataTable">
-        <p:outputLabel value="ab 12 Jahren"/>
-        <p:outputLabel value="Schwierigkeitsgrad"/>
-        <p:rating value="4" readonly="true"/>
-        <p:outputLabel value="Dauer: 4 Stunden"/>
-        <p:outputLabel value="für Draußen"/>
-        <p:outputLabel value="Gesamtbewertung"/>
-        <p:rating value="1" readonly="true"/>
-        <p:outputLabel value="eigene Bewertung"/>
-        <p:rating/>
-    </div>
-    <div id="instructions">
-        <p:outputPanel>
-            <p:outputLabel value="Text1"/>
-        </p:outputPanel>
-        <p:outputPanel>
-            <p:outputLabel value="Text2"/>
-        </p:outputPanel>
-        <p:outputPanel>
-            <p:outputLabel value="Text3"/>
-        </p:outputPanel>
-        <p:outputPanel>
-            <p:outputLabel value="Text4"/>
-            <p:graphicImage value="images/bombFishing.jpg"/>
-        </p:outputPanel>
-    </div>
-    <div id="komments">
-        <p:outputPanel>
-            <p:outputLabel value="Jean, 09.08.2021 13:00"/>
-            <p:rating value="1" readonly="true"/>
-            <p>
-                Bitte bringt andere Kinder nicht auf dumme Ideen. Klee macht schon genug Unsinn.
-            </p>
-            <p:button value="Löschen"/>
-        </p:outputPanel>
-        <p:commandButton value="Kommentar schreiben" type="button" onclick="PF('wrText').show()"/>
-    </div>
+
+    <h:form id="experimentDataTableForm">
+        <p:dataTable
+                id="experimentDataTable"
+                var="data" value="#{experimentView.lazyExperimentDataModel.newData}"
+        >
+            <p:column>
+                <h:outputText value="#{data}"/>
+            </p:column>
+            <div id="dataTable">
+                <p:outputLabel value="ab 12 Jahren"/>
+                <p:outputLabel value="Schwierigkeitsgrad"/>
+                <p:rating value="4" readonly="true"/>
+                <p:outputLabel value="Dauer: 4 Stunden"/>
+                <p:outputLabel value="für Draußen"/>
+                <p:outputLabel value="Gesamtbewertung"/>
+                <p:rating value="1" readonly="true"/>
+                <p:outputLabel value="eigene Bewertung"/>
+                <p:rating/>
+            </div>
+        </p:dataTable>
+    </h:form>
+
+    <h:form id="experimentInstructionsTableForm">
+        <p:dataTable id="experimentInstructionsTable">
+            <div id="instructions">
+                <p:outputPanel>
+                    <p:outputLabel value="Text1"/>
+                </p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="Text2"/>
+                </p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="Text3"/>
+                </p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="Text4"/>
+                    <p:graphicImage value="images/bombFishing.jpg"/>
+                </p:outputPanel>
+            </div>
+        </p:dataTable>
+    </h:form>
+
+    <h:form id="experimentCommentTableForm">
+        <p:dataTable id="experimentCommentTable">
+            <div id="komments">
+                <p:outputPanel>
+                    <p:outputLabel value="Jean, 09.08.2021 13:00"/>
+                    <p:rating value="1" readonly="true"/>
+                    <p>
+                        Bitte bringt andere Kinder nicht auf dumme Ideen. Klee macht schon genug Unsinn.
+                    </p>
+                    <p:button value="Löschen"/>
+                </p:outputPanel>
+                <p:commandButton value="Kommentar schreiben" type="button" onclick="PF('wrText').show()"/>
+            </div>
+        </p:dataTable>
+    </h:form>
 
     <p:dialog header="Kommentar schreiben" widgetVar="wrText" minHeight="100" width="350" showEffect="fade">
         <p:inputTextarea rows="5" cols="30" counter="display" maxlength="1000"
