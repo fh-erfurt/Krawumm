@@ -57,4 +57,20 @@ public class InstructionRepositoryImpl implements InstructionRepositoryCustom {
                 .map(parameter -> builder.equal(instruction.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
     }
+
+    public List<String> getInstructionsForExperiment (Experiment experiment) {
+        List<String> results = new ArrayList<>();
+        System.out.println(experiment.getId());
+
+        TypedQuery<Instruction> query =
+                em.createQuery("SELECT i FROM Instruction i WHERE i.experiment.id = ?1", Instruction.class);
+        query.setParameter(1, experiment.getId());
+        List<Instruction> instructionList = query.getResultList();
+
+        for (Instruction i : instructionList) {
+            results.add(i.getText());
+        }
+
+        return results;
+    }
 }

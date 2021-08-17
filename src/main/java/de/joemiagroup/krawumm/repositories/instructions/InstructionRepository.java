@@ -10,4 +10,5 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "instrtuctions", path = "instrtuctions")
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
     void deleteInstructionById(Long id);
+    List<String> getInstructionsForExperiment (Experiment experiment);
 }

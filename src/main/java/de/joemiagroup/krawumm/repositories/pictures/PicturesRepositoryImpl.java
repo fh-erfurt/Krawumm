@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.pictures;
 
+import de.joemiagroup.krawumm.domains.Comment;
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Pictures;
 import de.joemiagroup.krawumm.domains.TrueFalse;
@@ -65,6 +66,21 @@ public class PicturesRepositoryImpl implements PicturesRepositoryCustom {
 
         TypedQuery<Pictures> query =
                 em.createQuery("SELECT c FROM Pictures c WHERE c.experiment.id = ?1", Pictures.class);
+        query.setParameter(1, data.getId());
+        List<Pictures> picturesList = query.getResultList();
+
+        for (Pictures p : picturesList) {
+            results.add(p.getPictureName());
+        }
+
+        return results;
+    }
+
+    public List<String> getPicturesForComment(Comment data) {
+        List<String> results = new ArrayList<>();
+
+        TypedQuery<Pictures> query =
+                em.createQuery("SELECT c FROM Pictures c WHERE c.comment.id = ?1", Pictures.class);
         query.setParameter(1, data.getId());
         List<Pictures> picturesList = query.getResultList();
 

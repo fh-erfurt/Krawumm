@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.pictures;
 
+import de.joemiagroup.krawumm.domains.Comment;
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Pictures;
 import org.primefaces.model.FilterMeta;
@@ -14,4 +15,5 @@ public interface PicturesRepositoryCustom {
     long countByParameters(Map<String, FilterMeta> filters);
 
     List<String> getPicturesForExperiment(Experiment data);
+    List<String> getPicturesForComment(Comment data);
 }

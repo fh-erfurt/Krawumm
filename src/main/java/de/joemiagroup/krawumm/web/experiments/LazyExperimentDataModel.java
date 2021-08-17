@@ -1,10 +1,8 @@
 package de.joemiagroup.krawumm.web.experiments;
 
-import de.joemiagroup.krawumm.domains.BaseEntity;
-import de.joemiagroup.krawumm.domains.Experiment;
-import de.joemiagroup.krawumm.domains.IndoorOutdoor;
-import de.joemiagroup.krawumm.domains.TrueFalse;
+import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
+import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import lombok.Getter;
@@ -27,6 +25,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final ExperimentRepository experimentRepository;
     private final RatingRepository ratingRepository;
     private final PicturesRepository picturesRepository;
+    private final InstructionRepository instructionRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
 
@@ -69,7 +68,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
             String loc = this.translateIndoorOutdoor(e.getIndoorOutdoor());
             float rating = ratingRepository.getRatingForExperiment(e);
             List<String> picturesNameList = picturesRepository.getPicturesForExperiment(e);
-
+            List<String> instructions = instructionRepository.getInstructionsForExperiment(e);;
             results.add(new ExperimentDataView(e.getId(),
                                                e.getExperimentName(),
                                                e.getRegisteredUser().getUserName(),
@@ -80,9 +79,27 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
                                                loc,
                                                rating,
                                                ((int) rating),
-                                               picturesNameList.get(0) ));
+                                               picturesNameList,
+                                               e.getVideo(),
+                                               instructions,
+                                               this.gatherCommentDataForExperiment(e)));
         }
 
         return results;
+    }
+
+    public List<ExperimentDataView.CommentDataView> gatherCommentDataForExperiment(Experiment experiment) {
+        List<ExperimentDataView.CommentDataView> commentData = new ArrayList<>();
+
+        List<Comment> commentList = experimentRepository.getCommentsForExperiment(experiment);
+        for (Comment c : commentList) {
+            List<String> picturesList = picturesRepository.getPicturesForComment(c);
+            commentData.add(new ExperimentDataView.CommentDataView(c.getRegisteredUser().getUserName(),
+                                                                   c.getCreatedAt(),
+                                                                   c.getText(),
+                                                                   picturesList));
+        }
+
+        return commentData;
     }
 }

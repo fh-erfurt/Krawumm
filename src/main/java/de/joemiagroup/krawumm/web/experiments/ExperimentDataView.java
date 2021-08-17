@@ -4,10 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
 public class ExperimentDataView {
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class CommentDataView {
+        public String userName;
+        public Timestamp createdAt;
+        public String text;
+        public List<String> pictureComment;
+    }
+
     long id;
     public String title;
     public String creator;
@@ -18,5 +31,8 @@ public class ExperimentDataView {
     public String location;
     public float rating1;
     public int rating2;
-    public String picture;
+    public List<String> picture;
+    public String video;
+    public List<String> instructions;
+    public List<CommentDataView> comments;
 }

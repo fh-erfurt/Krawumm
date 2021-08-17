@@ -34,7 +34,6 @@
                     paginator="true"
                     rows="5"
                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                    rowsPerPageTemplate="5,10,{ShowAll|'Alle'}"
                     paginatorPosition="bottom"
                     lazy="true"
                     selection="#{experimentView.lazyExperimentDataModel.selected}"
@@ -42,15 +41,12 @@
                     selectionMode="single"
             >
                 <p:ajax
-                        id="selectData"
                         event="rowSelect"
                         listener="#{experimentView.onExperimentSelect}"
-                        process="@all"
-                        oncomplete="#{indexView.load('VIEW')}"
+                        update=":experimentDetailForm:experimentDetail"
+                        oncomplete="PF('experimentDetailDialog').show()"
                 />
-                <p:column id="columnPic">
-                    <p:graphicImage value="#{entry.picture}" height="100" width="100"/>
-                </p:column>
+
                 <p:column id="columnData">
                     <table>
                         <tr>
@@ -75,8 +71,14 @@
                         </tr>
                     </table>
                 </p:column>
+                <p:column id="columnPic">
+                    <p:graphicImage value="#{entry.picture.get(0)}" height="100" width="100"/>
+                </p:column>
             </p:dataTable>
-            <h:outputLabel id="expID" value="#{experimentView.lazyExperimentDataModel.newData.id}"/>
         </h:form>
     </div>
+
+    <ui:include src="view.xhtml">
+
+    </ui:include>
 </ui:composition>

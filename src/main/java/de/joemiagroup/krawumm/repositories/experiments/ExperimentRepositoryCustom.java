@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
+import de.joemiagroup.krawumm.domains.Comment;
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.TrueFalse;
 import org.primefaces.model.FilterMeta;
@@ -14,4 +15,5 @@ public interface ExperimentRepositoryCustom {
     long countByParameters(Map<String, FilterMeta> filters);
 
     List<Experiment> getAllExperiments(TrueFalse t);
+    List<Comment> getCommentsForExperiment(Experiment data);
 }

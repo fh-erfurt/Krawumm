@@ -21,79 +21,81 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:form id="experimentInfoTableForm">
-        <p:dataTable
-                id="experimentInfoTable"
-                var="info" value="#{experimentView.lazyExperimentDataModel.newData}"
-                rows="5"
-        >
-            <p:column>
-                <h:outputText value="#{info.title}"/>
-            </p:column>
-
-        </p:dataTable>
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:form id="experimentDetailForm">
+        <p:dialog widgetVar="experimentDetailDialog" positionType="absolute">
+            <p:outputPanel id="experimentDetail">
+                <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
+                    <div>
+                        #{experimentView.lazyExperimentDataModel.selected.title}
+                        <br/>
+                        #{experimentView.lazyExperimentDataModel.selected.creator}
+                    </div>
+                    <div>
+                        ab #{experimentView.lazyExperimentDataModel.selected.age} Jahren
+                        <br/>
+                        Schwierigkeitsgrad:<br/>
+                        #{experimentView.lazyExperimentDataModel.selected.difficulty}
+                        <br/>
+                        Dauer:<br/>
+                        #{experimentView.lazyExperimentDataModel.selected.duration} Minuten
+                        <br/>
+                        für #{experimentView.lazyExperimentDataModel.selected.location}
+                        <br/>
+                        Gesamtbewertung:<br/>
+                        #{experimentView.lazyExperimentDataModel.selected.rating1}
+                        <br/>
+                        Eigene Bewertung:
+                        <p:rating/>
+                    </div>
+                    <div>
+                        <p:dataTable
+                                id="instructionTable"
+                                var="text" value="#{experimentView.lazyExperimentDataModel.selected.instructions}"
+                        >
+                            <p:column><h:outputText value="#{text}"/></p:column>
+                        </p:dataTable>
+                    </div>
+                    <div>
+                        <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected.video}">
+                            <iframe src="#{experimentView.lazyExperimentDataModel.selected.video}"/>
+                        </c:if>
+                    </div>
+                    <div>
+                        <p:dataTable
+                                id="commentTable"
+                                var="comment" value="#{experimentView.lazyExperimentDataModel.selected.comments}"
+                        >
+                            <p:column>
+                                <table>
+                                    <tr>
+                                        <td>#{comment.userName}</td>
+                                        <td>#{comment.createdAt}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            #{comment.text}
+                                        </td>
+                                    </tr>
+                                    <c:if test="#{not empty comment.pictureComment}">
+                                        <tr>
+                                            <td colspan="2">
+                                                <p:galleria value="#{comment.pictureComment}" var="pic">
+                                                    <p:graphicImage value="#{pic}"/>
+                                                </p:galleria>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </table>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Kommentar schreiben" onclick="PF('wrText').show()" type="button"/>
+                    </div>
+                </p:column>
+            </p:outputPanel>
+        </p:dialog>
     </h:form>
-    <p:selectBooleanButton onIcon="pi pi-heart" offIcon="pi pi-heart" onLabel="" offLabel=""/>
-
-    <h:form id="experimentDataTableForm">
-        <p:dataTable
-                id="experimentDataTable"
-                var="data" value="#{experimentView.lazyExperimentDataModel.newData}"
-        >
-            <p:column>
-                <h:outputText value="#{data}"/>
-            </p:column>
-            <div id="dataTable">
-                <p:outputLabel value="ab 12 Jahren"/>
-                <p:outputLabel value="Schwierigkeitsgrad"/>
-                <p:rating value="4" readonly="true"/>
-                <p:outputLabel value="Dauer: 4 Stunden"/>
-                <p:outputLabel value="für Draußen"/>
-                <p:outputLabel value="Gesamtbewertung"/>
-                <p:rating value="1" readonly="true"/>
-                <p:outputLabel value="eigene Bewertung"/>
-                <p:rating/>
-            </div>
-        </p:dataTable>
-    </h:form>
-
-    <h:form id="experimentInstructionsTableForm">
-        <p:dataTable id="experimentInstructionsTable">
-            <div id="instructions">
-                <p:outputPanel>
-                    <p:outputLabel value="Text1"/>
-                </p:outputPanel>
-                <p:outputPanel>
-                    <p:outputLabel value="Text2"/>
-                </p:outputPanel>
-                <p:outputPanel>
-                    <p:outputLabel value="Text3"/>
-                </p:outputPanel>
-                <p:outputPanel>
-                    <p:outputLabel value="Text4"/>
-                    <p:graphicImage value="images/bombFishing.jpg"/>
-                </p:outputPanel>
-            </div>
-        </p:dataTable>
-    </h:form>
-
-    <h:form id="experimentCommentTableForm">
-        <p:dataTable id="experimentCommentTable">
-            <div id="komments">
-                <p:outputPanel>
-                    <p:outputLabel value="Jean, 09.08.2021 13:00"/>
-                    <p:rating value="1" readonly="true"/>
-                    <p>
-                        Bitte bringt andere Kinder nicht auf dumme Ideen. Klee macht schon genug Unsinn.
-                    </p>
-                    <p:button value="Löschen"/>
-                </p:outputPanel>
-                <p:commandButton value="Kommentar schreiben" type="button" onclick="PF('wrText').show()"/>
-            </div>
-        </p:dataTable>
-    </h:form>
-
     <p:dialog header="Kommentar schreiben" widgetVar="wrText" minHeight="100" width="350" showEffect="fade">
         <p:inputTextarea rows="5" cols="30" counter="display" maxlength="1000"
                          counterTemplate="{0} Zeichen übrig." autoResize="true" />
