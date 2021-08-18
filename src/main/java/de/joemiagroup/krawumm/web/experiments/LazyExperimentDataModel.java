@@ -98,7 +98,8 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
             String loc = this.translateIndoorOutdoor(e.getIndoorOutdoor());
             float rating = ratingRepository.getRatingForExperiment(e);
             List<String> picturesNameList = picturesRepository.getPicturesForExperiment(e);
-            List<String> instructions = instructionRepository.getInstructionsForExperiment(e);;
+            List<String> instructions = instructionRepository.getInstructionsForExperiment(e);
+            List<String> materials = experimentRepository.getMaterialsForExperiment(e);
             dataList.add(new ExperimentDataView(e.getId(),
                     e.getExperimentName(),
                     e.getRegisteredUser().getUserName(),
@@ -112,6 +113,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
                     picturesNameList,
                     e.getVideo(),
                     instructions,
+                    materials,
                     this.gatherCommentDataForExperiment(e)));
         }
 

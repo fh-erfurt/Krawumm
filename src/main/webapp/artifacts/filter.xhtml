@@ -28,12 +28,13 @@
             <p:outputLabel value="Bewertung"/>
             <p:rating id="rating"/>
             <p:outputLabel value="Schwierigkeitsgrad"/>
+            <p:outputLabel value="1 ist sehr einfach, 5 ist sehr schwer"/>
             <p:selectOneRadio id="difficulty">
-                <f:selectItem itemLabel="Sehr einfach" itemValue="sEasy"/>
-                <f:selectItem itemLabel="Einfach" itemValue="easy"/>
-                <f:selectItem itemLabel="Medium" itemValue="middle"/>
-                <f:selectItem itemLabel="Schwer" itemValue="hard"/>
-                <f:selectItem itemLabel="Sehr Schwer" itemValue="sHard"/>
+                <f:selectItem itemLabel="1" itemValue="sEasy"/>
+                <f:selectItem itemLabel="2" itemValue="easy"/>
+                <f:selectItem itemLabel="3" itemValue="middle"/>
+                <f:selectItem itemLabel="4" itemValue="hard"/>
+                <f:selectItem itemLabel="5" itemValue="sHard"/>
             </p:selectOneRadio>
             <p:outputLabel value="Drinnen/Draußen"/>
             <p:selectOneRadio id="indoorOutdoor">
@@ -46,7 +47,7 @@
             <p:outputLabel value="Maximale Zeit in Minuten"/>
             <p:inputNumber id="duration" value="#{inputNumberView.duration}" decimalPlaces="0"/>
         </h:form>
-
+        <p:commandButton value="Filter anwenden" action="" process="@form" update="main"/>
     </c:if>
     <c:if test="#{indexView.showFilter == false}">
         <p:commandButton value="Filter anzeigen" action="#{indexView.makeFiltersAppear}" process="@this" update="main"/>

@@ -86,4 +86,21 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
 
         return results;
     }
+
+    public List<String> getMaterialsForExperiment(Experiment experiment) {
+        List<String> results = new ArrayList<>();
+
+        TypedQuery<ExperimentHasMaterial> query =
+                em.createQuery("SELECT m FROM ExperimentHasMaterial m WHERE m.experiment.id = ?1", ExperimentHasMaterial.class);
+        query.setParameter(1, experiment.getId());
+        List<ExperimentHasMaterial> materialList = query.getResultList();
+
+        for (ExperimentHasMaterial m : materialList) {
+            results.add(m.getMaterial().getMaterialName());
+        }
+
+        return results;
+    }
+
+    public void writeCommentDataInDatabase() {}
 }

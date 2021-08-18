@@ -34,5 +34,6 @@ public class ExperimentDataView {
     public List<String> picture;
     public String video;
     public List<String> instructions;
+    public List<String> materials;
     public List<CommentDataView> comments;
 }
