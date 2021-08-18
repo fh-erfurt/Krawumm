@@ -4,6 +4,7 @@ package de.joemiagroup.krawumm.repositories.comments;
 import de.joemiagroup.krawumm.domains.Comment;
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Pictures;
+import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository

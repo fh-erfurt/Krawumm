@@ -24,7 +24,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:form id="experimentDetailForm">
-        <p:sidebar widgetVar="experimentDetailDialog" fullScreen="true" baseZIndex="10000" blockScroll="true" style="overflow-y: auto">
+        <p:sidebar widgetVar="experimentDetailDialog" fullScreen="true" blockScroll="true" style="overflow-y: auto">
             <p:outputPanel id="experimentDetail">
                 <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <div>
@@ -117,9 +117,19 @@
         </p:sidebar>
     </h:form>
     <p:dialog header="Kommentar schreiben" widgetVar="wrText" minHeight="100" width="350" showEffect="fade">
-        <p:inputTextarea rows="5" cols="30" counter="display" maxlength="1000"
-                         counterTemplate="{0} Zeichen übrig." autoResize="true" />
-        <h:outputText id="display"/>
-        <p:button value="Absenden"/>
+        <h:form>
+            <p:inputTextarea rows="5" cols="30" counter="display" maxlength="1000"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true"
+                             value="#{experimentView.lazyExperimentDataModel.commentText}"
+            />
+            <h:outputText id="display"/>
+            <p:commandButton
+                    value="Absenden"
+                    action="#{experimentView.writeComment(experimentView.lazyExperimentDataModel.selected.id,
+                                                                              personView.lazyDataModel.loggedInUser)}"
+                    process="@form"
+                    update="main, :experimentDetailForm:commentTable"
+            />
+        </h:form>
     </p:dialog>
 </ui:composition>

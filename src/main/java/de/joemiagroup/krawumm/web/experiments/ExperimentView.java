@@ -1,6 +1,7 @@
 package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
@@ -25,8 +26,10 @@ import java.util.List;
 public class ExperimentView extends BaseView<Experiment> {
     @Autowired
     public ExperimentView(final ExperimentRepository repository, final RatingRepository ratingRepository,
-                          final PicturesRepository picturesRepository, final InstructionRepository instructionRepository) {
-        this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository, instructionRepository);
+                          final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
+                          final CommentRepository commentRepository) {
+        this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository, instructionRepository,
+                                                                  commentRepository);
         this.data = lazyExperimentDataModel.gatherData();
     }
 
@@ -72,5 +75,10 @@ public class ExperimentView extends BaseView<Experiment> {
     public void searchForStringInName () {
         this.data = lazyExperimentDataModel.usingSearch(search);
         this.search = "";
+    }
+
+    public void writeComment (long experimentId, RegisteredUser user) {
+        this.lazyExperimentDataModel.writeComment(experimentId, user);
+        this.data = lazyExperimentDataModel.gatherData();
     }
 }

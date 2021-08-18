@@ -18,4 +18,5 @@ public interface ExperimentRepositoryCustom {
     List<Comment> getCommentsForExperiment(Experiment data);
     List<Experiment> lookForStringInExperimentName(String search);
     List<String> getMaterialsForExperiment(Experiment experiment);
+    Experiment getExperimentById (long id);
 }

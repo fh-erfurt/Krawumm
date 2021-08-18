@@ -47,7 +47,7 @@
             <p:outputLabel value="Maximale Zeit in Minuten"/>
             <p:inputNumber id="duration" value="#{inputNumberView.duration}" decimalPlaces="0"/>
         </h:form>
-        <p:commandButton value="Filter anwenden" action="" process="@form" update="main"/>
+        <p:commandButton value="Filter anwenden" process="@form" update="main"/>
     </c:if>
     <c:if test="#{indexView.showFilter == false}">
         <p:commandButton value="Filter anzeigen" action="#{indexView.makeFiltersAppear}" process="@this" update="main"/>

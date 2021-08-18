@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Comment extends BaseEntity{
     private String text;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private RegisteredUser registeredUser;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Experiment experiment;
 }

@@ -1,10 +1,12 @@
 package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
+import de.joemiagroup.krawumm.web.registeredUsers.RegisteredUserView;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.lang.Math;
+import java.util.Objects;
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
@@ -23,6 +26,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final RatingRepository ratingRepository;
     private final PicturesRepository picturesRepository;
     private final InstructionRepository instructionRepository;
+    private final CommentRepository commentRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
 
@@ -41,6 +45,9 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     @Getter
     @Setter
     private ExperimentDataView newData;
+    @Getter
+    @Setter
+    private String commentText;
 
     //Own methods
     public List<Experiment> loadAllExperiments() {
@@ -118,5 +125,29 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         }
 
         return dataList;
+    }
+
+    public void writeComment(long experimentId, RegisteredUser user) {
+        if (Objects.isNull(commentText)) {
+            return;
+        }
+
+        if (Objects.isNull(user)) {
+            return;
+        }
+
+        Comment comment = new Comment();
+
+        comment.setText(commentText);
+
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        comment.setExperiment(experiment);
+
+        comment.setRegisteredUser(user);
+
+        commentRepository.save(comment);
+
+        commentText = null;
+        return;
     }
 }

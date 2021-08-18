@@ -87,12 +87,12 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
-    public List<String> getMaterialsForExperiment(Experiment experiment) {
+    public List<String> getMaterialsForExperiment(Experiment data) {
         List<String> results = new ArrayList<>();
 
         TypedQuery<ExperimentHasMaterial> query =
                 em.createQuery("SELECT m FROM ExperimentHasMaterial m WHERE m.experiment.id = ?1", ExperimentHasMaterial.class);
-        query.setParameter(1, experiment.getId());
+        query.setParameter(1, data.getId());
         List<ExperimentHasMaterial> materialList = query.getResultList();
 
         for (ExperimentHasMaterial m : materialList) {
@@ -102,5 +102,12 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
-    public void writeCommentDataInDatabase() {}
+    public Experiment getExperimentById (long id) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT e FROM Experiment e WHERE e.id = ?1", Experiment.class);
+        query.setParameter(1, id);
+        List<Experiment> results = query.getResultList();
+
+        return results.get(0);
+    }
 }
