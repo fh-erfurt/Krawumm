@@ -34,6 +34,8 @@ public class ExperimentView extends BaseView<Experiment> {
     }
 
     //Creating an inner class for the instruction set-up
+    @Getter
+    @Setter
     public static class Layout {
         public int position;
         public String text;
@@ -45,15 +47,17 @@ public class ExperimentView extends BaseView<Experiment> {
     }
 
     private List<Layout> instructions;
+    private List<Layout> materials;
     private String newText;
-    private Instruction instruction = new Instruction();
+
 
     private List<ExperimentDataView> data;
     @Getter
     @Setter
     private String search = "";
 
-    private int number = 1;
+    private int numberInstruction = 1;
+    private int numberMaterial = 1;
 
     private final LazyExperimentDataModel lazyExperimentDataModel;
 
@@ -61,11 +65,18 @@ public class ExperimentView extends BaseView<Experiment> {
     public void init() {
         instructions = new ArrayList<>();
         instructions.add(new Layout(1, newText));
+        materials = new ArrayList<>();
+        materials.add(new Layout(1, newText));
     }
 
-    public void increment() {
-        number++;
-        instructions.add(new Layout(number, newText));
+    public void incrementInstruction() {
+        numberInstruction++;
+        instructions.add(new Layout(numberInstruction, newText));
+    }
+
+    public void incrementMaterial() {
+        numberMaterial++;
+        materials.add(new Layout(numberMaterial, newText));
     }
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {

@@ -23,38 +23,38 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form>
+    <h:form id="createExperimentForm">
         <p:outputPanel>
             <p:outputLabel for="title" value="Titel"/>
             <p:inputTextarea rows="1" cols="30" counter="displayTitle" maxlength="255"
                              counterTemplate="{0} Zeichen übrig." autoResize="true"
-                             id="title"   />
+                             id="title"   value="#{experimentView.lazyExperimentDataModel.newData.title}"/>
             <h:outputText id="displayTitle"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="descrip" value="Beschreibung"/>
             <p:inputTextarea rows="5" cols="30" counter="displayDescrip" maxlength="500"
                              counterTemplate="{0} Zeichen übrig." autoResize="true"
-                             id="descrip"   />
+                             id="descrip"   value="#{experimentView.lazyExperimentDataModel.newData.description}"/>
             <h:outputText id="displayDescrip"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="age" value="Alter"/>
-            <p:inputNumber id="age" value="#{experimentView.age}" minValue="1"
+            <p:inputNumber id="age" value="#{experimentView.lazyExperimentDataModel.newData.age}" minValue="1"
                            maxValue="100" decimalPlaces="0" />
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="difficulty" value="Schwierigkeitsgrad"/>
-            <p:rating id="difficulty"/>
+            <p:rating id="difficulty" value="#{experimentView.lazyExperimentDataModel.newData.rating2}"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="time" value="Dauer in Minuten"/>
-            <p:inputNumber id="time" value="#{experimentView.time}" minValue="1"
+            <p:inputNumber id="time" value="#{experimentView.lazyExperimentDataModel.newData.duration}" minValue="1"
                            maxValue="480" decimalPlaces="2" />
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="indoorOutdoor" value="Drinnen/Draußem"/>
-            <p:selectOneRadio id="indoorOutdoor">
+            <p:selectOneRadio id="indoorOutdoor" value="#{experimentView.lazyExperimentDataModel.newData.location}">
                 <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
                 <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
             </p:selectOneRadio>
@@ -70,7 +70,20 @@
                 <h:outputText id="display"/>
             </p:column>
         </p:dataTable>
-        <p:commandButton value="Schritt hinzufügen" action="#{experimentView.increment}" update="instructionTable"/>
-        <p:button value="Absenden"/>
+        <p:commandButton value="Schritt hinzufügen" action="#{experimentView.incrementInstruction}" process="@this" update=":createExperimentForm:instructionTable"/>
+
+    <p:dataTable    id="materialTable"
+                    var="material" value="#{experimentView.materials}">
+        <p:column>
+            <p:outputLabel for="text1" value="Material #{material.position}"/>
+            <p:inputTextarea id="text1" rows="1" cols="30"
+                             counter="display1" maxlength="100"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true"
+                             value="#{material.text}"/>
+            <h:outputText id="display1"/>
+        </p:column>
+    </p:dataTable>
+    <p:commandButton value="Material hinzufügen" action="#{experimentView.incrementMaterial}" process="@this" update=":createExperimentForm:materialTable"/>
+        <p:commandButton value="Absenden" process="@form" />
     </h:form>
 </ui:composition>
