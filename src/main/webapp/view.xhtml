@@ -42,8 +42,13 @@
                         <p>#{experimentView.lazyExperimentDataModel.selected.location}</p>
                         <h5>Gesamtbewertung:</h5>
                         <p>#{experimentView.lazyExperimentDataModel.selected.rating1}</p>
-                        <h5>Eigene Bewertung:</h5>
-                        <p:rating style="margin-bottom: 10px;"/>
+                        <c:if test="#{personView.lazyDataModel.loggedIn == true}">
+                            <h:form>
+                                <h5>Eigene Bewertung:</h5>
+                                <p:rating style="margin-bottom: 10px;" />
+                                <p:commandButton process="@form" value="bewerten"/>
+                            </h:form>
+                        </c:if>
                     </div>
 
                     <div>
@@ -111,7 +116,9 @@
                                 </table>
                             </p:column>
                         </p:dataTable>
+                        <c:if test="#{personView.lazyDataModel.loggedIn == true}">
                         <p:commandButton value="Kommentar schreiben" onclick="PF('wrText').show()" type="button"/>
+                        </c:if>
                     </div>
                 </p:column>
             </p:outputPanel>

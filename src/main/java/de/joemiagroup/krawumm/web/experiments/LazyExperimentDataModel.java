@@ -49,6 +49,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     @Setter
     private String commentText;
 
+
     //Own methods
     public List<Experiment> loadAllExperiments() {
         List<Experiment> experiments = experimentRepository.getAllExperiments(TrueFalse.T);
@@ -149,5 +150,25 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
         commentText = null;
         return;
+    }
+
+    public void createExperiment(RegisteredUser user){
+        Experiment experiment = new Experiment();
+        experiment.setExperimentName(getNewData().getTitle());
+        experiment.setDescription(getNewData().getDescription());
+        experiment.setRegisteredUser(user);
+        experiment.setDifficulty(getNewData().getDifficulty());
+        experiment.setVideo(getNewData().getVideo());
+        experiment.setAge(getNewData().getAge());
+        experiment.setDuration(getNewData().getDuration());
+        experiment.setIsReleased(TrueFalse.F);
+        if(getNewData().getLocation() == "indoor") experiment.setIndoorOutdoor(IndoorOutdoor.I);
+        else experiment.setIndoorOutdoor(IndoorOutdoor.O);
+        experimentRepository.save(experiment);
+    }
+
+    public Experiment getLastInsertedExperiment(){
+        Experiment experiment = experimentRepository.getLastInsertedExperiment();
+        return experiment;
     }
 }

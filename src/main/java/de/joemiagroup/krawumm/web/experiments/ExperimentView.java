@@ -48,7 +48,10 @@ public class ExperimentView extends BaseView<Experiment> {
 
     private List<Layout> instructions;
     private List<Layout> materials;
-    private String newText;
+    private List<Layout> pictures;
+    private List<String> instructionText;
+    private List<String> materialText;
+    private List<String> pictureText;
 
 
     private List<ExperimentDataView> data;
@@ -58,26 +61,69 @@ public class ExperimentView extends BaseView<Experiment> {
 
     private int numberInstruction = 1;
     private int numberMaterial = 1;
+    private int numberPicture = 1;
 
     private final LazyExperimentDataModel lazyExperimentDataModel;
 
     @PostConstruct
     public void init() {
         instructions = new ArrayList<>();
-        instructions.add(new Layout(1, newText));
+        instructionText = new ArrayList<>();
+        instructionText.add("");
+        instructions.add(new Layout(1, instructionText.get(0)));
         materials = new ArrayList<>();
-        materials.add(new Layout(1, newText));
+        materialText = new ArrayList<>();
+        materialText.add("");
+        materials.add(new Layout(1, materialText.get(0)));
+        pictures = new ArrayList<>();
+        pictureText = new ArrayList<>();
+        pictureText.add("");
+        pictures.add(new Layout(1, pictureText.get(0)));
     }
 
     public void incrementInstruction() {
         numberInstruction++;
-        instructions.add(new Layout(numberInstruction, newText));
+        instructionText.add("");
+        instructions.add(new Layout(numberInstruction, instructionText.get(numberInstruction -1)));
+    }
+    public void decreaseInstruction() {
+        if(numberInstruction >1){
+            instructions.remove((numberInstruction -1));
+            instructionText.remove((numberInstruction -1));
+            numberInstruction--;
+        }
     }
 
     public void incrementMaterial() {
         numberMaterial++;
-        materials.add(new Layout(numberMaterial, newText));
+        materialText.add("");
+        materials.add(new Layout(numberMaterial, materialText.get(numberMaterial-1)));
     }
+    public void decreaseMaterial() {
+        if(numberMaterial >1) {
+            materials.remove((numberMaterial - 1));
+            materialText.remove((numberMaterial -1));
+            numberMaterial--;
+        }
+    }
+
+    public void updateMaterial(SelectEvent<String> event, int position){
+        Layout layout = new Layout (position, event.getObject());
+        materials.set(position-1,layout);
+    }
+
+    public void incrementPicture() {
+        numberPicture++;
+        pictureText.add("");
+        pictures.add(new Layout(numberPicture, pictureText.get(numberPicture-1)));
+    }
+    public void decreasePicture() {
+            pictures.remove((numberPicture - 1));
+            pictureText.remove((numberPicture-1));
+            numberPicture--;
+    }
+
+
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
         this.lazyExperimentDataModel.setNewData(event.getObject());
@@ -91,5 +137,13 @@ public class ExperimentView extends BaseView<Experiment> {
     public void writeComment (long experimentId, RegisteredUser user) {
         this.lazyExperimentDataModel.writeComment(experimentId, user);
         this.data = lazyExperimentDataModel.gatherData();
+    }
+
+    public void onClickCreateExperiment(RegisteredUser user){
+        this.lazyExperimentDataModel.createExperiment(user);
+        Experiment experiment = this.lazyExperimentDataModel.getLastInsertedExperiment();
+        for(Layout instruction : this.instructions){
+
+        }
     }
 }

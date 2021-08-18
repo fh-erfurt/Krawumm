@@ -28,33 +28,43 @@
             <p:outputLabel for="title" value="Titel"/>
             <p:inputTextarea rows="1" cols="30" counter="displayTitle" maxlength="255"
                              counterTemplate="{0} Zeichen übrig." autoResize="true"
-                             id="title"   value="#{experimentView.lazyExperimentDataModel.newData.title}"/>
+                             id="title"   value="#{experimentView.lazyExperimentDataModel.newData.title}"
+                             required="true" requiredMessage="Bitte gib einen Titel ein."/>
             <h:outputText id="displayTitle"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="descrip" value="Beschreibung"/>
             <p:inputTextarea rows="5" cols="30" counter="displayDescrip" maxlength="500"
                              counterTemplate="{0} Zeichen übrig." autoResize="true"
-                             id="descrip"   value="#{experimentView.lazyExperimentDataModel.newData.description}"/>
+                             id="descrip"   value="#{experimentView.lazyExperimentDataModel.newData.description}"
+                             required="true" requiredMessage="Bitte gib eine Beschreibung ein."/>
             <h:outputText id="displayDescrip"/>
         </p:outputPanel>
         <p:outputPanel>
-            <p:outputLabel for="age" value="Alter"/>
+            <p:outputLabel for="age" value="Mindestalter"/>
             <p:inputNumber id="age" value="#{experimentView.lazyExperimentDataModel.newData.age}" minValue="1"
-                           maxValue="100" decimalPlaces="0" />
+                           maxValue="100" decimalPlaces="0" required="true" requiredMessage="Bitte gib eine Mindestalter ein."/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="difficulty" value="Schwierigkeitsgrad"/>
-            <p:rating id="difficulty" value="#{experimentView.lazyExperimentDataModel.newData.rating2}"/>
+            <p:rating id="difficulty" value="#{experimentView.lazyExperimentDataModel.newData.difficulty}"
+                      required="true" requiredMessage="Bitte gib eine Schwierigkeit ein."/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="time" value="Dauer in Minuten"/>
             <p:inputNumber id="time" value="#{experimentView.lazyExperimentDataModel.newData.duration}" minValue="1"
-                           maxValue="480" decimalPlaces="2" />
+                           maxValue="480" decimalPlaces="2" required="true" requiredMessage="Bitte gib eine Dauer ein."/>
+        </p:outputPanel>
+        <p:outputPanel>
+            <p:outputLabel for="video" value="Videolink"/>
+            <p:inputTextarea rows="1" cols="30" counter="displayVideo" maxlength="255"
+                             counterTemplate="{0} Zeichen übrig." autoResize="true"
+                             id="video"   value="#{experimentView.lazyExperimentDataModel.newData.video}"/>
+            <h:outputText id="displayVideo"/>
         </p:outputPanel>
         <p:outputPanel>
             <p:outputLabel for="indoorOutdoor" value="Drinnen/Draußem"/>
-            <p:selectOneRadio id="indoorOutdoor" value="#{experimentView.lazyExperimentDataModel.newData.location}">
+            <p:selectOneRadio id="indoorOutdoor" value="#{experimentView.lazyExperimentDataModel.newData.location}" required="true" requiredMessage="Bitte gib eine Location ein.">
                 <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
                 <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
             </p:selectOneRadio>
@@ -66,24 +76,44 @@
                 <p:inputTextarea id="text" rows="5" cols="30"
                                  counter="display" maxlength="1000"
                                  counterTemplate="{0} Zeichen übrig." autoResize="true"
-                                 value="#{entry.text}"/>
+                                 value="#{entry.text}" required="true" requiredMessage="Bitte gib ein Beschreibung für Schritt #{entry.position} ein."/>
                 <h:outputText id="display"/>
             </p:column>
         </p:dataTable>
         <p:commandButton value="Schritt hinzufügen" action="#{experimentView.incrementInstruction}" process="@this" update=":createExperimentForm:instructionTable"/>
+        <p:commandButton value="letzten Schritt entfernen" action="#{experimentView.decreaseInstruction}" process="@this" update=":createExperimentForm:instructionTable"/>
 
-    <p:dataTable    id="materialTable"
-                    var="material" value="#{experimentView.materials}">
-        <p:column>
-            <p:outputLabel for="text1" value="Material #{material.position}"/>
-            <p:inputTextarea id="text1" rows="1" cols="30"
-                             counter="display1" maxlength="100"
-                             counterTemplate="{0} Zeichen übrig." autoResize="true"
-                             value="#{material.text}"/>
-            <h:outputText id="display1"/>
-        </p:column>
-    </p:dataTable>
-    <p:commandButton value="Material hinzufügen" action="#{experimentView.incrementMaterial}" process="@this" update=":createExperimentForm:materialTable"/>
-        <p:commandButton value="Absenden" process="@form" />
+        <p:dataTable    id="materialTable"
+                        var="material" value="#{experimentView.materials}">
+            <p:column>
+                <p:outputLabel for="text1" value="Material #{material.position}"/>
+                <p:inputTextarea id="text1" rows="1" cols="30"
+                                 counter="display1" maxlength="100"
+                                 counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                 value="#{material.text}" required="true"
+                                 requiredMessage="Bitte gib einen Namen für Material #{entry.position} ein.">
+                    <p:ajax event="itemSelect" listener="#{experimentView.updateMaterial(material.position)}"/>
+                </p:inputTextarea>
+                <h:outputText id="display1"/>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton value="Material hinzufügen" action="#{experimentView.incrementMaterial}" process="@this" update=":createExperimentForm:materialTable"/>
+        <p:commandButton value="letztes Material entfernen" action="#{experimentView.decreaseMaterial}" process="@this" update=":createExperimentForm:materialTable"/>
+
+        <p:dataTable    id="pictureTable"
+                        var="picture" value="#{experimentView.pictures}">
+            <p:column>
+                <p:outputLabel for="text2" value="Bild #{picture.position}"/>
+                <p:inputTextarea id="text2" rows="1" cols="30"
+                                 counter="display2" maxlength="255"
+                                 counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                 value="#{experimentView.pictureText}" required="true" requiredMessage="Bitte gib einen Link für Bild #{entry.position} ein."/>
+                <h:outputText id="display2"/>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton value="Bild hinzufügen" action="#{experimentView.incrementPicture}" process="@this" update=":createExperimentForm:pictureTable"/>
+        <p:commandButton value="letztes Bild entfernen" action="#{experimentView.decreasePicture}" process="@this" update=":createExperimentForm:pictureTable"/>
+
+        <p:commandButton value="Absenden" process="@form" action="#{experimentView.onClickCreateExperiment(personView.lazyDataModel.loggedInUser)}"/>
     </h:form>
 </ui:composition>

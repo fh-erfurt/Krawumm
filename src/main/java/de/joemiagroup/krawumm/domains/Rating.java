@@ -12,8 +12,8 @@ import javax.persistence.*;
 
 public class Rating extends BaseEntity{
     private int ratingValue;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Experiment experiment;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private RegisteredUser registeredUser;
 }

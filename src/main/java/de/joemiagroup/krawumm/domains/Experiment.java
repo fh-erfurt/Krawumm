@@ -16,7 +16,7 @@ public class Experiment extends BaseEntity{
     private String experimentName;
     private String description;
     private IndoorOutdoor indoorOutdoor;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private RegisteredUser registeredUser;
     private int difficulty;
     private String video;

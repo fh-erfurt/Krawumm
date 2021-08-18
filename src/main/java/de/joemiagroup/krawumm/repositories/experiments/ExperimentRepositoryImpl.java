@@ -110,4 +110,14 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
 
         return results.get(0);
     }
+
+    @Override
+    public Experiment getLastInsertedExperiment() {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT e FROM Experiment e", Experiment.class);
+        List<Experiment> results = query.getResultList();
+
+        int lastPosition = results.size() -1;
+        return results.get(lastPosition);
+    }
 }
