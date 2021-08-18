@@ -1,0 +1,16 @@
+@import "variables.css";
+
+h5 {
+    font-size: 1rem;
+    color: var(--blue);
+    padding: 4px;
+    margin-top: 6px;
+}
+
+#experimentDetail p {
+    font-width: 600;
+}
+
+body .ui-datatable thead th {
+    color: var(--red);
+}

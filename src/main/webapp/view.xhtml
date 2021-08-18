@@ -29,32 +29,29 @@
                 <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <div>
                         <h2>#{experimentView.lazyExperimentDataModel.selected.title}</h2>
-                        <br/>
-                        #{experimentView.lazyExperimentDataModel.selected.creator}
+                        <p>von #{experimentView.lazyExperimentDataModel.selected.creator}</p>
                     </div>
                     <div>
-                        ab #{experimentView.lazyExperimentDataModel.selected.age} Jahren
-                        <br/>
-                        Schwierigkeitsgrad:<br/>
-                        #{experimentView.lazyExperimentDataModel.selected.difficulty}
-                        <br/>
-                        Dauer:<br/>
-                        #{experimentView.lazyExperimentDataModel.selected.duration} Minuten
-                        <br/>
-                        für #{experimentView.lazyExperimentDataModel.selected.location}
-                        <br/>
-                        Gesamtbewertung:<br/>
-                        #{experimentView.lazyExperimentDataModel.selected.rating1}
-                        <br/>
-                        Eigene Bewertung:
-                        <p:rating/>
+                        <h5>Mindestalter:</h5>
+                        <p>#{experimentView.lazyExperimentDataModel.selected.age} Jahre</p>
+                        <h5>Schwierigkeitsgrad:</h5>
+                        <p>#{experimentView.lazyExperimentDataModel.selected.difficulty}</p>
+                        <h5>Dauer:</h5>
+                        <p>etwa #{experimentView.lazyExperimentDataModel.selected.duration} Minuten</p>
+                        <h5>Durchführung:</h5>
+                        <p>#{experimentView.lazyExperimentDataModel.selected.location}</p>
+                        <h5>Gesamtbewertung:</h5>
+                        <p>#{experimentView.lazyExperimentDataModel.selected.rating1}</p>
+                        <h5>Eigene Bewertung:</h5>
+                        <p:rating style="margin-bottom: 10px;"/>
                     </div>
+
                     <div>
                         <p:dataTable
                                 id="materialTable"
                                 var="material" value="#{experimentView.lazyExperimentDataModel.selected.materials}"
                         >
-                            <p:column>
+                            <p:column headerText="Benötigte Materialien" style="text-align: center;">
                                 <h:outputText value="#{material}"/>
                             </p:column>
                         </p:dataTable>
@@ -65,7 +62,7 @@
                                 var="pic" value="#{experimentView.lazyExperimentDataModel.selected.picture}"
                         >
                             <p:column>
-                                <p:graphicImage value="#{pic}"/>
+                                <p:graphicImage value="#{pic}" style="height: 300px;"/>
                             </p:column>
                         </p:dataTable>
                     </div>
@@ -74,12 +71,16 @@
                                 id="instructionTable"
                                 var="text" value="#{experimentView.lazyExperimentDataModel.selected.instructions}"
                         >
-                            <p:column><h:outputText value="#{text}"/></p:column>
+                            <p:column headerText="Anleitung Schritt für Schritt" style="text-align: center;">
+                                <h:outputText value="#{text}"/>
+                            </p:column>
                         </p:dataTable>
                     </div>
                     <div>
                         <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected.video}">
-                            <iframe src="#{experimentView.lazyExperimentDataModel.selected.video}"/>
+                            <iframe width="949px" height="534px" src="#{experimentView.lazyExperimentDataModel.selected.video}" frameborder="0">
+                                Ihr Browser unterstützt diese Art der Videowiedergabe nicht.
+                            </iframe>
                         </c:if>
                     </div>
                     <div>
@@ -90,8 +91,8 @@
                             <p:column>
                                 <table>
                                     <tr>
-                                        <td>#{comment.userName}</td>
-                                        <td>#{comment.createdAt}</td>
+                                        <td style="font-weight: 600; color: #2e3192">#{comment.userName}</td>
+                                        <td><p>#{comment.createdAt}</p></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
