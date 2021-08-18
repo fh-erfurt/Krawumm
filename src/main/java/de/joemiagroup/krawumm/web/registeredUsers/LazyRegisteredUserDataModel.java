@@ -74,15 +74,17 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     }
 
     public String changePassword(){
-        RegisteredUser user = null;
+        RegisteredUser user;
         user = registeredUserRepository.findUserDataByName(this.getLoggedInUser().getUserName());
-        if (Objects.nonNull(this.getOldPassword()) && user != null) {
+        if (this.getOldPassword() != null) {
             if (BCrypt.checkpw(this.getOldPassword(), user.getPassword())){
-
+                this.getLoggedInUser().setPassword(hashPassword(this.getNewPassword()));
+                this.registeredUserRepository.save(this.getLoggedInUser());
+                return "Passwort wurde geändert!";
             }
             else return "Passwort falsch";
         }
-        return "Passwort muss angegeben werden!";
+        else return "Passwort muss angegeben werden3!";
     }
 
     public String checkLogin() {
@@ -121,7 +123,6 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     }
 
     public String save() {
-        System.out.println(this.selected);
         if (Objects.isNull(this.getSelected())) {
             return "Bitte gib deine Daten ein";
         }
@@ -132,9 +133,9 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
                 return "Benutzername schon vergeben";
             }
         }
-        if (Objects.nonNull(this.getSelected().getUserName())) {
-            RegisteredUser loadedUser = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
-            if(loadedUser.getEmail() == this.getSelected().getEmail()){
+        if (Objects.nonNull(this.getSelected().getEmail())) {
+            boolean loadedUser = registeredUserRepository.findUserByEmail(this.getSelected().getEmail());
+            if(loadedUser){
                 return "Zu dieser Email-Adresse existiert schon ein Account!";
             }
         }

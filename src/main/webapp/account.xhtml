@@ -31,7 +31,7 @@
         <p:outputLabel value="E-Mail"/>
         <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.email}"/>
 
-        <p:commandButton value="Ausloggen" process="@this" action="#{personView.onClickLogout}"/>
+        <p:commandButton value="Ausloggen" process="@this" action="#{personView.onClickLogout}" update="main"/>
         <p:commandButton value="Passwort ändern" process="@this" onclick="PF('pwChange').show()"/>
         <p:commandButton value="Konto löschen" onclick="PF('deleteAcc').show()"/>
 
@@ -48,32 +48,34 @@
     </div>
 
     <p:dialog header="Passwort ändern" widgetVar="pwChange" minHeight="100" width="350" showEffect="fade">
-        Bitte gib dein altes Passwort ein:
-        <p:password
-                id="oldPassword"
-                value="#{personView.lazyDataModel.oldPassword}"
-                toggleMask="true"
-                redisplay="true"
-                required="true"
-                requiredMessage="Passwort muss angegeben werden."
-        />
-        Bitte gib dein neues Passwort ein:
-        <p:password
-                id="newPassword"
-                value="#{personView.lazyDataModel.newPassword}"
-                toggleMask="true"
-                redisplay="true"
-                required="true"
-                requiredMessage="Passwort muss angegeben werden."
-        />
-        <p:commandButton process="@this" value="Abbrechen" update="main"/>
-        <p:commandButton value="Passwort ändern" process="@this" update="main" action="#{personView.onClickChangePassword}"/>
+        <h:form>
+            <p>Bitte gib dein altes Passwort ein:</p>
+            <p:password
+                    id="oldPassword"
+                    value="#{personView.lazyDataModel.oldPassword}"
+                    toggleMask="true"
+                    redisplay="true"
+                    required="true"
+                    requiredMessage="Passwort muss angegeben werden1."
+            />
+            <p>Bitte gib dein neues Passwort </p>
+            <p:password
+                    id="newPassword"
+                    value="#{personView.lazyDataModel.newPassword}"
+                    toggleMask="true"
+                    redisplay="true"
+                    required="true"
+                    requiredMessage="Passwort muss angegeben werden2."
+            />
+            <p:commandButton process="@this" value="Abbrechen" update="main"/>
+            <p:commandButton value="Passwort ändern" process="@form" update="main" action="#{personView.onClickChangePassword}"/>
+        </h:form>
     </p:dialog>
 
     <p:dialog header="Account löschen" widgetVar="deleteAcc" minHeight="100" width="350" showEffect="fade">
         <p>Möchten sie ihren Account wirklich löschen?</p>
         <p:commandButton process="@this" value="Abbrechen" update="main"/>
-        <p:commandButton process="@this" value="Account löschen" action="" update="main"/>
+        <p:commandButton process="@this" value="Account löschen" action="#{personView.onClickDeleteEntry}" update="main"/>
     </p:dialog>
 
     <p:confirmDialog global="true" width="350" responsive="true" showEffect="fade" hideEffect="fade">

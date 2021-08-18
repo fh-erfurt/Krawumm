@@ -39,13 +39,15 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     private LazyRegisteredUserDataModel lazyDataModel;
 
     @Transactional
-    public void onClickDeleteEntry(RegisteredUser entry) {
-        if (Objects.isNull(entry)) {
+    public void onClickDeleteEntry() {
+        if (Objects.isNull(this.lazyDataModel.getLoggedInUser())) {
             return;
         }
 
-        this.lazyDataModel.delete(entry);
+        this.lazyDataModel.delete(this.lazyDataModel.getLoggedInUser());
         this.renderMessage(FacesMessage.SEVERITY_ERROR, "Tschüss.");
+        this.lazyDataModel.setLoggedInUser(new RegisteredUser());
+        this.lazyDataModel.setLoggedIn(false);
     }
 
     public static boolean emailValidate(String email) {
@@ -56,7 +58,8 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     @Transactional
     public void onClickChangePassword() {
         this.editMode.set(true);
-        this.lazyDataModel.setLoggedIn(false);
+        String changeMessage = this.lazyDataModel.changePassword();
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "" + changeMessage);
     }
 
     @Transactional
@@ -65,6 +68,7 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         String loginMessage = this.lazyDataModel.checkLogin();
         this.renderMessage(FacesMessage.SEVERITY_INFO, "" + loginMessage);
         if(loginMessage == "Login erfolgreich"){
+            this.lazyDataModel.setLoggedInUser(new RegisteredUser());
             this.lazyDataModel.handleLoginData();
             this.lazyDataModel.setLoggedIn(true);
             this.lazyDataModel.setSelected(new RegisteredUser());
@@ -89,7 +93,9 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
 
         String message = this.lazyDataModel.save();
         this.renderMessage(FacesMessage.SEVERITY_INFO, "" + message);
-        this.lazyDataModel.setSelected(new RegisteredUser());
-        this.lazyDataModel.setRedirectSignup(true);
+        if (message == "Willkommen bei Krawumm!"){
+            this.lazyDataModel.setSelected(new RegisteredUser());
+            this.lazyDataModel.setRedirectSignup(true);
+        }
     }
 }

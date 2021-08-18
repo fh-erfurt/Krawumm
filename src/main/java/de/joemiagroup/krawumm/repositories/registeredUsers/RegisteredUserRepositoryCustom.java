@@ -16,4 +16,5 @@ public interface RegisteredUserRepositoryCustom {
 
     boolean findUserByName(String userName);
     RegisteredUser findUserDataByName(String userName);
+    boolean findUserByEmail(String email);
 }

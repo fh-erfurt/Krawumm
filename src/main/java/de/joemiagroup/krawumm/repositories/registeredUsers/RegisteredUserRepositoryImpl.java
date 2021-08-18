@@ -67,6 +67,18 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return null;
     }
 
+    public boolean findUserByEmail(String email) {
+        TypedQuery<RegisteredUser> query =
+                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
+        List<RegisteredUser> results = query.getResultList();
+
+        for(RegisteredUser i : results){
+            if(i.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
 
      public boolean findUserByName(String username) {
          TypedQuery<RegisteredUser> query =
