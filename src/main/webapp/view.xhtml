@@ -51,6 +51,16 @@
                     </div>
                     <div>
                         <p:dataTable
+                                id="materialTable"
+                                var="material" value="#{experimentView.lazyExperimentDataModel.selected.materials}"
+                        >
+                            <p:column>
+                                <h:outputText value="#{material}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <div>
+                        <p:dataTable
                                 id="picturesTable"
                                 var="pic" value="#{experimentView.lazyExperimentDataModel.selected.picture}"
                         >
