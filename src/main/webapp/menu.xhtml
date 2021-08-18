@@ -26,21 +26,33 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
     <div class="ui-g-12">
-        <h:form id="navigationBarForm">
-            <p:menubar>
-                <p:menuitem actionListener="#{indexView.load('HOME')}"
-                            update=":main"><p:graphicImage value="images/Logo Krawumm mit Fenster.png" height="50px"/></p:menuitem>
-                <p:menuitem><ui:include src="artifacts/search.xhtml"/></p:menuitem>
-                <p:menuitem value="Login" icon="pi pi-user"
-                            actionListener="#{indexView.load('LOGIN')}"
-                            update=":main"/>
-                <p:menuitem value="Konto" icon="pi pi-user"
-                            actionListener="#{indexView.load('ACCOUNT')}"
-                            update=":main"/>
-            </p:menubar>
-        </h:form>
+        <c:if test="#{personView.lazyDataModel.loggedIn == false}">
+            <h:form id="navigationBarForm">
+                <p:menubar>
+                    <p:menuitem actionListener="#{indexView.load('HOME')}"
+                                update=":main"><p:graphicImage value="images/Logo Krawumm mit Fenster.png" height="50px"/></p:menuitem>
+                    <p:menuitem><ui:include src="artifacts/search.xhtml"/></p:menuitem>
+                    <p:menuitem value="Login" icon="pi pi-user"
+                                actionListener="#{indexView.load('LOGIN')}"
+                                update=":main"/>
+                </p:menubar>
+            </h:form>
+        </c:if>
+        <c:if test="#{personView.lazyDataModel.loggedIn == true}">
+            <h:form id="navigationBarForm2">
+                <p:menubar>
+                    <p:menuitem actionListener="#{indexView.load('HOME')}"
+                                update=":main"><p:graphicImage value="images/Logo Krawumm mit Fenster.png" height="50px"/></p:menuitem>
+                    <p:menuitem><ui:include src="artifacts/search.xhtml"/></p:menuitem>
+                    <p:menuitem value="Konto" icon="pi pi-user"
+                                actionListener="#{indexView.load('ACCOUNT')}"
+                                update=":main"/>
+                </p:menubar>
+            </h:form>
+        </c:if>
     </div>
 
 </ui:composition>

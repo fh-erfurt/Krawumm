@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepositoryCustom;
+import jdk.jfr.Registered;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,22 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     @Getter
     @Setter
     private RegisteredUser selected;
+    @Getter
+    @Setter
+    private RegisteredUser loggedInUser;
+    @Getter
+    @Setter
+    private boolean loggedIn = false;
+    @Getter
+    @Setter
+    private boolean redirectSignup = false;
+    @Getter
+    @Setter
+    private String oldPassword;
+    @Getter
+    @Setter
+    private String newPassword;
+
 
     @Override
     public List<RegisteredUser> load(int page, int size, Map<String, SortMeta> sorts, Map<String, FilterMeta> filters) {
@@ -56,6 +73,18 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return String.valueOf(object.getId());
     }
 
+    public String changePassword(){
+        RegisteredUser user = null;
+        user = registeredUserRepository.findUserDataByName(this.getLoggedInUser().getUserName());
+        if (Objects.nonNull(this.getOldPassword()) && user != null) {
+            if (BCrypt.checkpw(this.getOldPassword(), user.getPassword())){
+
+            }
+            else return "Passwort falsch";
+        }
+        return "Passwort muss angegeben werden!";
+    }
+
     public String checkLogin() {
         if (Objects.isNull(this.getSelected())) {
             return "Benutzername oder Passwort falsch";
@@ -71,23 +100,42 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
             else return "Benutzername oder Passwort falsch";
         }
         return "Benutzername oder Passwort falsch";
-/*      this.registeredUserRepository.save(this.getSelected());*/
+    }
+
+    public void handleLoginData() {
+        RegisteredUser user = null;
+        if (Objects.nonNull(this.getSelected().getUserName())) {
+            boolean userExists = registeredUserRepository.findUserByName(this.getSelected().getUserName());
+            if (userExists) user = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
+            this.getLoggedInUser().setId(user.getId());
+            this.getLoggedInUser().setUserName(user.getUserName());
+            this.getLoggedInUser().setPassword(user.getPassword());
+            this.getLoggedInUser().setEmail(user.getEmail());
+            this.getLoggedInUser().setIsAdmin(user.getIsAdmin());
+            this.getLoggedInUser().setIsCreator(user.getIsCreator());
+        }
     }
 
     private String hashPassword(String plainTextPassword){
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 
-    public void save() {
+    public String save() {
         System.out.println(this.selected);
         if (Objects.isNull(this.getSelected())) {
-            return;
+            return "Bitte gib deine Daten ein";
         }
 
         if (Objects.nonNull(this.getSelected().getUserName())) {
             boolean loaded = registeredUserRepository.findUserByName(this.getSelected().getUserName());
             if(loaded){
-                return;
+                return "Benutzername schon vergeben";
+            }
+        }
+        if (Objects.nonNull(this.getSelected().getUserName())) {
+            RegisteredUser loadedUser = registeredUserRepository.findUserDataByName(this.getSelected().getUserName());
+            if(loadedUser.getEmail() == this.getSelected().getEmail()){
+                return "Zu dieser Email-Adresse existiert schon ein Account!";
             }
         }
         if (Objects.nonNull(this.getSelected().getPassword())) {
@@ -96,6 +144,7 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         this.getSelected().setIsAdmin(TrueFalse.F);
         this.getSelected().setIsCreator(TrueFalse.F);
         this.registeredUserRepository.save(this.getSelected());
+        return "Willkommen bei Krawumm!";
     }
 
 

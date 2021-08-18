@@ -54,11 +54,27 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     }
 
     @Transactional
+    public void onClickChangePassword() {
+        this.editMode.set(true);
+        this.lazyDataModel.setLoggedIn(false);
+    }
+
+    @Transactional
     public void onClickLogin() {
         this.editMode.set(false);
         String loginMessage = this.lazyDataModel.checkLogin();
         this.renderMessage(FacesMessage.SEVERITY_INFO, "" + loginMessage);
-        this.lazyDataModel.setSelected(new RegisteredUser());
+        if(loginMessage == "Login erfolgreich"){
+            this.lazyDataModel.handleLoginData();
+            this.lazyDataModel.setLoggedIn(true);
+            this.lazyDataModel.setSelected(new RegisteredUser());
+        }
+    }
+
+    @Transactional
+    public void onClickLogout() {
+        this.lazyDataModel.setLoggedIn(false);
+        this.lazyDataModel.setLoggedInUser(new RegisteredUser());
     }
 
     @Transactional
@@ -66,13 +82,14 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         this.editMode.set(false);
 
         if(!emailValidate(this.lazyDataModel.getSelected().getEmail())) {
-            this.renderMessage(FacesMessage.SEVERITY_ERROR, "Email hat falsches Format");
+            this.renderMessage(FacesMessage.SEVERITY_INFO, "Email hat falsches Format");
             this.lazyDataModel.setSelected(new RegisteredUser());
             return;
         }
 
-        this.lazyDataModel.save();
-        this.renderMessage(FacesMessage.SEVERITY_INFO, "Willkommen bei Krawumm!");
+        String message = this.lazyDataModel.save();
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "" + message);
         this.lazyDataModel.setSelected(new RegisteredUser());
+        this.lazyDataModel.setRedirectSignup(true);
     }
 }

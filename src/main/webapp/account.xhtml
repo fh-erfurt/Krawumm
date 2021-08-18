@@ -27,14 +27,13 @@
 
         <h3>Kontoinformationen</h3>
         <p:outputLabel value="Name"/>
-        <p:outputLabel value="Michel"/>
+        <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.userName}"/>
         <p:outputLabel value="E-Mail"/>
-        <p:outputLabel value="michel@krawumm.de"/>
+        <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.email}"/>
 
-        <p:commandButton value="Passwort ändern" type="button" onclick="PF('pwChange').show()"/>
-        <p:commandButton value="Konto löschen" action="#{confirmAccount.delete()}" update="message" type="button">
-            <p:confirm header="Konto löschen?" message="Möchtest du dein Konto löschen?"/>
-        </p:commandButton>
+        <p:commandButton value="Ausloggen" process="@this" action="#{personView.onClickLogout}"/>
+        <p:commandButton value="Passwort ändern" process="@this" onclick="PF('pwChange').show()"/>
+        <p:commandButton value="Konto löschen" onclick="PF('deleteAcc').show()"/>
 
         <div>
             <p:tabView>
@@ -52,6 +51,7 @@
         Bitte gib dein altes Passwort ein:
         <p:password
                 id="oldPassword"
+                value="#{personView.lazyDataModel.oldPassword}"
                 toggleMask="true"
                 redisplay="true"
                 required="true"
@@ -60,12 +60,20 @@
         Bitte gib dein neues Passwort ein:
         <p:password
                 id="newPassword"
+                value="#{personView.lazyDataModel.newPassword}"
                 toggleMask="true"
                 redisplay="true"
                 required="true"
                 requiredMessage="Passwort muss angegeben werden."
         />
-        <p:button value="Ändern"/>
+        <p:commandButton process="@this" value="Abbrechen" update="main"/>
+        <p:commandButton value="Passwort ändern" process="@this" update="main" action="#{personView.onClickChangePassword}"/>
+    </p:dialog>
+
+    <p:dialog header="Account löschen" widgetVar="deleteAcc" minHeight="100" width="350" showEffect="fade">
+        <p>Möchten sie ihren Account wirklich löschen?</p>
+        <p:commandButton process="@this" value="Abbrechen" update="main"/>
+        <p:commandButton process="@this" value="Account löschen" action="" update="main"/>
     </p:dialog>
 
     <p:confirmDialog global="true" width="350" responsive="true" showEffect="fade" hideEffect="fade">

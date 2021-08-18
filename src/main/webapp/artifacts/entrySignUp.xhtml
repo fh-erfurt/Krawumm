@@ -21,64 +21,68 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
-
-    <h:form>
-        <div class="username">
-            <p:outputLabel value="Nutzername"/>
-            <p:inputText
-                    id="inputUserName"
-                    value="#{personView.lazyDataModel.selected.userName}"
-                    required="true"
-                    requiredMessage="Bitte gib einen Nutzernamen an."
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{personView.lazyDataModel.redirectSignup == false}">
+        <h:form>
+            <div class="username">
+                <p:outputLabel value="Nutzername"/>
+                <p:inputText
+                        id="inputUserName"
+                        value="#{personView.lazyDataModel.selected.userName}"
+                        required="true"
+                        requiredMessage="Bitte gib einen Nutzernamen an."
+                />
+            </div>
+            <div class="mail">
+                <p:outputLabel value="E-Mail"/>
+                <p:inputText
+                        id="inputEmail"
+                        value="#{personView.lazyDataModel.selected.email}"
+                        required="true"
+                        requiredMessage="Bitte gib ein E-Mail an."
+                />
+            </div>
+            <div class="password">
+                <p:outputLabel id="labelPassword1" for="inputPassword1" value="Passwort"/>
+                <p:password
+                        value="#{personView.lazyDataModel.selected.password}"
+                        id="inputPassword1"
+                        required="true"
+                        requiredMessage="Du musst ein Passwort angeben."
+                        label="passwort1"
+                        match="inputPassword2"
+                        feedback="true"
+                        toggleMask="true"
+                        redisplay="true"
+                        promptLabel="Bitte gib dein Passwort ein."
+                        weakLabel="Passwort ist schwach."
+                        goodLabel="Passwort ist okay."
+                        strongLabel="Passwort ist stark."
+                />
+            </div>
+            <div class="password">
+                <p:outputLabel value="Passwort wiederholen"/>
+                <p:password
+                        id="inputPassword2"
+                        required="true"
+                        requiredMessage="Bitte Passwort bestätigen."
+                        label="password2"
+                        toggleMask="true"
+                        promptLabel="Bitte Passwort bestätigen."
+                />
+            </div>
+            <p:commandButton
+                    style="margin-top: 10px;"
+                    type="button"
+                    value="Konto erstellen"
+                    action="#{personView.onClickSaveEntry}"
+                    process="@form"
+                    update=":main"
             />
-        </div>
-        <div class="mail">
-            <p:outputLabel value="E-Mail"/>
-            <p:inputText
-                    id="inputEmail"
-                    value="#{personView.lazyDataModel.selected.email}"
-                    required="true"
-                    requiredMessage="Bitte gib ein E-Mail an."
-            />
-        </div>
-        <div class="password">
-            <p:outputLabel id="labelPassword1" for="inputPassword1" value="Passwort"/>
-            <p:password
-                    value="#{personView.lazyDataModel.selected.password}"
-                    id="inputPassword1"
-                    required="true"
-                    requiredMessage="Du musst ein Passwort angeben."
-                    label="passwort1"
-                    match="inputPassword2"
-                    feedback="true"
-                    toggleMask="true"
-                    redisplay="true"
-                    promptLabel="Bitte gib dein Passwort ein."
-                    weakLabel="Passwort ist schwach."
-                    goodLabel="Passwort ist okay."
-                    strongLabel="Passwort ist stark."
-            />
-        </div>
-        <div class="password">
-            <p:outputLabel value="Passwort wiederholen"/>
-            <p:password
-                    id="inputPassword2"
-                    required="true"
-                    requiredMessage="Bitte Passwort bestätigen."
-                    label="password2"
-                    toggleMask="true"
-                    promptLabel="Bitte Passwort bestätigen."
-            />
-        </div>
-        <p:commandButton
-                style="margin-top: 10px;"
-                type="button"
-                value="Konto erstellen"
-                action="#{personView.onClickSaveEntry}"
-                process="@form"
-                actionListener="#{indexView.load('LOGIN')}"
-                update=":main"
-        />
-    </h:form>
+        </h:form>
+    </c:if>
+    <c:if test="#{personView.lazyDataModel.redirectSignup == true}">
+        <ui:include src="../login.xhtml"/>
+    </c:if>
 </ui:composition>
