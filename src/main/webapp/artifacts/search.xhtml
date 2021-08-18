@@ -22,13 +22,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:form id="searchForm">
-        <p:inputText id="inputSearch" placeholder="Suche" required="false"/>
-        <p:commandButton
-                id="buttonSearch"
-                icon="pi pi-search"
-                process="@this"
-                ajax="true"
-        />
+        <p:inputText id="inputSearch" placeholder="Suche" value="#{experimentView.search}" required="false"/>
     </h:form>
+    <p:commandButton
+        id="buttonSearch"
+        icon="pi pi-search"
+        action="#{experimentView.searchForStringInName}"
+        process="@this"
+        update="main"
+    />
 
 </ui:composition>

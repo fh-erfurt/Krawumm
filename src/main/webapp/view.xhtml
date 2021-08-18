@@ -24,11 +24,11 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:form id="experimentDetailForm">
-        <p:sidebar widgetVar="experimentDetailDialog" fullScreen="true">
+        <p:sidebar widgetVar="experimentDetailDialog" fullScreen="true" baseZIndex="10000" blockScroll="true" style="overflow-y: auto">
             <p:outputPanel id="experimentDetail">
                 <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <div>
-                        #{experimentView.lazyExperimentDataModel.selected.title}
+                        <h2>#{experimentView.lazyExperimentDataModel.selected.title}</h2>
                         <br/>
                         #{experimentView.lazyExperimentDataModel.selected.creator}
                     </div>
@@ -48,6 +48,16 @@
                         <br/>
                         Eigene Bewertung:
                         <p:rating/>
+                    </div>
+                    <div>
+                        <p:dataTable
+                                id="picturesTable"
+                                var="pic" value="#{experimentView.lazyExperimentDataModel.selected.picture}"
+                        >
+                            <p:column>
+                                <p:graphicImage value="#{pic}"/>
+                            </p:column>
+                        </p:dataTable>
                     </div>
                     <div>
                         <p:dataTable

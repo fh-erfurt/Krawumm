@@ -8,12 +8,9 @@ import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.apache.http.protocol.RequestContent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
-import org.springframework.web.servlet.support.RequestContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,26 +61,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
         List<Experiment> experimentList = this.loadAllExperiments();
 
-        for (Experiment e : experimentList) {
-            String loc = this.translateIndoorOutdoor(e.getIndoorOutdoor());
-            float rating = ratingRepository.getRatingForExperiment(e);
-            List<String> picturesNameList = picturesRepository.getPicturesForExperiment(e);
-            List<String> instructions = instructionRepository.getInstructionsForExperiment(e);;
-            results.add(new ExperimentDataView(e.getId(),
-                                               e.getExperimentName(),
-                                               e.getRegisteredUser().getUserName(),
-                                               e.getDescription(),
-                                               e.getAge(),
-                                               e.getDifficulty(),
-                                               e.getDuration(),
-                                               loc,
-                                               rating,
-                                               Math.round(rating),
-                                               picturesNameList,
-                                               e.getVideo(),
-                                               instructions,
-                                               this.gatherCommentDataForExperiment(e)));
-        }
+        results = this.putDataForExperimentsTogether(experimentList);
 
         return results;
     }
@@ -101,5 +79,42 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         }
 
         return commentData;
+    }
+
+    public List<ExperimentDataView> usingSearch(String search) {
+        List<ExperimentDataView> results = new ArrayList<>();
+
+        List<Experiment> experimentList = experimentRepository.lookForStringInExperimentName(search);
+
+        results = this.putDataForExperimentsTogether(experimentList);
+
+        return results;
+    }
+
+    private List<ExperimentDataView> putDataForExperimentsTogether(List<Experiment> experimentList) {
+        List<ExperimentDataView> dataList = new ArrayList<>();
+
+        for (Experiment e : experimentList) {
+            String loc = this.translateIndoorOutdoor(e.getIndoorOutdoor());
+            float rating = ratingRepository.getRatingForExperiment(e);
+            List<String> picturesNameList = picturesRepository.getPicturesForExperiment(e);
+            List<String> instructions = instructionRepository.getInstructionsForExperiment(e);;
+            dataList.add(new ExperimentDataView(e.getId(),
+                    e.getExperimentName(),
+                    e.getRegisteredUser().getUserName(),
+                    e.getDescription(),
+                    e.getAge(),
+                    e.getDifficulty(),
+                    e.getDuration(),
+                    loc,
+                    rating,
+                    Math.round(rating),
+                    picturesNameList,
+                    e.getVideo(),
+                    instructions,
+                    this.gatherCommentDataForExperiment(e)));
+        }
+
+        return dataList;
     }
 }

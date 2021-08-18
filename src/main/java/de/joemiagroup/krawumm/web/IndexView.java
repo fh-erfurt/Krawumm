@@ -4,6 +4,8 @@ import de.joemiagroup.krawumm.core.UserSessionContext;
 import de.joemiagroup.krawumm.domains.BaseEntity;
 import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
 import de.joemiagroup.krawumm.web.experiments.ExperimentView;
+import lombok.Getter;
+import lombok.Setter;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +23,8 @@ public class IndexView extends BaseView{
     private static final String CACHE_KEY_CURRENT_CONTENT = "currentContent";
 
     private ContentTypes currentContent;
+    @Getter
+    private boolean showFilter = false;
 
     @Autowired
     public IndexView(final UserSessionContext context) {
@@ -45,5 +49,13 @@ public class IndexView extends BaseView{
 
     public String getCurrentContent() {
         return this.currentContent.name();
+    }
+
+    public void makeFiltersAppear() {
+        this.showFilter = true;
+    }
+
+    public void makeFiltersDisappear() {
+        this.showFilter = false;
     }
 }
