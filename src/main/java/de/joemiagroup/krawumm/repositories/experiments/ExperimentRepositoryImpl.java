@@ -3,6 +3,7 @@ package de.joemiagroup.krawumm.repositories.experiments;
 import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
 import de.joemiagroup.krawumm.web.experiments.ExperimentView;
+import de.joemiagroup.krawumm.web.experiments.FilterView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
@@ -119,5 +120,11 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
 
         int lastPosition = results.size() -1;
         return results.get(lastPosition);
+    }
+
+    public List<Experiment> useFilterOnAllExperiments(FilterView filters) {
+        List<Experiment> experimentList = new ArrayList<>();
+
+        return experimentList;
     }
 }

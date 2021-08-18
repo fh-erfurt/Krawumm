@@ -123,7 +123,13 @@ public class ExperimentView extends BaseView<Experiment> {
             numberPicture--;
     }
 
+    public void useFilters() {
+        this.data = this.lazyExperimentDataModel.useFiltersOnExperimentList();
+    }
 
+    public void resetEverything() {
+        this.data = this.lazyExperimentDataModel.gatherData();
+    }
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
         this.lazyExperimentDataModel.setNewData(event.getObject());

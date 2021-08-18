@@ -26,10 +26,10 @@
         <p:commandButton value="Filter verbergen" action="#{indexView.makeFiltersDisappear}" process="@this" update="main"/>
         <h:form id="filterForm">
             <p:outputLabel value="Bewertung"/>
-            <p:rating id="rating"/>
+            <p:rating id="rating" value="#{experimentView.lazyExperimentDataModel.filter.minRating}"/>
             <p:outputLabel value="Schwierigkeitsgrad"/>
             <p:outputLabel value="1 ist sehr einfach, 5 ist sehr schwer"/>
-            <p:selectOneRadio id="difficulty">
+            <p:selectOneRadio id="difficulty"  value="#{experimentView.lazyExperimentDataModel.filter.maxDifficulty}">
                 <f:selectItem itemLabel="1" itemValue="sEasy"/>
                 <f:selectItem itemLabel="2" itemValue="easy"/>
                 <f:selectItem itemLabel="3" itemValue="middle"/>
@@ -37,19 +37,20 @@
                 <f:selectItem itemLabel="5" itemValue="sHard"/>
             </p:selectOneRadio>
             <p:outputLabel value="Drinnen/Draußen"/>
-            <p:selectOneRadio id="indoorOutdoor">
+            <p:selectOneRadio id="indoorOutdoor"  value="#{experimentView.lazyExperimentDataModel.filter.location}">
                 <f:selectItem itemLabel="Drinnen" itemValue="indoor"/>
                 <f:selectItem itemLabel="Draußen" itemValue="outdoor"/>
             </p:selectOneRadio>
             <p:outputLabel for="age" value="Mindestalter in Jahren"/>
-            <p:inputNumber id="age" value="#{inputNumberView.age}" minValue="1"
+            <p:inputNumber id="age"  value="#{experimentView.lazyExperimentDataModel.filter.minAge}" minValue="1"
                            maxValue="100" decimalPlaces="0" />
             <p:outputLabel value="Maximale Zeit in Minuten"/>
-            <p:inputNumber id="duration" value="#{inputNumberView.duration}" decimalPlaces="0"/>
+            <p:inputNumber id="duration" value="#{experimentView.lazyExperimentDataModel.filter.maxTime}" decimalPlaces="0"/>
         </h:form>
-        <p:commandButton value="Filter anwenden" process="@form" update="main"/>
+        <p:commandButton value="Filter anwenden" action="#{experimentView.useFilters}" process="@this" update="main"/>
     </c:if>
     <c:if test="#{indexView.showFilter == false}">
         <p:commandButton value="Filter anzeigen" action="#{indexView.makeFiltersAppear}" process="@this" update="main"/>
     </c:if>
+    <p:commandButton value="Filter und Suche zurücksetzen" action="#{experimentView.resetEverything}" process="@this" update="main"/>
 </ui:composition>

@@ -42,6 +42,11 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     @Getter
     @Setter
     private ExperimentDataView selected;
+
+    @Getter
+    @Setter
+    private FilterView filter;
+
     @Getter
     @Setter
     private ExperimentDataView newData;
@@ -150,6 +155,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
         commentText = null;
         return;
+    }
+
+    public List<ExperimentDataView> useFiltersOnExperimentList () {
+        List<Experiment> experimentList = experimentRepository.useFilterOnAllExperiments(this.filter);
+        List<ExperimentDataView> dataList = this.putDataForExperimentsTogether(experimentList);
+
+        return dataList;
     }
 
     public void createExperiment(RegisteredUser user){
