@@ -77,4 +77,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
 
         return results;
     }
+
+    public List<Experiment> lookForStringInExperimentName(String search) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT c FROM Experiment c WHERE c.experimentName LIKE CONCAT('%',?1,'%')", Experiment.class);
+        query.setParameter(1, search);
+        List<Experiment> results = query.getResultList();
+
+        return results;
+    }
 }

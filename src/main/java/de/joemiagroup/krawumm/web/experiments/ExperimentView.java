@@ -46,6 +46,9 @@ public class ExperimentView extends BaseView<Experiment> {
     private Instruction instruction = new Instruction();
 
     private List<ExperimentDataView> data;
+    @Getter
+    @Setter
+    private String search = "";
 
     private int number = 1;
 
@@ -64,5 +67,10 @@ public class ExperimentView extends BaseView<Experiment> {
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
         this.lazyExperimentDataModel.setNewData(event.getObject());
+    }
+
+    public void searchForStringInName () {
+        this.data = lazyExperimentDataModel.usingSearch(search);
+        this.search = "";
     }
 }

@@ -16,4 +16,5 @@ public interface ExperimentRepositoryCustom {
 
     List<Experiment> getAllExperiments(TrueFalse t);
     List<Comment> getCommentsForExperiment(Experiment data);
+    List<Experiment> lookForStringInExperimentName(String search);
 }
