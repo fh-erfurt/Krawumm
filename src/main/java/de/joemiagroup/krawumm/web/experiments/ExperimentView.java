@@ -1,6 +1,7 @@
 package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
@@ -27,9 +28,9 @@ public class ExperimentView extends BaseView<Experiment> {
     @Autowired
     public ExperimentView(final ExperimentRepository repository, final RatingRepository ratingRepository,
                           final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
-                          final CommentRepository commentRepository) {
+                          final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository) {
         this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository, instructionRepository,
-                                                                  commentRepository);
+                                                                  commentRepository, bookmarkRepository);
         this.data = lazyExperimentDataModel.gatherData();
     }
 
@@ -152,4 +153,5 @@ public class ExperimentView extends BaseView<Experiment> {
 
         }
     }
+
 }

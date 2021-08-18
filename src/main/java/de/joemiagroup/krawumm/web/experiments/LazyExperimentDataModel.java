@@ -1,6 +1,7 @@
 package de.joemiagroup.krawumm.web.experiments;
 
 import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
@@ -27,6 +28,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final PicturesRepository picturesRepository;
     private final InstructionRepository instructionRepository;
     private final CommentRepository commentRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
 
@@ -53,6 +55,10 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     @Getter
     @Setter
     private String commentText;
+
+    @Getter
+    @Setter
+    private int rating;
 
 
     //Own methods
@@ -183,4 +189,42 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         Experiment experiment = experimentRepository.getLastInsertedExperiment();
         return experiment;
     }
+
+    public int getRatingOfExperiment(RegisteredUser user, long experimentId){
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        int rating = this.experimentRepository.getRatingOfExperimentForUser(user ,experiment);
+        return rating;
+    }
+
+    public void rateExperiment(RegisteredUser user, long experimentId){
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        if(this.rating > 0){
+            Rating rating = new Rating();
+            rating.setRatingValue(this.rating);
+            rating.setExperiment(experiment);
+            rating.setRegisteredUser(user);
+            this.ratingRepository.save(rating);
+        }
+    }
+
+    public boolean getBookmarkOfExperiment(RegisteredUser user, long experimentId){
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        boolean bookmarkExists = this.experimentRepository.getBookmarkOfExperiment(user ,experiment);
+        return bookmarkExists;
+    }
+
+    public void deleteBookmark(RegisteredUser user, long experimentId){
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        Bookmark bookmark = this.experimentRepository.getBookmarkDataOfExperiment(user ,experiment);
+        this.bookmarkRepository.delete(bookmark);
+    }
+
+    public void createBookmark(RegisteredUser user, long experimentId){
+        Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
+        Bookmark bookmark = new Bookmark();
+        bookmark.setRegisteredUser(user);
+        bookmark.setExperiment(experiment);
+        this.bookmarkRepository.save(bookmark);
+    }
+
 }

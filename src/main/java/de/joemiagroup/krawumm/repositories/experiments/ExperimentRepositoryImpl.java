@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
+import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
 import de.joemiagroup.krawumm.web.experiments.ExperimentView;
@@ -126,5 +127,44 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         List<Experiment> experimentList = new ArrayList<>();
 
         return experimentList;
+    }
+
+    @Override
+    public int getRatingOfExperimentForUser(RegisteredUser user, Experiment experiment) {
+        TypedQuery<Rating> query =
+                em.createQuery("SELECT e FROM Rating e WHERE e.registeredUser.id = ?1 and e.experiment.id = ?2", Rating.class);
+        query.setParameter(1, user.getId());
+        query.setParameter(2, experiment.getId());
+        List<Rating> results = query.getResultList();
+        if (results.isEmpty()){
+            return 0;
+        }
+        return results.get(0).getRatingValue();
+    }
+
+    @Override
+    public boolean getBookmarkOfExperiment(RegisteredUser user, Experiment experiment) {
+        TypedQuery<Bookmark> query =
+                em.createQuery("SELECT e FROM Bookmark e WHERE e.registeredUser.id = ?1 and e.experiment.id = ?2", Bookmark.class);
+        query.setParameter(1, user.getId());
+        query.setParameter(2, experiment.getId());
+        List<Bookmark> results = query.getResultList();
+        if (results.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Bookmark getBookmarkDataOfExperiment(RegisteredUser user, Experiment experiment) {
+        TypedQuery<Bookmark> query =
+                em.createQuery("SELECT e FROM Bookmark e WHERE e.registeredUser.id = ?1 and e.experiment.id = ?2", Bookmark.class);
+        query.setParameter(1, user.getId());
+        query.setParameter(2, experiment.getId());
+        List<Bookmark> results = query.getResultList();
+        if (!results.isEmpty()){
+            return results.get(0);
+        }
+        return null;
     }
 }

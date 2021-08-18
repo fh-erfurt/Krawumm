@@ -43,11 +43,30 @@
                         <h5>Gesamtbewertung:</h5>
                         <p>#{experimentView.lazyExperimentDataModel.selected.rating1}</p>
                         <c:if test="#{personView.lazyDataModel.loggedIn == true}">
-                            <h:form>
+                        <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected}">
+                            <c:if test="#{experimentView.lazyExperimentDataModel.getRatingOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id) != 0}">
                                 <h5>Eigene Bewertung:</h5>
-                                <p:rating style="margin-bottom: 10px;" />
-                                <p:commandButton process="@form" value="bewerten"/>
-                            </h:form>
+                                <p:rating style="margin-bottom: 10px;" value="#{experimentView.lazyExperimentDataModel.getRatingOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}"/>
+                            </c:if>
+                            <c:if test="#{experimentView.lazyExperimentDataModel.getRatingOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id) == 0}">
+                                <h:form>
+                                    <h5>Eigene Bewertung:</h5>
+                                    <p:rating style="margin-bottom: 10px;" value="#{experimentView.lazyExperimentDataModel.rating}"/>
+                                    <p:commandButton process="@form" value="bewerten" action="#{experimentView.lazyExperimentDataModel.rateExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}"/>
+                                </h:form>
+                            </c:if>
+                            </c:if>
+                        </c:if>
+
+                        <c:if test="#{personView.lazyDataModel.loggedIn == true}">
+                            <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected}">
+                                <c:if test="#{experimentView.lazyExperimentDataModel.getBookmarkOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}">
+                                    <p:commandButton process="@this" value="Lesezeichen entfernen" action="#{experimentView.lazyExperimentDataModel.deleteBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
+                                </c:if>
+                                <c:if test="#{!experimentView.lazyExperimentDataModel.getBookmarkOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}">
+                                    <p:commandButton process="@this" value="Lesezeichen hinzufügen" action="#{experimentView.lazyExperimentDataModel.createBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
+                                </c:if>
+                            </c:if>
                         </c:if>
                     </div>
 
@@ -136,7 +155,7 @@
                     action="#{experimentView.writeComment(experimentView.lazyExperimentDataModel.selected.id,
                                                                               personView.lazyDataModel.loggedInUser)}"
                     process="@form"
-                    update="main, :experimentDetailForm:commentTable"
+                    update=":experimentDetailForm:commentTable"
             />
         </h:form>
     </p:dialog>

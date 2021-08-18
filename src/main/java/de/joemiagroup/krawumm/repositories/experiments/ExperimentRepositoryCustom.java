@@ -1,8 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
-import de.joemiagroup.krawumm.domains.Comment;
-import de.joemiagroup.krawumm.domains.Experiment;
-import de.joemiagroup.krawumm.domains.TrueFalse;
+import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.web.experiments.FilterView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -22,4 +20,8 @@ public interface ExperimentRepositoryCustom {
     Experiment getExperimentById (long id);
     Experiment getLastInsertedExperiment();
     List<Experiment> useFilterOnAllExperiments(FilterView filters);
+    int getRatingOfExperimentForUser(RegisteredUser user, Experiment experiment);
+    boolean getBookmarkOfExperiment(RegisteredUser user, Experiment experiment);
+    Bookmark getBookmarkDataOfExperiment(RegisteredUser user, Experiment experiment);
+
 }
