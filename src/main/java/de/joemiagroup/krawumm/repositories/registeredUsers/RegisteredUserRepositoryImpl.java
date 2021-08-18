@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.Bookmark;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -80,7 +81,16 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return false;
     }
 
-     public boolean findUserByName(String username) {
+    @Override
+    public List<Bookmark> findBookmarksOfUser(RegisteredUser user) {
+        TypedQuery<Bookmark> query =
+                em.createQuery("SELECT c FROM Bookmark c WHERE c.registeredUser.id = ?1", Bookmark.class);
+        query.setParameter(1, user.getId());
+        List<Bookmark> results = query.getResultList();
+        return results;
+    }
+
+    public boolean findUserByName(String username) {
          TypedQuery<RegisteredUser> query =
                 em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
         List<RegisteredUser> results = query.getResultList();

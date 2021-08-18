@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.repositories.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.Bookmark;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -17,5 +18,6 @@ public interface RegisteredUserRepositoryCustom {
     boolean findUserByName(String userName);
     RegisteredUser findUserDataByName(String userName);
     boolean findUserByEmail(String email);
+    List<Bookmark> findBookmarksOfUser(RegisteredUser user);
 
 }

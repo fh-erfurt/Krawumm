@@ -40,8 +40,24 @@
                 <p:tab title="Eigene Experimente">
                     <p:commandButton value="Experiment erstellen" actionListener="#{indexView.load('CREATE')}" update=":main"/>
                 </p:tab>
-                <p:tab title="Eingereichte Experimente">Leere Liste</p:tab>
-                <p:tab title="Lesezeichen">Lesezeichen?</p:tab>
+                <p:tab title="Eingereichte Experimente">Leere Liste
+                </p:tab>
+                <p:tab title="Lesezeichen">
+                    <h:form id="bookmarkTableForm">
+                        <p:dataTable id="bookmarkTable" var="bookmarks" value="#{personView.lazyDataModel.showBookmarksOfUser()}">
+                            <p:column>
+                                <table>
+                                    <tr>
+                                        <th colspan="2"><h3>#{bookmarks.experiment.experimentName}</h3></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><h6>#{bookmarks.experiment.description}</h6></td>
+                                    </tr>
+                                </table>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:tab>
             </p:tabView>
         </div>
 

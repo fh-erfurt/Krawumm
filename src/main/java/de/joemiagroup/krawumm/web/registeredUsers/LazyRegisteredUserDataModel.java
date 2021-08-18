@@ -1,5 +1,6 @@
 package de.joemiagroup.krawumm.web.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.Bookmark;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.TrueFalse;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
@@ -148,6 +149,10 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return "Willkommen bei Krawumm!";
     }
 
+    public List<Bookmark> showBookmarksOfUser(){
+        List<Bookmark> bookmarks = registeredUserRepository.findBookmarksOfUser(this.loggedInUser);
+        return bookmarks;
+    }
 
     public void delete(RegisteredUser registeredUser) {
         this.registeredUserRepository.deleteRegisteredUserById(registeredUser.getId());
