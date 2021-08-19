@@ -10,6 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.Objects;
 
+/**
+ * This class is the controller for ratings
+ * <br>
+ *
+ * @author Jessica Eckardtsberg
+ *
+ */
+
 @Transactional
 @RestController
 @RequestMapping("/ratings")

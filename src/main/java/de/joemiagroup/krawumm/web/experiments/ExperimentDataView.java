@@ -8,6 +8,14 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * This class is a template to show the experiments
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

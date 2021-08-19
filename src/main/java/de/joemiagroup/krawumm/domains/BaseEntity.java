@@ -7,6 +7,14 @@ import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+/**
+ * This class is the base for the tables of the database
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
+
 @MappedSuperclass
 @Getter
 @Setter

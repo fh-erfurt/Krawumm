@@ -20,6 +20,16 @@ public class InstructionRepositoryImpl implements InstructionRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *This method searches for data based on the given parameter
+     *
+     * @param page
+     * @param count
+     * @param filters
+     * @param sorts
+     *
+     * @return ResultList
+     */
     @Override
     public List<Instruction> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -38,6 +48,13 @@ public class InstructionRepositoryImpl implements InstructionRepositoryCustom {
         return this.em.createQuery(query).setFirstResult(page * count).setMaxResults(count).getResultList();
     }
 
+    /**
+     *This method counts the data based on the given filters
+     *
+     * @param filters
+     *
+     * @return SingleResult
+     */
     @Override
     public long countByParameters(Map<String, FilterMeta> filters) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();

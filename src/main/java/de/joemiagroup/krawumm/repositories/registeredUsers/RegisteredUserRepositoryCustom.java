@@ -1,17 +1,19 @@
 package de.joemiagroup.krawumm.repositories.registeredUsers;
 
-import de.joemiagroup.krawumm.domains.Experiment;
-import de.joemiagroup.krawumm.domains.Bookmark;
-import de.joemiagroup.krawumm.domains.Comment;
-import de.joemiagroup.krawumm.domains.Rating;
-import de.joemiagroup.krawumm.domains.RegisteredUser;
+import de.joemiagroup.krawumm.domains.*;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
-import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This interface declares methods for the RegisteredUserRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
 
 public interface RegisteredUserRepositoryCustom {
     List<RegisteredUser> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);

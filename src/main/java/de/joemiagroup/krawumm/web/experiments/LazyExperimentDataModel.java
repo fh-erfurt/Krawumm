@@ -3,14 +3,13 @@ package de.joemiagroup.krawumm.web.experiments;
 import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.materials.MaterialRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
-import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
-import de.joemiagroup.krawumm.web.registeredUsers.RegisteredUserView;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,12 +17,18 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.lang.Math;
 import java.util.Objects;
+
+/**
+ * This class communicates with the repositories to secure the database
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyExperimentDataModel extends LazyDataModel<Experiment> {

@@ -1,6 +1,8 @@
 package de.joemiagroup.krawumm.web.experiments;
 
-import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.domains.Experiment;
+import de.joemiagroup.krawumm.domains.Material;
+import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
@@ -11,7 +13,6 @@ import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import de.joemiagroup.krawumm.web.BaseView;
-import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FlowEvent;
@@ -24,7 +25,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+/**
+ * This class is the view that shows the experiments
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
 
 @ManagedBean("experimentView")
 @ViewScoped
@@ -62,6 +70,11 @@ public class ExperimentView extends BaseView<Experiment> {
 
     private final LazyExperimentDataModel lazyExperimentDataModel;
 
+    /**
+     * This function initializes array lists for instructions, material and pictures for the experiment creation with program start
+     *
+     * no return value
+     */
     @PostConstruct
     public void init() {
         instructionText = new ArrayList<>();
@@ -69,24 +82,44 @@ public class ExperimentView extends BaseView<Experiment> {
         pictureText = new ArrayList<>();
     }
 
+    /**
+     * This function adds an instruction step to the creation of an experiment
+     *
+     * no return value
+     */
     public void incrementInstruction() {
         numberInstruction++;
         instructionText.add(this.instruction);
         this.instruction = "";
     }
 
+    /**
+     * This function adds an material to the creation of an experiment
+     *
+     * no return value
+     */
     public void incrementMaterial() {
         numberMaterial++;
         materialText.add(this.material);
         this.material = "";
     }
 
+    /**
+     * This function adds an picture to the creation of an experiment
+     *
+     * no return value
+     */
     public void incrementPicture() {
         numberPicture++;
         pictureText.add(this.picture);
         this.picture = "";
     }
 
+    /**
+     * This function filters the experiments
+     *
+     * no return value
+     */
     public void useFilters() {
         this.data = this.lazyExperimentDataModel.useFiltersOnExperimentList();
     }

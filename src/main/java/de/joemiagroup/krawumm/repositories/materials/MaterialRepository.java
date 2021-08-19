@@ -6,6 +6,14 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
+/**
+ * This interface declares methods for the MaterialRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 @RepositoryRestResource(collectionResourceRel = "materials", path = "materials")
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     void deleteMaterialById(Long id);

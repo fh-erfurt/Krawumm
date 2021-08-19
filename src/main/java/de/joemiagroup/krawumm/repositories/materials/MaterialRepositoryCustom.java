@@ -8,6 +8,14 @@ import org.primefaces.model.SortMeta;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This interface declares methods for the MaterialRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 public interface MaterialRepositoryCustom {
     List<Material> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);
 

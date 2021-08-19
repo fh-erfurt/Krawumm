@@ -13,11 +13,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This class handles the interaction with the table comment of the database
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 @Repository
 public class BookmarkRepositoryImpl implements BookmarkRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *This method searches for data based on the given parameter
+     *
+     * @param page
+     * @param count
+     * @param filters
+     * @param sorts
+     *
+     * @return ResultList
+     */
     @Override
     public List<Bookmark> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -36,6 +54,13 @@ public class BookmarkRepositoryImpl implements BookmarkRepositoryCustom {
         return this.em.createQuery(query).setFirstResult(page * count).setMaxResults(count).getResultList();
     }
 
+    /**
+     *This method counts the data based on the given filters
+     *
+     * @param filters
+     *
+     * @return SingleResult
+     */
     @Override
     public long countByParameters(Map<String, FilterMeta> filters) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -56,5 +81,4 @@ public class BookmarkRepositoryImpl implements BookmarkRepositoryCustom {
                 .collect(Collectors.toList());
     }
 
-    //Own methods
 }

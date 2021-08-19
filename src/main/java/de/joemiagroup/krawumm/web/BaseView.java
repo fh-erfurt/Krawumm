@@ -20,12 +20,21 @@
 package de.joemiagroup.krawumm.web;
 
 import de.joemiagroup.krawumm.domains.BaseEntity;
-import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicBoolean;
+import org.primefaces.event.SelectEvent;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.SelectEvent;
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * This class is the base for the other views
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
 
 public abstract class BaseView <E extends BaseEntity> implements Serializable{
     private static final long serialVersionUID = 4121972906010438269L;

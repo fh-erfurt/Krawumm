@@ -1,17 +1,13 @@
 package de.joemiagroup.krawumm.repositories.experimenthasmaterials;
 
-import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
-import de.joemiagroup.krawumm.domains.Material;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,6 +17,16 @@ public class ExperimentHasMaterialRepositoryImpl implements ExperimentHasMateria
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *This method searches for data based on the given parameter
+     *
+     * @param page
+     * @param count
+     * @param filters
+     * @param sorts
+     *
+     * @return ResultList
+     */
     @Override
     public List<ExperimentHasMaterial> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -39,6 +45,13 @@ public class ExperimentHasMaterialRepositoryImpl implements ExperimentHasMateria
         return this.em.createQuery(query).setFirstResult(page * count).setMaxResults(count).getResultList();
     }
 
+    /**
+     *This method counts the data based on the given filters
+     *
+     * @param filters
+     *
+     * @return SingleResult
+     */
     @Override
     public long countByParameters(Map<String, FilterMeta> filters) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();

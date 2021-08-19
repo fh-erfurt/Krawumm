@@ -9,6 +9,14 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.*;
 
+/**
+ * This interface declares methods for the ExperimentRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 @RepositoryRestResource(collectionResourceRel = "experimernts", path = "experimernts")
 public interface ExperimentRepository extends JpaRepository<Experiment, Long>, ExperimentRepositoryCustom {
     void deleteExperimentById(Long id);

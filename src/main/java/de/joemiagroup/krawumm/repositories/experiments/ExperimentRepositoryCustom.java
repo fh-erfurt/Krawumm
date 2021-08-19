@@ -8,6 +8,14 @@ import org.primefaces.model.SortMeta;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This interface declares methods for the ExperimentRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 public interface ExperimentRepositoryCustom {
     List<Experiment> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);
 

@@ -5,6 +5,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * This class defines the columns of the table pictures of the database
+ * <br>
+ *
+ * @author Marlene Bauch
+ *
+ */
+
 @Entity
 @Getter
 @Setter

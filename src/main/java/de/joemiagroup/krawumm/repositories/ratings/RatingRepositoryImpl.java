@@ -2,7 +2,6 @@ package de.joemiagroup.krawumm.repositories.ratings;
 
 import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Rating;
-import de.joemiagroup.krawumm.domains.TrueFalse;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 import org.springframework.stereotype.Repository;
@@ -20,6 +19,16 @@ public class RatingRepositoryImpl implements RatingRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *This method searches for data based on the given parameter
+     *
+     * @param page
+     * @param count
+     * @param filters
+     * @param sorts
+     *
+     * @return ResultList
+     */
     @Override
     public List<Rating> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -38,6 +47,13 @@ public class RatingRepositoryImpl implements RatingRepositoryCustom {
         return this.em.createQuery(query).setFirstResult(page * count).setMaxResults(count).getResultList();
     }
 
+    /**
+     *This method counts the data based on the given filters
+     *
+     * @param filters
+     *
+     * @return SingleResult
+     */
     @Override
     public long countByParameters(Map<String, FilterMeta> filters) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();

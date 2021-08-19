@@ -26,6 +26,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This class is for the user session
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
+
 @ManagedBean
 @SessionScoped
 public class UserSessionContext implements Serializable{

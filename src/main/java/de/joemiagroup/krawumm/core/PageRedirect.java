@@ -23,6 +23,14 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * This class is the controller for a page redirect to the index page
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
+
 @Configuration
 public class PageRedirect implements WebMvcConfigurer {
 

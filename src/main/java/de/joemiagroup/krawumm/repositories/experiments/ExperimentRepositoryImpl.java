@@ -1,8 +1,6 @@
 package de.joemiagroup.krawumm.repositories.experiments;
 
-import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.*;
-import de.joemiagroup.krawumm.trash.main;
 import de.joemiagroup.krawumm.web.experiments.FilterView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -23,6 +21,16 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *This method searches for data based on the given parameter
+     *
+     * @param page
+     * @param count
+     * @param filters
+     * @param sorts
+     *
+     * @return ResultList
+     */
     @Override
     public List<Experiment> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -41,6 +49,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return this.em.createQuery(query).setFirstResult(page * count).setMaxResults(count).getResultList();
     }
 
+    /**
+     *This method counts the data based on the given filters
+     *
+     * @param filters
+     *
+     * @return SingleResult
+     */
     @Override
     public long countByParameters(Map<String, FilterMeta> filters) {
         final CriteriaBuilder builder = this.em.getCriteriaBuilder();
@@ -62,6 +77,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
     }
 
     //Own methods
+    /**
+     *This method gets all experiments that are released
+     *
+     * @param released boolean whether an experiment is released or not
+     *
+     * @return ResultList
+     */
     public List<Experiment> getAllExperiments(TrueFalse released) {
         TypedQuery<Experiment> query =
                 em.createQuery("SELECT c FROM Experiment c WHERE c.isReleased = ?1", Experiment.class);
@@ -71,7 +93,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
-
+    /**
+     *This method gets all comments of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     public List<Comment> getCommentsForExperiment(Experiment data) {
         TypedQuery<Comment> query =
                 em.createQuery("SELECT c FROM Comment c WHERE c.experiment.id = ?1", Comment.class);
@@ -81,6 +109,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method checks whether an experiment is released or not
+     *
+     * @param id primary key of an experiment
+     *
+     * @return boolean
+     */
     @Override
     public boolean isExperimentReleased(long id) {
         TypedQuery<Experiment> query =
@@ -92,6 +127,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         } else return false;
     }
 
+    /**
+     *This method gets ratings of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     @Override
     public List<Rating> getRatingsForExperiment(Experiment data) {
         TypedQuery<Rating> query =
@@ -102,6 +144,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method gets instructions of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     @Override
     public List<Instruction> getInstructionsForExperiment(Experiment data) {
         TypedQuery<Instruction> query =
@@ -112,6 +161,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method gets pictures of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     @Override
     public List<Pictures> getPicturesForExperiment(Experiment data) {
         TypedQuery<Pictures> query =
@@ -122,6 +178,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method gets bookmarks of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     @Override
     public List<Bookmark> getBookmarksForExperiment(Experiment data) {
         TypedQuery<Bookmark> query =
@@ -132,6 +195,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method gets materials of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     @Override
     public List<ExperimentHasMaterial> getExperimentHasMaterialsForExperiment(Experiment data) {
         TypedQuery<ExperimentHasMaterial> query =
@@ -142,6 +212,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method searches for experiments based on a string
+     *
+     * @param search string that should be in the name of an experiment
+     *
+     * @return ResultList
+     */
     public List<Experiment> lookForStringInExperimentName(String search) {
         List<Experiment> searchResult = new ArrayList<>();
 
@@ -170,6 +247,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return searchResult;
     }
 
+    /**
+     *This method gets materials of an experiment
+     *
+     * @param data specific experiment
+     *
+     * @return ResultList
+     */
     public List<String> getMaterialsForExperiment(Experiment data) {
         List<String> results = new ArrayList<>();
 
@@ -185,6 +269,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    /**
+     *This method gets experiment by id
+     *
+     * @param id primary key of an experiment
+     *
+     * @return SingleResult
+     */
     public Experiment getExperimentById (long id) {
         TypedQuery<Experiment> query =
                 em.createQuery("SELECT e FROM Experiment e WHERE e.id = ?1", Experiment.class);
@@ -194,6 +285,11 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results.get(0);
     }
 
+    /**
+     *This method gets the experiment that was inserted last
+     *
+     * @return SingleResult
+     */
     @Override
     public Experiment getLastInsertedExperiment() {
         TypedQuery<Experiment> query =
@@ -204,6 +300,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results.get(lastPosition);
     }
 
+    /**
+     *This method gets all experiments that match the filters
+     *
+     * @param filters
+     *
+     * @return ResultList
+     */
     @Override
     public List<Experiment> useFilterOnExperiment(FilterView filters){
 
@@ -356,6 +459,14 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return resultList;
     }
 
+    /**
+     *This method gets the rating for an experiment by a user
+     *
+     * @param user specific user
+     * @param experiment specific experiment
+     *
+     * @return SingleResult
+     */
     @Override
     public int getRatingOfExperimentForUser(RegisteredUser user, Experiment experiment) {
         TypedQuery<Rating> query =
@@ -369,6 +480,14 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results.get(0).getRatingValue();
     }
 
+    /**
+     *This method gets the bookmark for an experiment by a user
+     *
+     * @param user specific user
+     * @param experiment specific experiment
+     *
+     * @return SingleResult
+     */
     @Override
     public boolean getBookmarkOfExperiment(RegisteredUser user, Experiment experiment) {
         TypedQuery<Bookmark> query =
@@ -382,6 +501,14 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return true;
     }
 
+    /**
+     *This method gets the bookmark for an experiment by a user
+     *
+     * @param user specific user
+     * @param experiment specific experiment
+     *
+     * @return SingleResult
+     */
     @Override
     public Bookmark getBookmarkDataOfExperiment(RegisteredUser user, Experiment experiment) {
         TypedQuery<Bookmark> query =
@@ -395,6 +522,13 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return null;
     }
 
+    /**
+     *This method gets all experiments by a user
+     *
+     * @param user specific user
+     *
+     * @return Resultlist
+     */
     public List<Experiment> getExperimentsForUser(RegisteredUser user) {
         TypedQuery<Experiment> query =
                 em.createQuery("SELECT e FROM Experiment e WHERE e.registeredUser.id = ?1 AND e.isReleased = ?2", Experiment.class);

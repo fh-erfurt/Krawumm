@@ -22,6 +22,8 @@ import java.io.Serial;
 
 /**
  * <h2>SqlException</h2>
+ *
+ * @author Johannes Otto
  */
 public class SqlException extends RuntimeException {
 

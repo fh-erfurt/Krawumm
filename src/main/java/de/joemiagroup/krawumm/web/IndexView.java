@@ -1,17 +1,20 @@
 package de.joemiagroup.krawumm.web;
 
 import de.joemiagroup.krawumm.core.UserSessionContext;
-import de.joemiagroup.krawumm.domains.BaseEntity;
-import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
-import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import lombok.Getter;
-import lombok.Setter;
-import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.util.Optional;
+
+/**
+ * This class is the index view that includes the different views
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
 
 @ManagedBean("indexView")
 @ViewScoped

@@ -8,6 +8,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.sql.SQLException;
 
+/**
+ * This class persists the data in the database
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
 
 @Configuration
 @EnableTransactionManagement

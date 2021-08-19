@@ -6,6 +6,14 @@ import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+/**
+ * This class is the view to delete an account
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
+
 @ManagedBean("confirmAccount")
 @RequestScope
 public class AccountConfirmView {

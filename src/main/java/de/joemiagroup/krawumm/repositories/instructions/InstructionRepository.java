@@ -7,6 +7,14 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
+/**
+ * This interface declares methods for the InstructionRepositoryImpl
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 @RepositoryRestResource(collectionResourceRel = "instrtuctions", path = "instrtuctions")
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
     void deleteInstructionById(Long id);
