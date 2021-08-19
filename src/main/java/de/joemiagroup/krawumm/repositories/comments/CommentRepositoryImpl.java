@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,21 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
         query.where(predicates.toArray(new Predicate[0]));
 
         return em.createQuery(query).getSingleResult();
+    }
+
+    /**
+     *This method gives all existing Comments
+     *
+     *
+     *
+     * @return List<Comment> holds all existing Comments
+     */
+    @Override
+    public List<Comment> getAllComments() {
+        TypedQuery<Comment> query =
+                em.createQuery("SELECT c FROM Comment c", Comment.class);
+        List<Comment> results = query.getResultList();
+        return results;
     }
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<Comment> comment, final Map<String, FilterMeta> filters){

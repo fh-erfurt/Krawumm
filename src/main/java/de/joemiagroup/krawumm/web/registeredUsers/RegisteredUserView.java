@@ -13,26 +13,27 @@ import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import de.joemiagroup.krawumm.web.BaseView;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
-import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.transaction.Transactional;
 
-import de.joemiagroup.krawumm.web.BaseView;
-import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
+/**
+ * This class is the view that shows the experiments
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
 @ManagedBean("personView")
 @ViewScoped
 public class RegisteredUserView extends BaseView<RegisteredUser> {
@@ -59,6 +60,12 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     @Getter
     private LazyRegisteredUserDataModel lazyDataModel;
 
+    /**
+     * This function deletes a RegisteredUSer with all relating Data(own Comments, own Ratings, own Bookamrks,
+     * own Experiments and all to those Experiments regarding comments, ratings, pictures, bookmarks, instruction, experimentHasMaterials)
+     *
+     * no return value
+     */
     @Transactional
     public void onClickDeleteEntry() {
         if (Objects.isNull(this.lazyDataModel.getLoggedInUser())) {
@@ -71,11 +78,21 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         this.lazyDataModel.setLoggedIn(false);
     }
 
+    /**
+     * This function checks if the email follows a email format
+     *
+     * no return value
+     */
     public static boolean emailValidate(String email) {
         Matcher matcher= EMAIL_REGEX.matcher(email);
         return matcher.find();
     }
 
+    /**
+     * This function calls the function, which changes the password in the Database
+     *
+     * no return value
+     */
     @Transactional
     public void onClickChangePassword() {
         this.editMode.set(true);
@@ -83,6 +100,11 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         this.renderMessage(FacesMessage.SEVERITY_INFO, "" + changeMessage);
     }
 
+    /**
+     * This function calls the function, which checks the login and sets the loggedInUser
+     *
+     * no return value
+     */
     @Transactional
     public void onClickLogin() {
         this.editMode.set(false);
@@ -96,12 +118,22 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         }
     }
 
+    /**
+     * This function logs out the user and resets the loggedInUser
+     *
+     * no return value
+     */
     @Transactional
     public void onClickLogout() {
         this.lazyDataModel.setLoggedIn(false);
         this.lazyDataModel.setLoggedInUser(new RegisteredUser());
     }
 
+    /**
+     * This function calls the function, which writes a new User into the database if the inputed data is correct
+     *
+     * no return value
+     */
     @Transactional
     public void onClickSaveEntry() {
         this.editMode.set(false);

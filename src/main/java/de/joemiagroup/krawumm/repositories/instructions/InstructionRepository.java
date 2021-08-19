@@ -19,4 +19,6 @@ import java.util.List;
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
     void deleteInstructionById(Long id);
     List<String> getInstructionsForExperiment (Experiment experiment);
+    List<Instruction> getAllInstructions();
+
 }
