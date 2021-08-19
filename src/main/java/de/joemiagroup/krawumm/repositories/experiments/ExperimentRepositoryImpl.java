@@ -2,6 +2,7 @@ package de.joemiagroup.krawumm.repositories.experiments;
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.*;
+import de.joemiagroup.krawumm.trash.main;
 import de.joemiagroup.krawumm.web.experiments.FilterView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -120,12 +121,31 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
     }
 
     public List<Experiment> lookForStringInExperimentName(String search) {
-        TypedQuery<Experiment> query =
-                em.createQuery("SELECT c FROM Experiment c WHERE c.experimentName LIKE CONCAT('%',?1,'%')", Experiment.class);
-        query.setParameter(1, search);
-        List<Experiment> results = query.getResultList();
+        List<Experiment> searchResult = new ArrayList<>();
 
-        return results;
+        List<Experiment> experimentList = this.getAllExperiments(TrueFalse.T);
+        String[] keywords = search.split(" ");
+
+        for (String keyword : keywords) {
+            for (Experiment experiment : experimentList) {
+                if (experiment.getExperimentName().contains(keyword)){
+                    boolean isInArray = false;
+                    for(int i  = 0; i <searchResult.size(); i++){
+                        if(searchResult.get(i) == experiment){
+                            isInArray = true;
+                            break;
+                        }
+                    }
+                    if(!isInArray){
+                        searchResult.add(experiment);
+                    }
+                }
+            }
+        }
+        if(searchResult.size()==0){
+            System.out.println("Keine Suchergebnisse vorhanden!");
+        }
+        return searchResult;
     }
 
     public List<String> getMaterialsForExperiment(Experiment data) {

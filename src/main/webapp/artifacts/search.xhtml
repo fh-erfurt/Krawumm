@@ -25,11 +25,10 @@
         <p:inputText id="inputSearch" placeholder="Suche" value="#{experimentView.search}" required="false"/>
     </h:form>
     <p:commandButton
-        id="buttonSearch"
-        icon="pi pi-search"
-        action="#{experimentView.searchForStringInName}"
-        process="@this"
-        update="main"
+            id="buttonSearch"
+            icon="pi pi-search"
+            action="#{experimentView.searchForStringInName()}"
+            process="@form"
+            update="main"
     />
-
 </ui:composition>
