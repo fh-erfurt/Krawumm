@@ -44,6 +44,16 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
     private final List<Experiment> cache = new ArrayList<>();
 
+    /**
+     * This function loads experiments that match the parameters
+     *
+     * @param page
+     * @param size
+     * @param sorts
+     * @param filters
+     *
+     * @return cache
+     */
     @Override
     public List<Experiment> load(int page, int size, Map<String, SortMeta> sorts, Map<String, FilterMeta> filters) {
         cache.clear();
@@ -74,12 +84,24 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
 
     //Own methods
+    /**
+     * This function loads all experiments
+     *
+     *@return all experiments
+     */
     public List<Experiment> loadAllExperiments() {
         List<Experiment> experiments = experimentRepository.getAllExperiments(TrueFalse.T);
 
         return experiments;
     }
 
+    /**
+     * This function "translates" the values for indoor and outdoor
+     *
+     * @param toTranslate value of indoor or outdoor that should be translated
+     *
+     * @return string value for indoor and outdoor
+     */
     public String translateIndoorOutdoor(IndoorOutdoor toTranslate) {
         if (toTranslate.toString().equals("O")) {
             return "draußen";
@@ -87,6 +109,11 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return "drinnen";
     }
 
+    /**
+     * This function gathers data for the released experiments
+     *
+     * @return all experiments
+     */
     public List<ExperimentDataView> gatherData() {
         List<ExperimentDataView> results = new ArrayList<>();
 
@@ -97,6 +124,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return results;
     }
 
+    /**
+     * This function gathers all data for the comments of a specific experiment
+     *
+     * @param experiment specific experiment
+     *
+     * @return all comments of an experiment
+     */
     public List<ExperimentDataView.CommentDataView> gatherCommentDataForExperiment(Experiment experiment) {
         List<ExperimentDataView.CommentDataView> commentData = new ArrayList<>();
 
@@ -112,6 +146,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return commentData;
     }
 
+    /**
+     * This function creates a list with all experiments that match the search string
+     *
+     * @param search search string
+     *
+     * @return all data for the experiments that match the search string
+     */
     public List<ExperimentDataView> usingSearch(String search) {
         List<ExperimentDataView> results = new ArrayList<>();
 
@@ -122,6 +163,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return results;
     }
 
+    /**
+     * This function creates a list with edited data of the experiments that should be shown on the website
+     *
+     * @param experimentList list of experiments
+     *
+     * @return data of the experiments
+     */
     private List<ExperimentDataView> putDataForExperimentsTogether(List<Experiment> experimentList) {
         List<ExperimentDataView> dataList = new ArrayList<>();
 
@@ -151,6 +199,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return dataList;
     }
 
+    /**
+     * This function creates a list with edited data of the bookmarks
+     *
+     * @param bookmarks list of bookmarks
+     *
+     * @return data of the bookmarks
+     */
     public List<ExperimentDataView> putDataForBookmarksTogether(List<Bookmark> bookmarks) {
         List<Experiment> experimentList = new ArrayList<>();
         for (Bookmark b : bookmarks) {
@@ -159,6 +214,14 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return this.putDataForExperimentsTogether(experimentList);
     }
 
+    /**
+     * This function is used to save a comment to the database
+     *
+     * @param experimentId primary key of an experiment
+     * @param user specific user
+     *
+     * no return values
+     */
     public void writeComment(long experimentId, RegisteredUser user) {
         if (Objects.isNull(commentText)) {
             return;
@@ -183,6 +246,11 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return;
     }
 
+    /**
+     * This function creates a list with edited data of the experiments that match the filters
+     *
+     * @return data of experiments that match the filters
+     */
     public List<ExperimentDataView> useFiltersOnExperimentList () {
         List<Experiment> experimentList = experimentRepository.useFilterOnExperiment(this.filter);
         List<ExperimentDataView> dataList = this.putDataForExperimentsTogether(experimentList);
@@ -191,6 +259,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return dataList;
     }
 
+    /**
+     * This function is used to save a new experiment to the database that needs to be released
+     *
+     * @param user specific user
+     *
+     * no return value
+     */
     public void createExperiment(RegisteredUser user){
         Experiment experiment = new Experiment();
         experiment.setExperimentName(getNewData().getTitle());
@@ -206,6 +281,14 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.experimentRepository.save(experiment);
     }
 
+    /**
+     * This function is used to save an instruction to the database
+     *
+     * @param experiment specific experiment
+     * @param text instruction text
+     *
+     * no return value
+     */
     public void createInstructions(Experiment experiment, String text) {
         Instruction instruction = new Instruction();
         instruction.setExperiment(experiment);
@@ -214,6 +297,14 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.instructionRepository.save(instruction);
     }
 
+    /**
+     * This function is used to save a picture to the database
+     *
+     * @param experiment specific experiment
+     * @param text picture url
+     *
+     * no return value
+     */
     public void createPicture(Experiment experiment, String text) {
         Pictures pictures = new Pictures();
         pictures.setExperiment(experiment);
@@ -221,10 +312,25 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.picturesRepository.save(pictures);
     }
 
+    /**
+     * This function looks if a material is already in the database
+     *
+     * @param text instruction text
+     *
+     * @return material
+     */
     public List<Material> findMaterial(String text) {
         return this.materialRepository.findMaterialByName(text);
     }
 
+    /**
+     * This function is used to save which material belongs to which experiment to the database
+     *
+     * @param experiment specific experiment
+     * @param material material
+     *
+     * no return value
+     */
     public void createExperimentHasMaterial(Experiment experiment, Material material) {
         ExperimentHasMaterial ehm = new ExperimentHasMaterial();
         ehm.setExperiment(experiment);
@@ -232,27 +338,60 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.experimentHasMaterialRepository.save(ehm);
     }
 
+    /**
+     * This function is used to save a material to the database
+     *
+     * @param text material
+     *
+     * no return value
+     */
     public void createMaterial(String text) {
         Material material = new Material();
         material.setMaterialName(text);
         this.materialRepository.save(material);
     }
 
+    /**
+     * This function looks for the material that was inserted last
+     *
+     * @return material
+     */
     public Material findLastInsertedMaterial() {
         return this.materialRepository.getLastInsertedMaterial();
     }
 
+    /**
+     * This function looks for the experiment that was inserted last
+     *
+     * @return experiment
+     */
     public Experiment getLastInsertedExperiment(){
         Experiment experiment = experimentRepository.getLastInsertedExperiment();
         return experiment;
     }
 
+    /**
+     * This function looks for the rating for an experiment by a specific user
+     *
+     * @param user specific user
+     * @param experimentId primary key of experiment
+     *
+     * @return rating
+     */
     public int getRatingOfExperiment(RegisteredUser user, long experimentId){
         Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
         int rating = this.experimentRepository.getRatingOfExperimentForUser(user ,experiment);
         return rating;
     }
 
+    /**
+     * This function is used to save a rating to the database
+     *
+     * @param user specific user
+     * @param experimentId primary key of experiment
+     *
+     * no return value
+     */
     public void rateExperiment(RegisteredUser user, long experimentId){
         Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
         if(this.rating > 0){
@@ -264,18 +403,42 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         }
     }
 
+    /**
+     * This function looks whether a user has a bookmark for a specific experiment
+     *
+     * @param user specific user
+     * @param experimentId primary key of experiment
+     *
+     * @return boolean whether bookmark exists or not
+     */
     public boolean getBookmarkOfExperiment(RegisteredUser user, long experimentId){
         Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
         boolean bookmarkExists = this.experimentRepository.getBookmarkOfExperiment(user ,experiment);
         return bookmarkExists;
     }
 
+    /**
+     * This function deletes a bookmark by a user for an experiment
+     *
+     * @param user specific user
+     * @param experimentId primary key of experiment
+     *
+     * no return value
+     */
     public void deleteBookmark(RegisteredUser user, long experimentId){
         Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
         Bookmark bookmark = this.experimentRepository.getBookmarkDataOfExperiment(user ,experiment);
         this.bookmarkRepository.delete(bookmark);
     }
 
+    /**
+     * This function is used to save a bookmark to the database
+     *
+     * @param user specific user
+     * @param experimentId primary key of experiment
+     *
+     * no return value
+     */
     public void createBookmark(RegisteredUser user, long experimentId){
         Experiment experiment = this.experimentRepository.getExperimentById(experimentId);
         Bookmark bookmark = new Bookmark();
@@ -284,12 +447,24 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.bookmarkRepository.save(bookmark);
     }
 
+    /**
+     * This function looks for the unreleased experiments
+     *
+     * @return experiments
+     */
     public List<ExperimentDataView> getUnreleasedExperiments(){
         List<Experiment> experimentList = this.experimentRepository.getAllExperiments(TrueFalse.F);
         List<ExperimentDataView> experiments = this.putDataForExperimentsTogether(experimentList);
         return experiments;
     }
 
+    /**
+     * This function looks for the experiments by a specific user
+     *
+     * @param user specific user
+     *
+     * @return experiments by a specific user
+     */
     public List<ExperimentDataView> getExperimentsCreatedByUser(RegisteredUser user) {
         List<ExperimentDataView> results = new ArrayList<>();
         List<Experiment> experiments = this.experimentRepository.getExperimentsForUser(user);
@@ -298,11 +473,23 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return results;
     }
 
+    /**
+     * This function checks whether an experiment is released or not
+     *
+     * @param experimentId primary key of experiment
+     *
+     * @return boolean whether an experiment is released or not
+     */
     public boolean experimentIsReleased(long experimentId){
         boolean result = this.experimentRepository.isExperimentReleased(experimentId);
         return result;
     }
 
+    /**
+     * This function changes the column is_released for a selected experiment released
+     *
+     * no return value
+     */
     public void releaseSelectedExperiment(){
         RegisteredUser creator = this.registeredUserRepository.findUserDataByName(this.getSelected().getCreator());
         Experiment experiment = new Experiment();
@@ -321,6 +508,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.experimentRepository.save(experiment);
     }
 
+    /**
+     * This function is used to delete an experiment
+     *
+     * @param id primary key of experiment
+     *
+     * no return value
+     */
     public void deleteExperimentData(long id){
 
         Experiment experiment = this.experimentRepository.getExperimentById(id);
