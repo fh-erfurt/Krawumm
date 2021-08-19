@@ -40,60 +40,62 @@
         <div>
             <p:tabView>
                 <p:tab title="Eigene Experimente">
-                    <h:form>
-                        <p:dataTable
-                                id="ownExperimentTable"
-                                var="own"
-                                value="#{experimentView.lazyExperimentDataModel.getExperimentsCreatedByUser(personView.lazyDataModel.loggedInUser)}"
-                                lazy="true"
-                                selection="#{experimentView.lazyExperimentDataModel.selected}"
-                                selectionMode="single"
-                                rowKey="#{own.id}"
-                        >
-                            <p:ajax
-                                    event="rowSelect"
-                                    listener="#{experimentView.onExperimentSelect}"
-                                    update=":experimentDetailForm:experimentDetail"
-                                    oncomplete="PF('experimentDetailDialog').show()"
-                            />
-                            <p:column id="ownData">
-                                <table>
-                                    <tr>
-                                        <th colspan="2"><h3>#{own.title}</h3></th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><h6>#{own.description}</h6></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">Alter:</td>
-                                        <td style="text-align: left;">#{own.age} Jahre</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">Schwierigkeitsgrad:</td>
-                                        <td style="text-align: left;">#{own.difficulty} von 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">Dauer:</td>
-                                        <td style="text-align: left;">etwa #{own.duration} Minuten</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">Durchführung:</td>
-                                        <td style="text-align: left;">#{own.location}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">Bewertung:</td>
-                                        <td>
-                                            <p:rating style="float: left;" value="#{own.rating2}" readonly="true"/>
-                                            (#{own.rating1})
-                                        </td>
-                                    </tr>
-                                </table>
-                            </p:column>
-                            <p:column id="ownPic">
-                                <p:graphicImage style="height: 280px;" value="#{own.picture.get(0)}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
+                    <c:if test="#{not empty experimentView.lazyExperimentDataModel.getExperimentsCreatedByUser(personView.lazyDataModel.loggedInUser)}">
+                        <h:form>
+                            <p:dataTable
+                                    id="ownExperimentTable"
+                                    var="own"
+                                    value="#{experimentView.lazyExperimentDataModel.getExperimentsCreatedByUser(personView.lazyDataModel.loggedInUser)}"
+                                    lazy="true"
+                                    selection="#{experimentView.lazyExperimentDataModel.selected}"
+                                    selectionMode="single"
+                                    rowKey="#{own.id}"
+                            >
+                                <p:ajax
+                                        event="rowSelect"
+                                        listener="#{experimentView.onExperimentSelect}"
+                                        update=":experimentDetailForm:experimentDetail"
+                                        oncomplete="PF('experimentDetailDialog').show()"
+                                />
+                                <p:column id="ownData">
+                                    <table>
+                                        <tr>
+                                            <th colspan="2"><h3>#{own.title}</h3></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><h6>#{own.description}</h6></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">Alter:</td>
+                                            <td style="text-align: left;">#{own.age} Jahre</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">Schwierigkeitsgrad:</td>
+                                            <td style="text-align: left;">#{own.difficulty} von 5</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">Dauer:</td>
+                                            <td style="text-align: left;">etwa #{own.duration} Minuten</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">Durchführung:</td>
+                                            <td style="text-align: left;">#{own.location}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">Bewertung:</td>
+                                            <td>
+                                                <p:rating style="float: left;" value="#{own.rating2}" readonly="true"/>
+                                                (#{own.rating1})
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p:column>
+                                <p:column id="ownPic">
+                                    <p:graphicImage style="height: 280px;" value="#{own.picture.get(0)}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </c:if>
                     <p:commandButton value="Experiment erstellen" actionListener="#{indexView.load('CREATE')}" update=":main"/>
                 </p:tab>
                 <p:tab title="Lesezeichen">

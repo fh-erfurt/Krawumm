@@ -13,6 +13,7 @@ import de.joemiagroup.krawumm.web.BaseView;
 import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -173,5 +174,7 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = lazyExperimentDataModel.gatherData();
     }
 
-
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
+    }
 }
