@@ -43,7 +43,7 @@
                         <p:dataTable
                                 id="ownExperimentTable"
                                 var="own"
-                                value="#{experimentView.lazyExperimentDataModel.putDataForBookmarksTogether(personView.lazyDataModel.showBookmarksOfUser())}"
+                                value="#{experimentView.lazyExperimentDataModel.getExperimentsCreatedByUser(personView.lazyDataModel.loggedInUser)}"
                                 lazy="true"
                                 selection="#{experimentView.lazyExperimentDataModel.selected}"
                                 selectionMode="single"

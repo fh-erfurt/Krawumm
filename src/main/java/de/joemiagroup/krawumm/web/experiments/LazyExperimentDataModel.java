@@ -243,4 +243,13 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         return experiments;
     }
 
+    public List<ExperimentDataView> getExperimentsCreatedByUser(RegisteredUser user) {
+        List<ExperimentDataView> results = new ArrayList<>();
+
+        List<Experiment> experimentList = this.experimentRepository.getExperimentsForUser(user);
+
+        results = this.putDataForExperimentsTogether(experimentList);
+
+        return results;
+    }
 }
