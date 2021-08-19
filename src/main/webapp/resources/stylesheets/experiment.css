@@ -1,3 +1,5 @@
+/* styling for experiments and creating experiments */
+
 @import "variables.css";
 
 /* special headline */
@@ -13,4 +15,22 @@ h5 {
 
 body .ui-datatable thead th {
     color: var(--red);
+}
+
+/* outputLabels for entryCreate.xhtml */
+
+body .ui-panel .ui-panel-content {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--blue);
+    display: block;
+}
+
+.ui-selectoneradio label {
+    color: #495057;
+    font-weight: normal;
+}
+
+.entry-page .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
+    margin-bottom: 10px;
 }

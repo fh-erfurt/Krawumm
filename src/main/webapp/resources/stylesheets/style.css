@@ -14,7 +14,6 @@
   box-sizing: border-box;
   text-decoration: none;
   text-align: center;
-  /*color: var(--neutral);*/
 }
 
 /* filter */
@@ -26,6 +25,10 @@
   margin-top: 10px;
   margin-bottom: 4px;
   display: block;
+}
+
+#filterForm .difficulty-description .ui-outputlabel {
+  font-size: 1rem;
 }
 
 /* rating */

@@ -29,7 +29,7 @@
                 <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <c:if test="#{experimentView.lazyExperimentDataModel.experimentIsReleased(experimentView.lazyExperimentDataModel.selected.id) == false}">
-                        <p:commandButton value="Experiment veröffentlichen" process="@this" action="#{experimentView.releaseExperiment}"/>
+                        <p:commandButton style="margin-right: 10px;" value="Experiment veröffentlichen" process="@this" action="#{experimentView.releaseExperiment}"/>
                     </c:if>
                     <c:if test="#{personView.lazyDataModel.loggedInUser.isAdmin.toString() == 'T'}">
                         <p:commandButton value="Experiment löschen" process="@this" action="#{experimentView.lazyExperimentDataModel.deleteExperimentData(experimentView.lazyExperimentDataModel.selected.id)}" update="main"/>
@@ -60,7 +60,7 @@
                                 <h:form>
                                     <h5>Eigene Bewertung:</h5>
                                     <p:rating style="margin-bottom: 10px;" value="#{experimentView.lazyExperimentDataModel.rating}"/>
-                                    <p:commandButton process="@form" value="bewerten" action="#{experimentView.lazyExperimentDataModel.rateExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}"/>
+                                    <p:commandButton style="margin-bottom: 10px;" process="@form" value="bewerten" action="#{experimentView.lazyExperimentDataModel.rateExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}"/>
                                 </h:form>
                             </c:if>
                             </c:if>
