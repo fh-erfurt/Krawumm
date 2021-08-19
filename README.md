@@ -10,10 +10,10 @@ Krawumm - Experimente für Kinder
 * Michel Rost
 
 ## 1. Einleitung
-Für das Modul Programmierung Java 1 soll in einer Gruppenarbeit die Grundlage für das Projekt in Programmierung Java 2 entstehen. In diesem Semester sollen zunächst die Logik und das Datenmodell für eine Java-basierte Server-Anwendung entwickelt werden. Dazu gehören Klassen und deren Beziehungen, welche die Gegebenheiten der realen Problemwelt modellieren. Die Logik regelt das Zusammenspiel dieser Klassen bzw. bildet die Geschäftsprozesse ab.
+Für das Modul Programmierung Java 2 soll in einer Gruppenarbeit das Projekt aus Programmierung Java 1 erweitert werden. In diesem Semester sollen die Logik und das Datenmodell ergänzt werden. Dazu gehören ein Datenbank und eine “Schnittstelle nach außen”.
 
 ## 2. Ausgangssituation
-Wir mussten uns überlegen, was wir für das Projekt umsetzen wollen und kamen auf die Idee, eine Sammelstelle für Experimente für Kinder zu entwickeln.
+Die Grundlage und Idee für das Projekt existieren. Die Anwendung muss umgesetzt werden.
 
 ## 3. Zielbestimmungen
 Nicht registrierte User sollen sich Experimente ansehen und diese nach bestimmten Kriterien filtern können. Außerdem soll es eine Suchfunktion geben.
@@ -21,9 +21,11 @@ Das Programm soll registrierten Usern die Möglichkeit geben, Experimente einzur
 Administratoren sollen zusätzlich die eingereichten Experimente freischalten können.
 
 ## 4. Verwendete Programme und Tools
-* IntelliJ      - IDE für Java
-* draw.io       - erstellen des Use-Case-Diagramms
-* GitHub        - Versionskontrollsystem
-* Skype         - Kommunikationstool für regelmäßige Meetings
-* WhatsApp      - Kommunikationstool für ausgefallenes Internet und Terminabsprache
-* Google Drive  - Dateiaustausch (kein Code) und erstellen von Präsentationen
+* IntelliJ        - IDE für Java
+* draw.io         - erstellen des Use-Case-Diagramms
+* MySQL Workbench - erstellen des Datenbank-Diagramms
+* GitHub          - Versionskontrollsystem
+* Skype           - Kommunikationstool für regelmäßige Meetings
+* Discord         - Kommunikationstool für Co-Working
+* WhatsApp        - Kommunikationstool für ausgefallenes Internet und Terminabsprache
+* Google Drive    - Dateiaustausch (kein Code) und erstellen von Präsentationen
