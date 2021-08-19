@@ -394,4 +394,12 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         }
         return null;
     }
+
+    public List<Experiment> getExperimentsForUser(RegisteredUser user) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT e FROM Experiment e WHERE e.registeredUser.id = ?1 AND e.isReleased = ?2", Experiment.class);
+        query.setParameter(1, user.getId());
+        query.setParameter(2, TrueFalse.T);
+        return query.getResultList();
+    }
 }

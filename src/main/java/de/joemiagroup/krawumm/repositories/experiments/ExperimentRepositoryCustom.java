@@ -29,4 +29,5 @@ public interface ExperimentRepositoryCustom {
     boolean getBookmarkOfExperiment(RegisteredUser user, Experiment experiment);
     Bookmark getBookmarkDataOfExperiment(RegisteredUser user, Experiment experiment);
     List<Experiment> useFilterOnExperiment(FilterView filters);
+    List<Experiment> getExperimentsForUser(RegisteredUser user);
 }
