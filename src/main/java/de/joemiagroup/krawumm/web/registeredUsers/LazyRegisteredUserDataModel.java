@@ -21,12 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepositoryCustom;
-import jdk.jfr.Registered;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -35,7 +30,6 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-import javax.faces.application.FacesMessage;
 
 @RequiredArgsConstructor(staticName = "of")
 public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
