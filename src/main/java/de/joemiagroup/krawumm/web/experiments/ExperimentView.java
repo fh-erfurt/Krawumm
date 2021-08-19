@@ -133,7 +133,7 @@ public class ExperimentView extends BaseView<Experiment> {
     }
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
-        this.lazyExperimentDataModel.setNewData(event.getObject());
+        this.lazyExperimentDataModel.setSelected(event.getObject());
     }
 
     public void searchForStringInName () {
