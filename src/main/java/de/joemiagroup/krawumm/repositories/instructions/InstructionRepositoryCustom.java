@@ -21,4 +21,5 @@ public interface InstructionRepositoryCustom {
 
     long countByParameters(Map<String, FilterMeta> filters);
     List<String> getInstructionsForExperiment (Experiment experiment);
+    List<Instruction> getAllInstructions();
 }

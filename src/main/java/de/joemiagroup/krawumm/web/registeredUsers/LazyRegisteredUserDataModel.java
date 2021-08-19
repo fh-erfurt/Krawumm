@@ -30,7 +30,13 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-
+/**
+ * This class communicates with the repositories to secure the database
+ * <br>
+ *
+ * @author Johannes Otto
+ *
+ */
 @RequiredArgsConstructor(staticName = "of")
 public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     private static final long serialVersionUID = 3843316090759353348L;
@@ -87,6 +93,7 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     public String getRowKey(RegisteredUser object) {
         return String.valueOf(object.getId());
     }
+
 
     public String changePassword(){
         RegisteredUser user;

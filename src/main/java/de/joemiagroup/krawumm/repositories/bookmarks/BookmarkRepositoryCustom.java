@@ -19,5 +19,6 @@ public interface BookmarkRepositoryCustom {
     List<Bookmark> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);
 
     long countByParameters(Map<String, FilterMeta> filters);
+    List<Bookmark> getAllBookmarks();
 
 }

@@ -106,4 +106,19 @@ public class PicturesRepositoryImpl implements PicturesRepositoryCustom {
 
         return results;
     }
+
+    /**
+     *This method gives all existing Pictures
+     *
+     *
+     *
+     * @return List<Pictures> holds all existing Pictures
+     */
+    @Override
+    public List<Pictures> getAllPictures() {
+        TypedQuery<Pictures> query =
+                em.createQuery("SELECT c FROM Pictures c", Pictures.class);
+        List<Pictures> results = query.getResultList();
+        return results;
+    }
 }

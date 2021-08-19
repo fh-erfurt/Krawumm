@@ -20,4 +20,6 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
 
     List<Material> findMaterialByName(String name);
     Material getLastInsertedMaterial();
+    List<Material> getAllMaterials();
+    Material getMaterialById(long id);
 }

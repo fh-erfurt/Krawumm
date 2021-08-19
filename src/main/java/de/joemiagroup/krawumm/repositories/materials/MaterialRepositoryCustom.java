@@ -23,4 +23,6 @@ public interface MaterialRepositoryCustom {
 
     List<Material> findMaterialByName(String name);
     Material getLastInsertedMaterial();
+    List<Material> getAllMaterials();
+    Material getMaterialById(long id);
 }

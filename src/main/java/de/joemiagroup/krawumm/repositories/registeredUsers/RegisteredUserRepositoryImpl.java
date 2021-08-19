@@ -175,6 +175,21 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
     }
 
     /**
+     *This method gives all existing RegisteredUsers
+     *
+     *
+     *
+     * @return List<RegisteredUser> holds all existing RegisteredUsers
+     */
+    @Override
+    public List<RegisteredUser> getAllRegisteredUsers() {
+        TypedQuery<RegisteredUser> query =
+                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
+        List<RegisteredUser> results = query.getResultList();
+        return results;
+    }
+
+    /**
      *This method tests if a Usernam is already used
      *
      * @param username

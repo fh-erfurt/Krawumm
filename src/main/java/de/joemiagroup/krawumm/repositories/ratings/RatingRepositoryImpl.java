@@ -90,4 +90,19 @@ public class RatingRepositoryImpl implements RatingRepositoryCustom {
 
         return results;
     }
+
+    /**
+     *This method gives all existing Ratings
+     *
+     *
+     *
+     * @return List<Rating> holds all existing Ratings
+     */
+    @Override
+    public List<Rating> getAllRatings() {
+        TypedQuery<Rating> query =
+                em.createQuery("SELECT c FROM Rating c", Rating.class);
+        List<Rating> results = query.getResultList();
+        return results;
+    }
 }

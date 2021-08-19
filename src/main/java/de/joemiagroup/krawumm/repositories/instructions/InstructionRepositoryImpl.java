@@ -90,4 +90,19 @@ public class InstructionRepositoryImpl implements InstructionRepositoryCustom {
 
         return results;
     }
+
+    /**
+     *This method gives all existing Instructions
+     *
+     *
+     *
+     * @return List<Instruction> holds all existing Instructions
+     */
+    @Override
+    public List<Instruction> getAllInstructions() {
+        TypedQuery<Instruction> query =
+                em.createQuery("SELECT c FROM Instruction c", Instruction.class);
+        List<Instruction> results = query.getResultList();
+        return results;
+    }
 }

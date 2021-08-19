@@ -24,4 +24,5 @@ public interface PicturesRepositoryCustom {
 
     List<String> getPicturesForExperiment(Experiment data);
     List<String> getPicturesForComment(Comment data);
+    List<Pictures> getAllPictures();
 }

@@ -27,5 +27,6 @@ public interface RegisteredUserRepositoryCustom {
     List<Comment> findCommentsOfUser(RegisteredUser user);
     List<Rating> findRatingsOfUser(RegisteredUser user);
     List<Experiment> findExperimentsOfUser(RegisteredUser user);
+    List<RegisteredUser> getAllRegisteredUsers();
 
 }

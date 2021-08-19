@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,21 @@ public class BookmarkRepositoryImpl implements BookmarkRepositoryCustom {
         query.where(predicates.toArray(new Predicate[0]));
 
         return em.createQuery(query).getSingleResult();
+    }
+
+    /**
+     *This method gives all existing Bookmarks
+     *
+     *
+     *
+     * @return List<Bookmark> holds all existing Bookmarks
+     */
+    @Override
+    public List<Bookmark> getAllBookmarks() {
+        TypedQuery<Bookmark> query =
+                em.createQuery("SELECT c FROM Bookmark c", Bookmark.class);
+        List<Bookmark> results = query.getResultList();
+        return results;
     }
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<Bookmark> bookmark, final Map<String, FilterMeta> filters){

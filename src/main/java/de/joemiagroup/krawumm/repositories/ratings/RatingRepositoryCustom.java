@@ -22,4 +22,5 @@ public interface RatingRepositoryCustom {
     long countByParameters(Map<String, FilterMeta> filters);
 
     float getRatingForExperiment(Experiment data);
+    List<Rating> getAllRatings();
 }

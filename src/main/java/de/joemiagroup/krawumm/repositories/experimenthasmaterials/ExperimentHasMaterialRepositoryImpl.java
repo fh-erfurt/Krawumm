@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,21 @@ public class ExperimentHasMaterialRepositoryImpl implements ExperimentHasMateria
         query.where(predicates.toArray(new Predicate[0]));
 
         return em.createQuery(query).getSingleResult();
+    }
+
+    /**
+     *This method gives all existing ExperimentHasMaterial
+     *
+     *
+     *
+     * @return List<ExperimentHasMaterial> holds all existing ExperimentHasMaterial
+     */
+    @Override
+    public List<ExperimentHasMaterial> getAllExperimentHasMaterials() {
+        TypedQuery<ExperimentHasMaterial> query =
+                em.createQuery("SELECT c FROM ExperimentHasMaterial c", ExperimentHasMaterial.class);
+        List<ExperimentHasMaterial> results = query.getResultList();
+        return results;
     }
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<ExperimentHasMaterial> experimenthasmaterial, final Map<String, FilterMeta> filters){
