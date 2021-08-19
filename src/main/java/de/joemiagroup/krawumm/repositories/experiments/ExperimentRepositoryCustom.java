@@ -23,9 +23,8 @@ public interface ExperimentRepositoryCustom {
     List<String> getMaterialsForExperiment(Experiment experiment);
     Experiment getExperimentById (long id);
     Experiment getLastInsertedExperiment();
-    List<Experiment> useFilterOnAllExperiments(FilterView filters);
     int getRatingOfExperimentForUser(RegisteredUser user, Experiment experiment);
     boolean getBookmarkOfExperiment(RegisteredUser user, Experiment experiment);
     Bookmark getBookmarkDataOfExperiment(RegisteredUser user, Experiment experiment);
-
+    List<Experiment> useFilterOnExperiment(FilterView filters);
 }

@@ -130,6 +130,7 @@ public class ExperimentView extends BaseView<Experiment> {
 
     public void resetEverything() {
         this.data = this.lazyExperimentDataModel.gatherData();
+        this.lazyExperimentDataModel.setFilter(new FilterView());
     }
 
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {

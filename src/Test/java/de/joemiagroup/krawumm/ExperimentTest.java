@@ -2,6 +2,7 @@ package de.joemiagroup.krawumm;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import de.joemiagroup.krawumm.trash.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

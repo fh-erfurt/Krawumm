@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm;
+package de.joemiagroup.krawumm.trash;
 
 /**
  * This class describes the attributes used in Form and Experiment and their setter and getter functions

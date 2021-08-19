@@ -2,8 +2,6 @@ package de.joemiagroup.krawumm.repositories.experiments;
 
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.*;
-import de.joemiagroup.krawumm.web.experiments.ExperimentDataView;
-import de.joemiagroup.krawumm.web.experiments.ExperimentView;
 import de.joemiagroup.krawumm.web.experiments.FilterView;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -16,6 +14,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
@@ -163,10 +162,156 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results.get(lastPosition);
     }
 
-    public List<Experiment> useFilterOnAllExperiments(FilterView filters) {
-        List<Experiment> experimentList = new ArrayList<>();
+    @Override
+    public List<Experiment> useFilterOnExperiment(FilterView filters){
 
-        return experimentList;
+        // list which gets filled with the result Experiments
+        List<Experiment> filterList;
+        // lists that will get filled with the results of each filter individually
+        List<Experiment> ageList = new ArrayList<Experiment>();
+        List<Experiment> difficultyList = new ArrayList<Experiment>();
+        List<Experiment> finalRatingList = new ArrayList<Experiment>();
+        List<Experiment> durationList = new ArrayList<Experiment>();
+        List<Experiment> indoorOutdoorList = new ArrayList<Experiment>();
+        // get list of all Experiments
+        List<Experiment> experimentList = this.getAllExperiments(TrueFalse.T);
+
+        // puts all Experiments, which match the filter if the filter is set, in their specific list
+        if (!Objects.isNull(filters.getMinAge())) {
+            for (Experiment experiment : experimentList) {
+                if (filters.getMinAge() >= experiment.getAge()) {
+                    ageList.add(experiment);
+                }
+            }
+        }
+
+        if (!Objects.isNull(filters.getMaxDifficulty())) {
+            for (Experiment experiment : experimentList) {
+                if (filters.getMaxDifficulty() >= experiment.getDifficulty()) {
+                    difficultyList.add(experiment);
+                }
+            }
+        }
+
+        if (!Objects.isNull(filters.getMinRating())) {
+            for (Experiment experiment : experimentList) {
+                TypedQuery<Rating> query =
+                        em.createQuery("SELECT r FROM Rating r WHERE r.experiment.id = ?1", Rating.class);
+                query.setParameter(1, experiment.getId());
+                List<Rating> ratingList = query.getResultList();
+
+                float finalRating = 0.0f;
+
+                for (Rating rating : ratingList) {
+                    finalRating = finalRating + rating.getRatingValue();
+                }
+
+                finalRating = finalRating/ratingList.size();
+
+                if (filters.getMinRating() <= finalRating) {
+                    finalRatingList.add(experiment);
+                }
+            }
+        }
+
+        if (!Objects.isNull(filters.getMaxTime())) {
+            for (Experiment experiment : experimentList) {
+                if (filters.getMaxTime() >= experiment.getDuration()) {
+                    durationList.add(experiment);
+                }
+            }
+        }
+
+        if (!Objects.isNull(filters.getLocation())) {
+            IndoorOutdoor loc;
+            if (filters.getLocation().equals("indoor")) {
+                loc = IndoorOutdoor.I;
+            } else {
+                loc = IndoorOutdoor.O;
+            }
+            for (Experiment experiment : experimentList) {
+                if (loc == experiment.getIndoorOutdoor()) {
+                    indoorOutdoorList.add(experiment);
+                }
+            }
+        }
+
+
+        // compares all existing filter lists and puts all Experiments, which match all set filters, in the return/filterList
+        // if age filter was set check if other filters were set
+        if (!ageList.isEmpty()){
+            filterList = ageList;
+            if (!difficultyList.isEmpty()){
+                filterList = compare(filterList, difficultyList);
+            }
+            if (!finalRatingList.isEmpty()){
+                filterList = compare(filterList, finalRatingList);
+            }
+            if (!durationList.isEmpty()){
+                filterList = compare(filterList, durationList);
+            }
+            if (!indoorOutdoorList.isEmpty()){
+                filterList = compare(filterList, indoorOutdoorList);
+            }
+        }
+        // age filter not set check if difficulty filter was set and check if other filters were set
+        else if (!difficultyList.isEmpty()){
+            filterList = difficultyList;
+            if (!finalRatingList.isEmpty()){
+                filterList = compare(filterList, finalRatingList);
+            }
+            if (!durationList.isEmpty()){
+                filterList = compare(filterList, durationList);
+            }
+            if (!indoorOutdoorList.isEmpty()){
+                filterList = compare(filterList, indoorOutdoorList);
+            }
+        }
+        // age and difficulty filter not set check if finalRating filter was set and check if other filters were set
+        else if (!finalRatingList.isEmpty()){
+            filterList = finalRatingList;
+            if (!durationList.isEmpty()){
+                filterList = compare(filterList, durationList);
+            }
+            if (!indoorOutdoorList.isEmpty()){
+                filterList = compare(filterList, indoorOutdoorList);
+            }
+        }
+        // age, difficulty and finalRating filter not set check if duration filter was set and check if other filters were set
+        else if (!durationList.isEmpty()){
+            filterList = durationList;
+            if (!indoorOutdoorList.isEmpty()){
+                filterList = compare(filterList, indoorOutdoorList);
+            }
+        }
+        // age, difficulty, finalRating and duration filter not set check if indoorOutdoor filter was set
+        else if (!indoorOutdoorList.isEmpty()){
+            filterList = indoorOutdoorList;
+        }
+        // no filters set show all Experiments
+        else filterList = this.getAllExperiments(TrueFalse.T);
+        return filterList;
+    }
+
+    private List<Experiment> compare(List<Experiment> resultList, List<Experiment> compareList ){
+        List<Experiment> removeList = new ArrayList<>();
+        for (Experiment experimentResult : resultList) {
+            boolean existsInList = false;
+            for (Experiment experimentCompare : compareList) {
+                if (experimentResult == experimentCompare) {
+                    existsInList = true;
+                    break;
+                }
+            }
+            if (!existsInList){
+                //resultList.remove(experimentResult);
+                removeList.add(experimentResult);
+            }
+        }
+        for (Experiment removeExperiment : removeList) {
+            resultList.remove(removeExperiment);
+        }
+        return resultList;
     }
 
     @Override

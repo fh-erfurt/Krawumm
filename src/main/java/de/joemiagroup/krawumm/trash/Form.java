@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm;
+package de.joemiagroup.krawumm.trash;
 
 /**
  * this class is a subclass of ExperimentData gets attributes(+setter and getter)(same as used in Experiment)

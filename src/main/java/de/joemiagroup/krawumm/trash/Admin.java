@@ -1,4 +1,4 @@
-package de.joemiagroup.krawumm;
+package de.joemiagroup.krawumm.trash;
 
 /**
  * This class is asubclass of RegisterdUser
