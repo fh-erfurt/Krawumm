@@ -21,6 +21,7 @@
 }
 
 /* all buttons */
+
 button.ui-button {
     background-color: var(--blue);
     border: 0;
@@ -33,7 +34,8 @@ button.ui-button:hover {
     color: white;
 }
 
-/* buttons for login and signup */
+/* buttons for login, signup and account */
+
 .login-page button.ui-button,
 .signup-page button.ui-button,
 .account-page button.ui-button {
@@ -41,6 +43,7 @@ button.ui-button:hover {
 }
 
 /* account tabs */
+
 body .ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active a {
     color: var(--red);
 }
@@ -55,4 +58,14 @@ body .ui-tabs.ui-tabs-top .ui-tabs-nav li a:hover {
 
 body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active {
     border-color: var(--blue);
+}
+
+/* account page */
+
+.account-page .account-info .ui-outputlabel {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #495057;
+    margin-bottom: 10px;
+    display: block;
 }

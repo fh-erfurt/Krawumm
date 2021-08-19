@@ -1,5 +1,7 @@
 @import "variables.css";
 
+/* special headline */
+
 h5 {
     font-size: 1rem;
     color: var(--blue);
@@ -7,10 +9,7 @@ h5 {
     margin-top: 6px;
 }
 
-/* geht noch nicht */
-#experimentDetail p {
-    font-width: 600;
-}
+/* table header */
 
 body .ui-datatable thead th {
     color: var(--red);

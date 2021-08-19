@@ -27,9 +27,9 @@
 
         <h3>Kontoinformationen</h3>
         <p:outputLabel value="Name"/>
-        <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.userName}"/>
+        <div class="account-info"> <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.userName}"/> </div>
         <p:outputLabel value="E-Mail"/>
-        <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.email}"/>
+    <div class="account-info"> <p:outputLabel value="#{personView.lazyDataModel.loggedInUser.email}"/> </div>
 
         <p:commandButton value="Ausloggen" process="@this" action="#{personView.onClickLogout}" update="main"/>
         <p:commandButton value="Passwort ändern" process="@this" onclick="PF('pwChange').show()"/>
@@ -67,6 +67,7 @@
         <h:form>
             <p>Bitte gib dein altes Passwort ein:</p>
             <p:password
+                    style="margin-bottom: 10px;"
                     id="oldPassword"
                     value="#{personView.lazyDataModel.oldPassword}"
                     toggleMask="true"
@@ -76,6 +77,7 @@
             />
             <p>Bitte gib dein neues Passwort </p>
             <p:password
+                    style="margin-bottom: 10px;"
                     id="newPassword"
                     value="#{personView.lazyDataModel.newPassword}"
                     toggleMask="true"
@@ -84,18 +86,13 @@
                     requiredMessage="Passwort muss angegeben werden2."
             />
             <p:commandButton process="@this" value="Abbrechen" update="main"/>
-            <p:commandButton value="Passwort ändern" process="@form" update="main" action="#{personView.onClickChangePassword}"/>
+            <p:commandButton style="display: block; margin: 10px auto;" value="Passwort ändern" process="@form" update="main" action="#{personView.onClickChangePassword}"/>
         </h:form>
     </p:dialog>
 
     <p:dialog header="Account löschen" widgetVar="deleteAcc" minHeight="100" width="350" showEffect="fade">
-        <p>Möchten sie ihren Account wirklich löschen?</p>
+        <p style="margin-bottom: 10px;">Möchten sie ihren Account wirklich löschen?</p>
         <p:commandButton process="@this" value="Abbrechen" update="main"/>
-        <p:commandButton process="@this" value="Account löschen" action="#{personView.onClickDeleteEntry}" update="main"/>
+        <p:commandButton style="display: block; margin: 10px auto;" process="@this" value="Account löschen" action="#{personView.onClickDeleteEntry}" update="main"/>
     </p:dialog>
-
-    <p:confirmDialog global="true" width="350" responsive="true" showEffect="fade" hideEffect="fade">
-        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" />
-    </p:confirmDialog>
 </ui:composition>

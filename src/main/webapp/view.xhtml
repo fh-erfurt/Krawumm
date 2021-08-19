@@ -29,7 +29,7 @@
                 <p:column rendered="#{not empty experimentView.lazyExperimentDataModel.selected}">
                     <div>
                         <h2>#{experimentView.lazyExperimentDataModel.selected.title}</h2>
-                        <p>von #{experimentView.lazyExperimentDataModel.selected.creator}</p>
+                        <h4>von #{experimentView.lazyExperimentDataModel.selected.creator}</h4>
                     </div>
                     <div>
                         <h5>Mindestalter:</h5>
@@ -61,10 +61,10 @@
                         <c:if test="#{personView.lazyDataModel.loggedIn == true}">
                             <c:if test="#{not empty experimentView.lazyExperimentDataModel.selected}">
                                 <c:if test="#{experimentView.lazyExperimentDataModel.getBookmarkOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}">
-                                    <p:commandButton process="@this" value="Lesezeichen entfernen" action="#{experimentView.lazyExperimentDataModel.deleteBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
+                                    <p:commandButton style="margin-bottom: 10px;" process="@this" value="Lesezeichen entfernen" action="#{experimentView.lazyExperimentDataModel.deleteBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
                                 </c:if>
                                 <c:if test="#{!experimentView.lazyExperimentDataModel.getBookmarkOfExperiment(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}">
-                                    <p:commandButton process="@this" value="Lesezeichen hinzufügen" action="#{experimentView.lazyExperimentDataModel.createBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
+                                    <p:commandButton style="margin-bottom: 10px;" process="@this" value="Lesezeichen hinzufügen" action="#{experimentView.lazyExperimentDataModel.createBookmark(personView.lazyDataModel.loggedInUser, experimentView.lazyExperimentDataModel.selected.id)}" update=":experimentDetailForm"/>
                                 </c:if>
                             </c:if>
                         </c:if>
@@ -151,6 +151,7 @@
             />
             <h:outputText id="display"/>
             <p:commandButton
+                    style="display: block; margin: 10px auto;"
                     value="Absenden"
                     action="#{experimentView.writeComment(experimentView.lazyExperimentDataModel.selected.id,
                                                                               personView.lazyDataModel.loggedInUser)}"
