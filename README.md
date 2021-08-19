@@ -1,7 +1,6 @@
 # Krawumm
 Krawumm - Experimente für Kinder
 
-[![Build Status](https://github.com/fh-erfurt/Krawumm/workflows/build/badge.svg)](https://github.com/fh-erfurt/Krawumm/actions)
 
 ## Ein Projekt von:
 * Marlene Bauch
