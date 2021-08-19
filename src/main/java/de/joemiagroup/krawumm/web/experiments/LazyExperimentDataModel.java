@@ -7,6 +7,8 @@ import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
+import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.web.registeredUsers.RegisteredUserView;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,8 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final InstructionRepository instructionRepository;
     private final CommentRepository commentRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final RegisteredUserRepository registeredUserRepository;
+    private final ExperimentHasMaterialRepository experimentHasMaterialRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
 
@@ -241,6 +245,67 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         List<Experiment> experimentList = this.experimentRepository.getAllExperiments(TrueFalse.F);
         List<ExperimentDataView> experiments = this.putDataForExperimentsTogether(experimentList);
         return experiments;
+    }
+
+    public boolean experimentIsReleased(long experimentId){
+        boolean result = this.experimentRepository.isExperimentReleased(experimentId);
+        return result;
+    }
+
+    public void releaseSelectedExperiment(){
+        RegisteredUser creator = this.registeredUserRepository.findUserDataByName(this.getSelected().getCreator());
+        Experiment experiment = new Experiment();
+        experiment.setId(this.getSelected().getId());
+        experiment.setExperimentName(this.getSelected().getTitle());
+        experiment.setDescription(this.getSelected().getDescription());
+        experiment.setRegisteredUser(creator);
+        if(this.getSelected().getLocation() == "draußen"){
+            experiment.setIndoorOutdoor(IndoorOutdoor.O);
+        } else experiment.setIndoorOutdoor(IndoorOutdoor.I);
+        experiment.setAge(this.getSelected().getAge());
+        experiment.setDifficulty(this.getSelected().getDifficulty());
+        experiment.setDuration(this.getSelected().getDuration());
+        experiment.setVideo(this.getSelected().getVideo());
+        experiment.setIsReleased(TrueFalse.T);
+        this.experimentRepository.save(experiment);
+    }
+
+    public void deleteExperimentData(long id){
+
+        Experiment experiment = this.experimentRepository.getExperimentById(id);
+
+        //delete Comments of experiment
+        List<Comment> comments = this.experimentRepository.getCommentsForExperiment(experiment);
+        for(Comment c : comments){
+            this.commentRepository.delete(c);
+        }
+        //delete Ratings of experiment
+        List<Rating> ratings = this.experimentRepository.getRatingsForExperiment(experiment);
+        for(Rating r : ratings){
+            this.ratingRepository.delete(r);
+        }
+        //delete Instructions of Experiment
+        List<Instruction> instructions = this.experimentRepository.getInstructionsForExperiment(experiment);
+        for(Instruction i : instructions){
+            this.instructionRepository.delete(i);
+        }
+        //delete Pictures of Experiment
+        List<Pictures> pictures = this.experimentRepository.getPicturesForExperiment(experiment);
+        for(Pictures p : pictures){
+            this.picturesRepository.delete(p);
+        }
+        //delete Experiment has Material of experiment
+        List<ExperimentHasMaterial> experimentHasMaterials = this.experimentRepository.getExperimentHasMaterialsForExperiment(experiment);
+        for(ExperimentHasMaterial ehs : experimentHasMaterials){
+            this.experimentHasMaterialRepository.delete(ehs);
+        }
+        //delete Bookmarks of experiment
+            List<Bookmark> bookmarks = this.experimentRepository.getBookmarksForExperiment(experiment);
+            for(Bookmark b : bookmarks){
+                this.bookmarkRepository.delete(b);
+            }
+        //delete experiment
+        this.experimentRepository.delete(experiment);
     }
 
 }

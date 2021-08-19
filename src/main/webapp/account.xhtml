@@ -25,6 +25,7 @@
         xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <div class="account-page">
+        <c:if test="#{personView.lazyDataModel.loggedIn == true}">
 
         <h3>Kontoinformationen</h3>
         <p:outputLabel value="Name"/>
@@ -211,8 +212,12 @@
                 </c:if>
             </p:tabView>
         </div>
-
+        </c:if>
     </div>
+
+    <c:if test="#{personView.lazyDataModel.loggedIn == false}">
+        <ui:include src="login.xhtml"/>
+    </c:if>
 
     <p:dialog header="Passwort ändern" widgetVar="pwChange" minHeight="100" width="350" showEffect="fade">
         <h:form>

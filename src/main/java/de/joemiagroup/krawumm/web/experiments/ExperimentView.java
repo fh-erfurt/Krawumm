@@ -3,10 +3,12 @@ package de.joemiagroup.krawumm.web.experiments;
 import de.joemiagroup.krawumm.domains.*;
 import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
+import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import de.joemiagroup.krawumm.web.BaseView;
 import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +31,10 @@ public class ExperimentView extends BaseView<Experiment> {
     @Autowired
     public ExperimentView(final ExperimentRepository repository, final RatingRepository ratingRepository,
                           final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
-                          final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository) {
+                          final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository,
+                          final RegisteredUserRepository registeredUserRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository) {
         this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository, instructionRepository,
-                                                                  commentRepository, bookmarkRepository);
+                                                                  commentRepository, bookmarkRepository, registeredUserRepository, experimentHasMaterialRepository);
         this.data = lazyExperimentDataModel.gatherData();
     }
 
@@ -62,6 +66,7 @@ public class ExperimentView extends BaseView<Experiment> {
     private int numberInstruction = 1;
     private int numberMaterial = 1;
     private int numberPicture = 1;
+
 
     private final LazyExperimentDataModel lazyExperimentDataModel;
 
@@ -153,5 +158,20 @@ public class ExperimentView extends BaseView<Experiment> {
 
         }
     }
+
+    public void releaseExperiment(){
+        this.editMode.set(true);
+        this.lazyExperimentDataModel.releaseSelectedExperiment();
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "Experiment wurde veröffentlicht");
+        this.data = lazyExperimentDataModel.gatherData();
+    }
+
+    public void deleteExperiment(long id){
+        this.editMode.set(false);
+        this.lazyExperimentDataModel.deleteExperimentData(id);
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "Experiment wurde gelöscht");
+        this.data = lazyExperimentDataModel.gatherData();
+    }
+
 
 }

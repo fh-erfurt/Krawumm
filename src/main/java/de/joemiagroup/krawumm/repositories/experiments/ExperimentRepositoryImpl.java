@@ -82,6 +82,17 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
     }
 
     @Override
+    public boolean isExperimentReleased(long id) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT c FROM Experiment c WHERE c.id = ?1", Experiment.class);
+        query.setParameter(1, id);
+        List<Experiment> results = query.getResultList();
+        if (results.get(0).getIsReleased().equals(TrueFalse.T)){
+            return true;
+        } else return false;
+    }
+
+    @Override
     public List<Rating> getRatingsForExperiment(Experiment data) {
         TypedQuery<Rating> query =
                 em.createQuery("SELECT c FROM Rating c WHERE c.experiment.id = ?1", Rating.class);
@@ -107,6 +118,16 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
                 em.createQuery("SELECT c FROM Pictures c WHERE c.experiment.id = ?1", Pictures.class);
         query.setParameter(1, data.getId());
         List<Pictures> results = query.getResultList();
+
+        return results;
+    }
+
+    @Override
+    public List<Bookmark> getBookmarksForExperiment(Experiment data) {
+        TypedQuery<Bookmark> query =
+                em.createQuery("SELECT c FROM Bookmark c WHERE c.experiment.id = ?1", Bookmark.class);
+        query.setParameter(1, data.getId());
+        List<Bookmark> results = query.getResultList();
 
         return results;
     }

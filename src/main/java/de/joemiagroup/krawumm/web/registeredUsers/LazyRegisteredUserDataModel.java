@@ -228,6 +228,13 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
                 this.experimentHasMaterialRepository.delete(ehs);
             }
         }
+        //delete Bookmarks of experiments
+        for(Experiment e : ownExperiments){
+            List<Bookmark> bookmarks = this.experimentRepository.getBookmarksForExperiment(e);
+            for(Bookmark b : bookmarks){
+                this.bookmarkRepository.delete(b);
+            }
+        }
         //delete Own experiments
         for(Experiment e : ownExperiments){
             this.experimentRepository.delete(e);
