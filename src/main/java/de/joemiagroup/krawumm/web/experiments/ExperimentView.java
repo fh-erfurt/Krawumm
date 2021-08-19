@@ -125,25 +125,57 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = this.lazyExperimentDataModel.useFiltersOnExperimentList();
     }
 
+    /**
+     * This function resets filters and search
+     *
+     * no return value
+     */
     public void resetEverything() {
         this.data = this.lazyExperimentDataModel.gatherData();
         this.lazyExperimentDataModel.setFilter(new FilterView());
     }
 
+    /**
+     * This function saves the selected experiment in a variable
+     *
+     * @param event selected experiment
+     *
+     * no return value
+     */
     public void onExperimentSelect(SelectEvent<ExperimentDataView> event) {
         this.lazyExperimentDataModel.setSelected(event.getObject());
     }
 
+    /**
+     * This function searches for experiments based on a string
+     *
+     * no return value
+     */
     public void searchForStringInName () {
         this.data = lazyExperimentDataModel.usingSearch(search);
         this.search = "";
     }
 
+    /**
+     * This function calls a function to save a comment into the database and updates the data that is shown on the website
+     *
+     * @param experimentId id of an experiment
+     * @param user specific user
+     *
+     * no return value
+     */
     public void writeComment (long experimentId, RegisteredUser user) {
         this.lazyExperimentDataModel.writeComment(experimentId, user);
         this.data = lazyExperimentDataModel.gatherData();
     }
 
+    /**
+     * This function calls a function to save the data of a new experiment to the database
+     *
+     * @param user specific user
+     *
+     * no return value
+     */
     public void onClickCreateExperiment(RegisteredUser user){
         this.editMode.set(false);
         this.lazyExperimentDataModel.createExperiment(user);
@@ -167,6 +199,11 @@ public class ExperimentView extends BaseView<Experiment> {
         this.renderMessage(FacesMessage.SEVERITY_INFO, "Formular wurde eingereicht.");
     }
 
+    /**
+     * This function calls a function to set an experiment is_released to true
+     *
+     * no return value
+     */
     public void releaseExperiment(){
         this.editMode.set(true);
         this.lazyExperimentDataModel.releaseSelectedExperiment();
@@ -174,6 +211,13 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = lazyExperimentDataModel.gatherData();
     }
 
+    /**
+     * This function calls a function to delete an experiment
+     *
+     * @param id primary key of an experiment
+     *
+     * no return value
+     */
     public void deleteExperiment(long id){
         this.editMode.set(false);
         this.lazyExperimentDataModel.deleteExperimentData(id);
@@ -181,6 +225,13 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = lazyExperimentDataModel.gatherData();
     }
 
+    /**
+     * This function navigates between the different tabs for create experiment wizard
+     *
+     * @param event whether it is a tab forwards or backwards
+     *
+     * @return which tab to show
+     */
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }

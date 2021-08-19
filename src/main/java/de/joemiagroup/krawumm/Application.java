@@ -9,6 +9,14 @@ import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 import java.util.Arrays;
 
+/**
+ * This class is the base of the whole project and starts the application/website
+ * <br>
+ *
+ * @author Jessica Eckhardtsberg
+ *
+ */
+
 @SpringBootApplication
 public class Application {
 

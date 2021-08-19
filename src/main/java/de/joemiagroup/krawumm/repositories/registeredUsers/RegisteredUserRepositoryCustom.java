@@ -11,7 +11,7 @@ import java.util.Map;
  * This interface declares methods for the RegisteredUserRepositoryImpl
  * <br>
  *
- * @author Jessica Eckhardtsberg
+ * @author Johannes Otto
  *
  */
 

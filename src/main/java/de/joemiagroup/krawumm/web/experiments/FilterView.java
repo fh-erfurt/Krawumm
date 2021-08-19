@@ -1,8 +1,16 @@
 package de.joemiagroup.krawumm.web.experiments;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+/**
+ * This class is a template for the filters
+ * <br>
+ *
+ * @author Michel Rost
+ *
+ */
+
 
 @Getter
 @Setter
