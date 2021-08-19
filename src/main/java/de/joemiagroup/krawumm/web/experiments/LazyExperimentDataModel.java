@@ -15,6 +15,7 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -137,6 +138,14 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         }
 
         return dataList;
+    }
+
+    public List<ExperimentDataView> putDataForBookmarksTogether(List<Bookmark> bookmarks) {
+        List<Experiment> experimentList = new ArrayList<>();
+        for (Bookmark b : bookmarks) {
+            experimentList.add(b.getExperiment());
+        }
+        return this.putDataForExperimentsTogether(experimentList);
     }
 
     public void writeComment(long experimentId, RegisteredUser user) {
