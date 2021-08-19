@@ -11,9 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExperimentHasMaterial extends BaseEntity{
-    @Id
-    @GeneratedValue
-    private Long id;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Material material;
     @ManyToOne(cascade = CascadeType.MERGE)

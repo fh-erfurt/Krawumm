@@ -12,9 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 public class Experiment extends BaseEntity{
-    @Id
-    @GeneratedValue
-    private Long id;
+
     private String experimentName;
     private String description;
     private IndoorOutdoor indoorOutdoor;

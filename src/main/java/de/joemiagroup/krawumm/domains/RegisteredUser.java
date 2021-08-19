@@ -12,9 +12,6 @@ import javax.persistence.*;
 public class RegisteredUser extends BaseEntity{
     private static final long serialVersionUID = -3990512965359939849L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private String password;
     private String email;
     private String userName;
