@@ -7,6 +7,7 @@ import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.materials.MaterialRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
@@ -29,6 +30,8 @@ import de.joemiagroup.krawumm.web.BaseView;
 import de.joemiagroup.krawumm.web.IndexView;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 @ManagedBean("personView")
 @ViewScoped
@@ -41,10 +44,16 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     public RegisteredUserView(final RegisteredUserRepository repository, final RatingRepository ratingRepository,
                               final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
                               final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository,
-                              final ExperimentRepository experimentRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository) {
+                              final ExperimentRepository experimentRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository,
+                              final MaterialRepository materialRepository) {
         this.lazyDataModel = LazyRegisteredUserDataModel.of(repository, commentRepository, bookmarkRepository, ratingRepository,
-                experimentRepository, picturesRepository, instructionRepository,experimentHasMaterialRepository);
+                experimentRepository, picturesRepository, instructionRepository,experimentHasMaterialRepository, materialRepository);
         this.lazyDataModel.setSelected(new RegisteredUser());
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void initUsers() {
+        this.lazyDataModel.initUserData();
     }
 
     @Getter

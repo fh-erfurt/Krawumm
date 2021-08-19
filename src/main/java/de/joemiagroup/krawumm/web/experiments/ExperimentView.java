@@ -18,6 +18,8 @@ import lombok.Setter;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -51,6 +53,10 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = lazyExperimentDataModel.gatherData();
     }
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void initExperiment() {
+
+    }
 
     private List<String> instructionText;
     private String instruction = "";
