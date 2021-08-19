@@ -4,10 +4,12 @@ import de.joemiagroup.krawumm.domains.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource(collectionResourceRel = "materials", path = "materials")
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     void deleteMaterialById(Long id);
 
-    Material findMaterialByName(String name);
+    List<Material> findMaterialByName(String name);
     Material getLastInsertedMaterial();
 }

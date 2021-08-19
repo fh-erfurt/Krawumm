@@ -122,9 +122,9 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
 
     public boolean findUserByName(String username) {
          TypedQuery<RegisteredUser> query =
-                em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
+                em.createQuery("SELECT c FROM RegisteredUser c WHERE c.userName = ?1", RegisteredUser.class);
+        query.setParameter(1, username);
         List<RegisteredUser> results = query.getResultList();
-
         for(RegisteredUser i : results){
             if(i.getUserName().equals(username)){
                 return true;

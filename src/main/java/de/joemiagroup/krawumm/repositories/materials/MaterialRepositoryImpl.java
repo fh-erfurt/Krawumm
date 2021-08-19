@@ -53,11 +53,12 @@ public class MaterialRepositoryImpl implements MaterialRepositoryCustom {
     }
 
     @Override
-    public Material findMaterialByName(String name) {
+    public List<Material> findMaterialByName(String name) {
         TypedQuery<Material> query =
                 em.createQuery("SELECT e FROM Material e WHERE e.materialName = ?1 ", Material.class);
         query.setParameter(1, name);
-        return query.getSingleResult();
+        List<Material> results = query.getResultList();
+        return results;
     }
 
     @Override

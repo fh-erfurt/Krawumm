@@ -13,6 +13,6 @@ public interface MaterialRepositoryCustom {
 
     long countByParameters(Map<String, FilterMeta> filters);
 
-    Material findMaterialByName(String name);
+    List<Material> findMaterialByName(String name);
     Material getLastInsertedMaterial();
 }

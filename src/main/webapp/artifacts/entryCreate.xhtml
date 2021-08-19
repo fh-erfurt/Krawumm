@@ -138,7 +138,8 @@
                             <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.location}" styleClass="outputLabel"/>
                         </h:panelGrid>
 
-                        <h:panelGrid columns="1" title="Materialien">
+                        <h:panelGrid columns="1" >
+                            <p:outputLabel value="Materialien"/>
                             <p:dataTable id="materialShowTable"
                                          var="text" value="#{experimentView.materialText}"
                             >
@@ -148,7 +149,8 @@
                             </p:dataTable>
                         </h:panelGrid>
 
-                        <h:panelGrid columns="1" title="Anweisungen">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Anweisungen"/>
                             <p:dataTable id="instructionShowTable"
                                          var="text" value="#{experimentView.instructionText}"
                             >
@@ -158,7 +160,8 @@
                             </p:dataTable>
                         </h:panelGrid>
 
-                        <h:panelGrid columns="1" title="Bilder und Video">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Bilder"/>
                             <p:dataTable id="pictureShowTable"
                                          var="text" value="#{experimentView.pictureText}"
                             >

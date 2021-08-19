@@ -216,7 +216,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.picturesRepository.save(pictures);
     }
 
-    public Material findMaterial(String text) {
+    public List<Material> findMaterial(String text) {
         return this.materialRepository.findMaterialByName(text);
     }
 

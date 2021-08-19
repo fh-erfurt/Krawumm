@@ -121,9 +121,9 @@ public class ExperimentView extends BaseView<Experiment> {
             if (t != "") this.lazyExperimentDataModel.createPicture(experiment, t);
         }
         for (String t : this.materialText) {
-            Material material = this.lazyExperimentDataModel.findMaterial(t);
-            if (Objects.nonNull(material)) {
-                this.lazyExperimentDataModel.createExperimentHasMaterial(experiment, material);
+            List<Material> material = this.lazyExperimentDataModel.findMaterial(t);
+            if (material.size() == 1) {
+                this.lazyExperimentDataModel.createExperimentHasMaterial(experiment, material.get(0));
             } else {
                 this.lazyExperimentDataModel.createMaterial(t);
                 Material m = this.lazyExperimentDataModel.findLastInsertedMaterial();
