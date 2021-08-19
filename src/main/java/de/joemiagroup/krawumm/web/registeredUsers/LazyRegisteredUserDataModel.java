@@ -71,6 +71,11 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     private String newPassword;
 
 
+    /**
+     * This function initializes the database with example data
+     *
+     * no return value
+     */
         public void initUserData() {
             RegisteredUser pyro59 = new RegisteredUser(this.hashPassword("Pyro1234"), "pyro95@mail.com", "Pyro95", TrueFalse.T, TrueFalse.F);
             RegisteredUser supermum = new RegisteredUser(this.hashPassword("Mum1234"), "supermom89@mail.com", "Supermom89", TrueFalse.T, TrueFalse.F);
@@ -469,6 +474,7 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
             }
         }
 
+
     @Override
     public List<RegisteredUser> load(int page, int size, Map<String, SortMeta> sorts, Map<String, FilterMeta> filters) {
 
@@ -493,6 +499,11 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
 
 
 
+    /**
+     * This function changes the password if old password correct
+     *
+     * @return String holds success Message
+     */
     public String changePassword(){
         RegisteredUser user;
         user = registeredUserRepository.findUserDataByName(this.getLoggedInUser().getUserName());
@@ -507,6 +518,11 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         else return "Passwort muss angegeben werden3!";
     }
 
+    /**
+     * This function checks the passed Data from the form with the Data of the database
+     *
+     * @return String holds success Message
+     */
     public String checkLogin() {
         if (Objects.isNull(this.getSelected())) {
             return "Benutzername oder Passwort falsch";
@@ -524,6 +540,11 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return "Benutzername oder Passwort falsch";
     }
 
+    /**
+     * This function sets the loggedInUser data so it can be used in this session
+     *
+     * no return value
+     */
     public void handleLoginData() {
         RegisteredUser user = null;
         if (Objects.nonNull(this.getSelected().getUserName())) {
@@ -538,10 +559,20 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         }
     }
 
+    /**
+     * This function hashes the plainTextPassword so it can be stored safely into the database
+     *
+     * @return String hashedPassword
+     */
     private String hashPassword(String plainTextPassword){
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 
+    /**
+     * This function saves the RegisteredUser data into the Database
+     *
+     * @return String holds success Message
+     */
     public String save() {
         if (Objects.isNull(this.getSelected())) {
             return "Bitte gib deine Daten ein";
@@ -568,11 +599,22 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
         return "Willkommen bei Krawumm!";
     }
 
+    /**
+     * This function finds the Bookmarks of a User
+     *
+     * @return List<Bookmark> holds Bookmarks of User
+     */
     public List<Bookmark> showBookmarksOfUser(){
         List<Bookmark> bookmarks = this.registeredUserRepository.findBookmarksOfUser(this.loggedInUser);
         return bookmarks;
     }
 
+    /**
+     * This function deletes all relating Data of a Registered User from the database, so the User can be deleted(own Comments, own Ratings, own Bookmarks,
+     * own Experiments and all to those Experiments regarding comments, ratings, pictures, bookmarks, instruction, experimentHasMaterials)
+     *
+     * no return value
+     */
     public void deleteRelatedData(RegisteredUser user){
         //delete Own Comments
         List<Comment> ownComments = this.registeredUserRepository.findCommentsOfUser(user);
@@ -641,6 +683,11 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
 
     }
 
+    /**
+     * This function deletes a RegisteredUser in the database
+     *
+     * no return value
+     */
     public void delete(RegisteredUser registeredUser) {
         this.registeredUserRepository.deleteRegisteredUserById(registeredUser.getId());
     }

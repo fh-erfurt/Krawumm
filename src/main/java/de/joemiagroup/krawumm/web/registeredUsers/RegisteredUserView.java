@@ -61,7 +61,7 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     private LazyRegisteredUserDataModel lazyDataModel;
 
     /**
-     * This function deletes a RegisteredUSer with all relating Data(own Comments, own Ratings, own Bookamrks,
+     * This function deletes a RegisteredUSer with all relating Data(own Comments, own Ratings, own Bookmarks,
      * own Experiments and all to those Experiments regarding comments, ratings, pictures, bookmarks, instruction, experimentHasMaterials)
      *
      * no return value
