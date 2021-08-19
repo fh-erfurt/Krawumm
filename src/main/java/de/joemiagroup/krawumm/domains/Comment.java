@@ -11,6 +11,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private Long id;
     private String text;
     @ManyToOne(cascade = CascadeType.MERGE)
     private RegisteredUser registeredUser;

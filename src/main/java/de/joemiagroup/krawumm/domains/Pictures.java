@@ -11,9 +11,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pictures extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private Long id;
     private String pictureName;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Comment comment;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Experiment experiment;
 }

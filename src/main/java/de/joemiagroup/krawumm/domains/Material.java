@@ -11,5 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Material extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private Long id;
     private String materialName;
 }

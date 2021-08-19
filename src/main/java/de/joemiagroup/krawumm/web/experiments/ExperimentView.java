@@ -6,6 +6,7 @@ import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.materials.MaterialRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
@@ -23,6 +24,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @ManagedBean("experimentView")
 @ViewScoped
@@ -33,33 +35,22 @@ public class ExperimentView extends BaseView<Experiment> {
     public ExperimentView(final ExperimentRepository repository, final RatingRepository ratingRepository,
                           final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
                           final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository,
-                          final RegisteredUserRepository registeredUserRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository) {
+                          final RegisteredUserRepository registeredUserRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository,
+                          final MaterialRepository materialRepository) {
         this.lazyExperimentDataModel = LazyExperimentDataModel.of(repository, ratingRepository, picturesRepository, instructionRepository,
-                                                                  commentRepository, bookmarkRepository, registeredUserRepository, experimentHasMaterialRepository);
+                                                                  commentRepository, bookmarkRepository, registeredUserRepository, experimentHasMaterialRepository,
+                                                                  materialRepository);
         this.data = lazyExperimentDataModel.gatherData();
     }
 
-    //Creating an inner class for the instruction set-up
-    @Getter
-    @Setter
-    public static class Layout {
-        public int position;
-        public String text;
-
-        public Layout(int position, String text) {
-            this.position = position;
-            this.text = text;
-        }
-    }
-
-    private List<Layout> instructions;
-    private List<Layout> materials;
-    private List<Layout> pictures;
-    @Getter
-    @Setter
     private List<String> instructionText;
+    private String instruction = "";
+
     private List<String> materialText;
+    private String material = "";
+
     private List<String> pictureText;
+    private String picture = "";
 
 
     private List<ExperimentDataView> data;
@@ -73,60 +64,27 @@ public class ExperimentView extends BaseView<Experiment> {
 
     @PostConstruct
     public void init() {
-        instructions = new ArrayList<>();
         instructionText = new ArrayList<>();
-        instructionText.add("");
-        instructions.add(new Layout(1, instructionText.get(0)));
-        materials = new ArrayList<>();
         materialText = new ArrayList<>();
-        materialText.add("");
-        materials.add(new Layout(1, materialText.get(0)));
-        pictures = new ArrayList<>();
         pictureText = new ArrayList<>();
-        pictureText.add("");
-        pictures.add(new Layout(1, pictureText.get(0)));
     }
 
     public void incrementInstruction() {
         numberInstruction++;
-        instructionText.add("");
-        instructions.add(new Layout(numberInstruction, instructionText.get(numberInstruction -1)));
-    }
-    public void decreaseInstruction() {
-        if(numberInstruction >1){
-            instructions.remove((numberInstruction -1));
-            instructionText.remove((numberInstruction -1));
-            numberInstruction--;
-        }
+        instructionText.add(this.instruction);
+        this.instruction = "";
     }
 
     public void incrementMaterial() {
         numberMaterial++;
-        materialText.add("");
-        materials.add(new Layout(numberMaterial, materialText.get(numberMaterial-1)));
-    }
-    public void decreaseMaterial() {
-        if(numberMaterial >1) {
-            materials.remove((numberMaterial - 1));
-            materialText.remove((numberMaterial -1));
-            numberMaterial--;
-        }
-    }
-
-    public void updateMaterial(SelectEvent<String> event, int position){
-        Layout layout = new Layout (position, event.getObject());
-        materials.set(position-1,layout);
+        materialText.add(this.material);
+        this.material = "";
     }
 
     public void incrementPicture() {
         numberPicture++;
-        pictureText.add("");
-        pictures.add(new Layout(numberPicture, pictureText.get(numberPicture-1)));
-    }
-    public void decreasePicture() {
-            pictures.remove((numberPicture - 1));
-            pictureText.remove((numberPicture-1));
-            numberPicture--;
+        pictureText.add(this.picture);
+        this.picture = "";
     }
 
     public void useFilters() {
@@ -153,11 +111,26 @@ public class ExperimentView extends BaseView<Experiment> {
     }
 
     public void onClickCreateExperiment(RegisteredUser user){
+        this.editMode.set(false);
         this.lazyExperimentDataModel.createExperiment(user);
         Experiment experiment = this.lazyExperimentDataModel.getLastInsertedExperiment();
-        for(Layout instruction : this.instructions){
-
+        for (String t : this.instructionText) {
+            this.lazyExperimentDataModel.createInstructions(experiment, t);
         }
+        for (String t : this.pictureText) {
+            if (t != "") this.lazyExperimentDataModel.createPicture(experiment, t);
+        }
+        for (String t : this.materialText) {
+            Material material = this.lazyExperimentDataModel.findMaterial(t);
+            if (Objects.nonNull(material)) {
+                this.lazyExperimentDataModel.createExperimentHasMaterial(experiment, material);
+            } else {
+                this.lazyExperimentDataModel.createMaterial(t);
+                Material m = this.lazyExperimentDataModel.findLastInsertedMaterial();
+                this.lazyExperimentDataModel.createExperimentHasMaterial(experiment, m);
+            }
+        }
+        this.renderMessage(FacesMessage.SEVERITY_INFO, "Formular wurde eingereicht.");
     }
 
     public void releaseExperiment(){

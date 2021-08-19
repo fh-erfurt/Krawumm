@@ -16,9 +16,7 @@ import java.sql.Timestamp;
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 2894119989476983510L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+
 
     private Timestamp CreatedAt = new Timestamp(System.currentTimeMillis());
 

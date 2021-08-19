@@ -12,4 +12,7 @@ public interface MaterialRepositoryCustom {
     List<Material> findByParameters(int page, int count, Map<String, FilterMeta> filters, Map<String, SortMeta> sorts);
 
     long countByParameters(Map<String, FilterMeta> filters);
+
+    Material findMaterialByName(String name);
+    Material getLastInsertedMaterial();
 }

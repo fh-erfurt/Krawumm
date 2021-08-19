@@ -32,20 +32,147 @@
                         <p:inputText id="title" value="#{experimentView.lazyExperimentDataModel.newData.title}" required="true"/>
 
                         <h:outputText for="description" value="Beschreibung"/>
-                        <p:inputTextarea id="description" value="#{experimentView.lazyExperimentDataModel.newData.description}" required="true"/>
+                        <p:inputTextarea id="description" value="#{experimentView.lazyExperimentDataModel.newData.description}" required="true" maxlength="500"
+                                         counter="displayDescription" counterTemplate="{0} Zeichen übrig." autoResize="true"/>
+                        <h:outputText id="displayDescription"/>
 
                         <h:outputText for="age" value="Mindestalter"/>
                         <p:inputNumber id="age" value="#{experimentView.lazyExperimentDataModel.newData.age}" required="true"/>
 
-                        <h:outputText for="difficulty" value="Drinnen/Draußen"/>
-                        <p:inputText id="difficulty" value="#{experimentView.lazyExperimentDataModel.newData.difficulty}" required="true"/>
+                        <h:outputText for="difficulty" value="Schwierigkeitsgrad"/>
+                        <p:rating id="difficulty" value="#{experimentView.lazyExperimentDataModel.newData.difficulty}"
+                                  required="true" requiredMessage="Bitte gib eine Schwierigkeit ein."/>
 
                         <h:outputText for="time" value="Dauer in Minuten"/>
                         <p:inputNumber id="time" value="#{experimentView.lazyExperimentDataModel.newData.duration}" required="true"/>
 
                         <h:outputText for="indoorOutdoor" value="Drinnen/Draußen"/>
-                        <p:inputText id="indoorOutdoor" value="#{experimentView.lazyExperimentDataModel.newData.location}" required="true"/>
+                        <p:selectOneRadio id="indoorOutdoor" value="#{experimentView.lazyExperimentDataModel.newData.location}" required="true" requiredMessage="Bitte gib eine Location ein.">
+                            <f:selectItem itemLabel="Drinnen" itemValue="Drinnen"/>
+                            <f:selectItem itemLabel="Draußen" itemValue="Draußen"/>
+                        </p:selectOneRadio>
                     </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="materialExperiment" title="Materialien">
+                <p:dataTable id="materialTable"
+                             var="text" value="#{experimentView.materialText}"
+                >
+                    <p:column>
+                        <h:outputText value="#{text}"/>
+                    </p:column>
+                </p:dataTable>
+                <h:form id="updateMaterial">
+                    <h:outputText for="textMaterial" value="Material #{experimentView.numberMaterial}"/>
+                    <p:inputTextarea id="textMaterial" rows="1" cols="30"
+                                     counter="displayMaterial" maxlength="255"
+                                     counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                     value="#{experimentView.material}" required="true"
+                                     requiredMessage="Bitte gib einen Namen für Materialen ein."/>
+                    <h:outputText id="displayMaterial"/>
+                    <p:commandButton value="Material hinzufügen" action="#{experimentView.incrementMaterial}" process="@form" update=":createExperimentForm:materialTable, updateMaterial"/>
+                </h:form>
+            </p:tab>
+            <p:tab id="instructionsExperiment" title="Anweisungen">
+                <p:dataTable id="instructionTable"
+                             var="text" value="#{experimentView.instructionText}"
+                >
+                    <p:column>
+                        <h:outputText value="#{text}"/>
+                    </p:column>
+                </p:dataTable>
+                <h:form id="updateInstruction">
+                    <h:outputText for="textInstruction" value="Schritt #{experimentView.numberInstruction}"/>
+                    <p:inputTextarea id="textInstruction" rows="1" cols="30"
+                                     counter="displayInstruction" maxlength="255"
+                                     counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                     value="#{experimentView.instruction}" required="true"
+                                     requiredMessage="Bitte gib ein Beschreibung für den Schritt ein."/>
+                    <h:outputText id="displayInstruction"/>
+                    <p:commandButton value="Schritt hinzufügen" action="#{experimentView.incrementInstruction}" process="@form" update=":createExperimentForm:instructionTable, updateInstruction"/>
+                </h:form>
+            </p:tab>
+            <p:tab id="mediaExperiment" title="Bilder und Video">
+                <p:dataTable id="pictureTable"
+                             var="text" value="#{experimentView.pictureText}"
+                >
+                    <p:column>
+                        <h:outputText value="#{text}"/>
+                    </p:column>
+                </p:dataTable>
+                <h:form id="updatePictures">
+                    <h:outputText for="textPictures" value="Bild #{experimentView.numberPicture}"/>
+                    <p:inputTextarea id="textPictures" rows="1" cols="30"
+                                     counter="displayPictures" maxlength="255"
+                                     counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                     value="#{experimentView.picture}"/>
+                    <h:outputText id="displayPictures"/>
+                    <p:commandButton value="Bild hinzufügen" action="#{experimentView.incrementPicture}" process="@form" update=":createExperimentForm:pictureTable, updatePictures"/>
+                </h:form>
+                <p:outputLabel for="video" value="Videolink"/>
+                <p:inputTextarea rows="1" cols="30" counter="displayVideo" maxlength="255"
+                                 counterTemplate="{0} Zeichen übrig." autoResize="true"
+                                 id="video"   value="#{experimentView.lazyExperimentDataModel.newData.video}"/>
+                <h:outputText id="displayVideo"/>
+            </p:tab>
+            <p:tab id="confirmExperiment" title="Daten bestätigen">
+                <p:panel>
+                    <h:panelGrid id="confirmation" columns="4" columnClasses="grid,grid,grid,grid">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Titel: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.title}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Beschreibung: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.description}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Mindestalter: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.age}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Schwierigkeitsgrad: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.difficulty}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Dauer in Minuten: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.duration}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Drinnen/Draußen: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.location}" styleClass="outputLabel"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" title="Materialien">
+                            <p:dataTable id="materialShowTable"
+                                         var="text" value="#{experimentView.materialText}"
+                            >
+                                <p:column>
+                                    <h:outputText value="#{text}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" title="Anweisungen">
+                            <p:dataTable id="instructionShowTable"
+                                         var="text" value="#{experimentView.instructionText}"
+                            >
+                                <p:column>
+                                    <h:outputText value="#{text}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" title="Bilder und Video">
+                            <p:dataTable id="pictureShowTable"
+                                         var="text" value="#{experimentView.pictureText}"
+                            >
+                                <p:column>
+                                    <h:outputText value="#{text}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <h:outputText value="Video: "/>
+                            <h:outputText value="#{experimentView.lazyExperimentDataModel.newData.video}" styleClass="outputLabel"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <p:commandButton value="Einreichen" action="#{experimentView.onClickCreateExperiment(personView.lazyDataModel.loggedInUser)}" update="main" process="@this"/>
                 </p:panel>
             </p:tab>
         </p:wizard>

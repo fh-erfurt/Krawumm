@@ -1,5 +1,7 @@
 package de.joemiagroup.krawumm.repositories.materials;
 
+import de.joemiagroup.krawumm.domains.Bookmark;
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Material;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +52,29 @@ public class MaterialRepositoryImpl implements MaterialRepositoryCustom {
         return em.createQuery(query).getSingleResult();
     }
 
+    @Override
+    public Material findMaterialByName(String name) {
+        TypedQuery<Material> query =
+                em.createQuery("SELECT e FROM Material e WHERE e.materialName = ?1 ", Material.class);
+        query.setParameter(1, name);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Material getLastInsertedMaterial() {
+        TypedQuery<Material> query =
+                em.createQuery("SELECT e FROM Material e", Material.class);
+        List<Material> results = query.getResultList();
+
+        int lastPosition = results.size() - 1;
+        return results.get(lastPosition);
+    }
+
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<Material> material, final Map<String, FilterMeta> filters){
         return filters.values().stream()
                 .map(parameter -> builder.equal(material.get(parameter.getField()), parameter.getFilterValue()))
                 .collect(Collectors.toList());
     }
+
+
 }

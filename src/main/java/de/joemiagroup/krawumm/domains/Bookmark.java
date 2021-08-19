@@ -10,6 +10,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Bookmark extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private Long id;
     @ManyToOne(cascade = CascadeType.MERGE)
     private RegisteredUser registeredUser;
     @ManyToOne(cascade = CascadeType.MERGE)

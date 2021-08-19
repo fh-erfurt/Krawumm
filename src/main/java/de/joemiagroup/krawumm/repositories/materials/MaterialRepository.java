@@ -7,4 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "materials", path = "materials")
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     void deleteMaterialById(Long id);
+
+    Material findMaterialByName(String name);
+    Material getLastInsertedMaterial();
 }

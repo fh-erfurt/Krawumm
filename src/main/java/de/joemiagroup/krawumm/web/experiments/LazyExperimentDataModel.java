@@ -5,6 +5,7 @@ import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
 import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
 import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
 import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.materials.MaterialRepository;
 import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
 import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
@@ -34,6 +35,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
     private final BookmarkRepository bookmarkRepository;
     private final RegisteredUserRepository registeredUserRepository;
     private final ExperimentHasMaterialRepository experimentHasMaterialRepository;
+    private final MaterialRepository materialRepository;
 
     private final List<Experiment> cache = new ArrayList<>();
 
@@ -56,7 +58,7 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
 
     @Getter
     @Setter
-    private ExperimentDataView newData;
+    private ExperimentDataView newData = new ExperimentDataView();
     @Getter
     @Setter
     private String commentText;
@@ -194,9 +196,45 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         experiment.setAge(getNewData().getAge());
         experiment.setDuration(getNewData().getDuration());
         experiment.setIsReleased(TrueFalse.F);
-        if(getNewData().getLocation() == "indoor") experiment.setIndoorOutdoor(IndoorOutdoor.I);
+        if(getNewData().getLocation() == "Drinnen") experiment.setIndoorOutdoor(IndoorOutdoor.I);
         else experiment.setIndoorOutdoor(IndoorOutdoor.O);
-        experimentRepository.save(experiment);
+        this.experimentRepository.save(experiment);
+    }
+
+    public void createInstructions(Experiment experiment, String text) {
+        Instruction instruction = new Instruction();
+        instruction.setExperiment(experiment);
+        instruction.setText(text);
+        System.out.println(instruction.getId());
+        this.instructionRepository.save(instruction);
+    }
+
+    public void createPicture(Experiment experiment, String text) {
+        Pictures pictures = new Pictures();
+        pictures.setExperiment(experiment);
+        pictures.setPictureName(text);
+        this.picturesRepository.save(pictures);
+    }
+
+    public Material findMaterial(String text) {
+        return this.materialRepository.findMaterialByName(text);
+    }
+
+    public void createExperimentHasMaterial(Experiment experiment, Material material) {
+        ExperimentHasMaterial ehm = new ExperimentHasMaterial();
+        ehm.setExperiment(experiment);
+        ehm.setMaterial(material);
+        this.experimentHasMaterialRepository.save(ehm);
+    }
+
+    public void createMaterial(String text) {
+        Material material = new Material();
+        material.setMaterialName(text);
+        this.materialRepository.save(material);
+    }
+
+    public Material findLastInsertedMaterial() {
+        return this.materialRepository.getLastInsertedMaterial();
     }
 
     public Experiment getLastInsertedExperiment(){

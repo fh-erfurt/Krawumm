@@ -11,6 +11,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 public class Rating extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private Long id;
     private int ratingValue;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Experiment experiment;
