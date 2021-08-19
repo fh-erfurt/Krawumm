@@ -51,6 +51,7 @@ public class ExperimentView extends BaseView<Experiment> {
         this.data = lazyExperimentDataModel.gatherData();
     }
 
+
     private List<String> instructionText;
     private String instruction = "";
 

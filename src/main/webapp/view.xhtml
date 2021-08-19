@@ -31,9 +31,6 @@
                     <c:if test="#{experimentView.lazyExperimentDataModel.experimentIsReleased(experimentView.lazyExperimentDataModel.selected.id) == false}">
                         <p:commandButton style="margin-right: 10px;" value="Experiment veröffentlichen" process="@this" action="#{experimentView.releaseExperiment}"/>
                     </c:if>
-                    <c:if test="#{personView.lazyDataModel.loggedInUser.isAdmin.toString() == 'T'}">
-                        <p:commandButton value="Experiment löschen" process="@this" action="#{experimentView.lazyExperimentDataModel.deleteExperimentData(experimentView.lazyExperimentDataModel.selected.id)}" update="main"/>
-                    </c:if>
                     </c:if>
                     <div>
                         <h2>#{experimentView.lazyExperimentDataModel.selected.title}</h2>
