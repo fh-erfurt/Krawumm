@@ -228,4 +228,9 @@ public class LazyExperimentDataModel extends LazyDataModel<Experiment> {
         this.bookmarkRepository.save(bookmark);
     }
 
+    public List<Experiment> getUnreleasedExperiments(){
+        List<Experiment> experiments = this.experimentRepository.getAllExperiments(TrueFalse.F);
+        return experiments;
+    }
+
 }

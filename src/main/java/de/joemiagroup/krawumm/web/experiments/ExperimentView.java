@@ -50,16 +50,15 @@ public class ExperimentView extends BaseView<Experiment> {
     private List<Layout> instructions;
     private List<Layout> materials;
     private List<Layout> pictures;
+    @Getter
+    @Setter
     private List<String> instructionText;
     private List<String> materialText;
     private List<String> pictureText;
 
 
     private List<ExperimentDataView> data;
-    @Getter
-    @Setter
     private String search = "";
-
     private int numberInstruction = 1;
     private int numberMaterial = 1;
     private int numberPicture = 1;
