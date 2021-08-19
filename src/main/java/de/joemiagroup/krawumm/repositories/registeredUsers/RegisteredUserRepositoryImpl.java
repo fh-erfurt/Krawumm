@@ -70,6 +70,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return em.createQuery(query).getSingleResult();
     }
 
+    /**
+     *This method finds all User params for a username
+     *
+     * @param username
+     *
+     * @return RegisteredUser
+     */
     public RegisteredUser findUserDataByName(String username) {
         TypedQuery<RegisteredUser> query =
                 em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
@@ -83,6 +90,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return null;
     }
 
+    /**
+     *This method tests if  a Email is already related to a RegisteredUser
+     *
+     * @param email
+     *
+     * @return boolean true if email already exists
+     */
     public boolean findUserByEmail(String email) {
         TypedQuery<RegisteredUser> query =
                 em.createQuery("SELECT c FROM RegisteredUser c", RegisteredUser.class);
@@ -96,6 +110,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return false;
     }
 
+    /**
+     *This method finds all Bookmarks of a RegisteredUser
+     *
+     * @param user
+     *
+     * @return List<Bookmark> holds all Bookamrks of a RegisteredUser
+     */
     @Override
     public List<Bookmark> findBookmarksOfUser(RegisteredUser user) {
         TypedQuery<Bookmark> query =
@@ -105,6 +126,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return results;
     }
 
+    /**
+     *This method finds all Comments of a RegisteredUser
+     *
+     * @param user
+     *
+     * @return List<Comment> holds all Comments of a RegisteredUser
+     */
     @Override
     public List<Comment> findCommentsOfUser(RegisteredUser user) {
         TypedQuery<Comment> query =
@@ -114,6 +142,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return results;
     }
 
+    /**
+     *This method finds all Ratings of a RegisteredUser
+     *
+     * @param user
+     *
+     * @return List<Rating> holds all Ratings of a given RegisteredUser
+     */
     @Override
     public List<Rating> findRatingsOfUser(RegisteredUser user) {
         TypedQuery<Rating> query =
@@ -123,6 +158,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return results;
     }
 
+    /**
+     *This method finds all Experiments of a RegisteredUser
+     *
+     * @param user
+     *
+     * @return List<Experiment> holds all Experiments of a given RegisteredUser
+     */
     @Override
     public List<Experiment> findExperimentsOfUser(RegisteredUser user) {
         TypedQuery<Experiment> query =
@@ -132,6 +174,13 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         return results;
     }
 
+    /**
+     *This method tests if a Usernam is already used
+     *
+     * @param username
+     *
+     * @return boolean true if username already used
+     */
     public boolean findUserByName(String username) {
          TypedQuery<RegisteredUser> query =
                 em.createQuery("SELECT c FROM RegisteredUser c WHERE c.userName = ?1", RegisteredUser.class);
@@ -144,7 +193,6 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
         }
         return false;
     }
-
 
     private List<Predicate> convertToPredicates(final CriteriaBuilder builder, final Root<RegisteredUser> registeredUser, final Map<String, FilterMeta> filters){
         return filters.values().stream()
