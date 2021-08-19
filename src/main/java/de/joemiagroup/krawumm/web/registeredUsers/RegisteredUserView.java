@@ -1,6 +1,14 @@
 package de.joemiagroup.krawumm.web.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
+import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
+import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
+import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
+import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
+import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
 import de.joemiagroup.krawumm.web.BaseView;
 
@@ -30,8 +38,12 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
     private static final Pattern EMAIL_REGEX = Pattern.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", Pattern.CASE_INSENSITIVE);
 
     @Autowired
-    public RegisteredUserView(final RegisteredUserRepository repository) {
-        this.lazyDataModel = LazyRegisteredUserDataModel.of(repository);
+    public RegisteredUserView(final RegisteredUserRepository repository, final RatingRepository ratingRepository,
+                              final PicturesRepository picturesRepository, final InstructionRepository instructionRepository,
+                              final CommentRepository commentRepository, final BookmarkRepository bookmarkRepository,
+                              final ExperimentRepository experimentRepository, final ExperimentHasMaterialRepository experimentHasMaterialRepository) {
+        this.lazyDataModel = LazyRegisteredUserDataModel.of(repository, commentRepository, bookmarkRepository, ratingRepository,
+                experimentRepository, picturesRepository, instructionRepository,experimentHasMaterialRepository);
         this.lazyDataModel.setSelected(new RegisteredUser());
     }
 
@@ -43,7 +55,7 @@ public class RegisteredUserView extends BaseView<RegisteredUser> {
         if (Objects.isNull(this.lazyDataModel.getLoggedInUser())) {
             return;
         }
-
+        this.lazyDataModel.deleteRelatedData(this.lazyDataModel.getLoggedInUser());
         this.lazyDataModel.delete(this.lazyDataModel.getLoggedInUser());
         this.renderMessage(FacesMessage.SEVERITY_ERROR, "Tschüss.");
         this.lazyDataModel.setLoggedInUser(new RegisteredUser());

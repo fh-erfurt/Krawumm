@@ -1,6 +1,9 @@
 package de.joemiagroup.krawumm.repositories.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Bookmark;
+import de.joemiagroup.krawumm.domains.Comment;
+import de.joemiagroup.krawumm.domains.Rating;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
@@ -87,6 +90,33 @@ public class RegisteredUserRepositoryImpl implements RegisteredUserRepositoryCus
                 em.createQuery("SELECT c FROM Bookmark c WHERE c.registeredUser.id = ?1", Bookmark.class);
         query.setParameter(1, user.getId());
         List<Bookmark> results = query.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<Comment> findCommentsOfUser(RegisteredUser user) {
+        TypedQuery<Comment> query =
+                em.createQuery("SELECT c FROM Comment c WHERE c.registeredUser.id = ?1", Comment.class);
+        query.setParameter(1, user.getId());
+        List<Comment> results = query.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<Rating> findRatingsOfUser(RegisteredUser user) {
+        TypedQuery<Rating> query =
+                em.createQuery("SELECT c FROM Rating c WHERE c.registeredUser.id = ?1", Rating.class);
+        query.setParameter(1, user.getId());
+        List<Rating> results = query.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<Experiment> findExperimentsOfUser(RegisteredUser user) {
+        TypedQuery<Experiment> query =
+                em.createQuery("SELECT c FROM Experiment c WHERE c.registeredUser.id = ?1", Experiment.class);
+        query.setParameter(1, user.getId());
+        List<Experiment> results = query.getResultList();
         return results;
     }
 

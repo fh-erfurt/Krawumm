@@ -15,6 +15,10 @@ public interface ExperimentRepositoryCustom {
 
     List<Experiment> getAllExperiments(TrueFalse t);
     List<Comment> getCommentsForExperiment(Experiment data);
+    List<Rating> getRatingsForExperiment(Experiment data);
+    List<Instruction> getInstructionsForExperiment(Experiment data);
+    List<Pictures> getPicturesForExperiment(Experiment data);
+    List<ExperimentHasMaterial> getExperimentHasMaterialsForExperiment(Experiment data);
     List<Experiment> lookForStringInExperimentName(String search);
     List<String> getMaterialsForExperiment(Experiment experiment);
     Experiment getExperimentById (long id);

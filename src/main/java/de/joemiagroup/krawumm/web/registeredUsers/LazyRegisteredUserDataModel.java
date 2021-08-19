@@ -1,9 +1,22 @@
 package de.joemiagroup.krawumm.web.registeredUsers;
 
+import de.joemiagroup.krawumm.domains.Instruction;
+import de.joemiagroup.krawumm.domains.Pictures;
+import de.joemiagroup.krawumm.domains.ExperimentHasMaterial;
+import de.joemiagroup.krawumm.domains.Experiment;
 import de.joemiagroup.krawumm.domains.Bookmark;
+import de.joemiagroup.krawumm.domains.Comment;
+import de.joemiagroup.krawumm.domains.Rating;
 import de.joemiagroup.krawumm.domains.RegisteredUser;
 import de.joemiagroup.krawumm.domains.TrueFalse;
 import de.joemiagroup.krawumm.repositories.registeredUsers.RegisteredUserRepository;
+import de.joemiagroup.krawumm.repositories.comments.CommentRepository;
+import de.joemiagroup.krawumm.repositories.bookmarks.BookmarkRepository;
+import de.joemiagroup.krawumm.repositories.ratings.RatingRepository;
+import de.joemiagroup.krawumm.repositories.experiments.ExperimentRepository;
+import de.joemiagroup.krawumm.repositories.pictures.PicturesRepository;
+import de.joemiagroup.krawumm.repositories.instructions.InstructionRepository;
+import de.joemiagroup.krawumm.repositories.experimenthasmaterials.ExperimentHasMaterialRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +42,13 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     private static final long serialVersionUID = 3843316090759353348L;
 
     private final RegisteredUserRepository registeredUserRepository;
+    private final CommentRepository commentRepository;
+    private final BookmarkRepository bookmarkRepository;
+    private final RatingRepository ratingRepository;
+    private final ExperimentRepository experimentRepository;
+    private final PicturesRepository picturesRepository;
+    private final InstructionRepository instructionRepository;
+    private final ExperimentHasMaterialRepository experimentHasMaterialRepository;
 
     private final List<RegisteredUser> cache = new ArrayList<>();
 
@@ -150,8 +170,69 @@ public class LazyRegisteredUserDataModel extends LazyDataModel<RegisteredUser> {
     }
 
     public List<Bookmark> showBookmarksOfUser(){
-        List<Bookmark> bookmarks = registeredUserRepository.findBookmarksOfUser(this.loggedInUser);
+        List<Bookmark> bookmarks = this.registeredUserRepository.findBookmarksOfUser(this.loggedInUser);
         return bookmarks;
+    }
+
+    public void deleteRelatedData(RegisteredUser user){
+        //delete Own Comments
+        List<Comment> ownComments = this.registeredUserRepository.findCommentsOfUser(user);
+        for(Comment i : ownComments){
+            this.commentRepository.delete(i);
+        }
+        //delete Own Bookmarks
+        List<Bookmark> ownBookmarks = this.registeredUserRepository.findBookmarksOfUser(user);
+        for(Bookmark i : ownBookmarks){
+            this.bookmarkRepository.delete(i);
+        }
+        //delete Own Ratings
+        List<Rating> ownRatings = this.registeredUserRepository.findRatingsOfUser(user);
+        for(Rating i : ownRatings){
+            this.ratingRepository.delete(i);
+        }
+
+        List<Experiment> ownExperiments = this.registeredUserRepository.findExperimentsOfUser(user);
+
+        //delete Comments of experiments
+        for(Experiment e : ownExperiments){
+            List<Comment> comments = this.experimentRepository.getCommentsForExperiment(e);
+            for(Comment c : comments){
+                this.commentRepository.delete(c);
+            }
+        }
+        //delete Ratings of experiments
+        for(Experiment e : ownExperiments){
+            List<Rating> ratings = this.experimentRepository.getRatingsForExperiment(e);
+            for(Rating r : ratings){
+                this.ratingRepository.delete(r);
+            }
+        }
+        //delete Instructions of Experiments
+        for(Experiment e : ownExperiments){
+            List<Instruction> instructions = this.experimentRepository.getInstructionsForExperiment(e);
+            for(Instruction i : instructions){
+                this.instructionRepository.delete(i);
+            }
+        }
+        //delete Pictures of Experiments
+        for(Experiment e : ownExperiments){
+            List<Pictures> pictures = this.experimentRepository.getPicturesForExperiment(e);
+            for(Pictures p : pictures){
+                this.picturesRepository.delete(p);
+            }
+        }
+        //delete Experiment has Material of experiments
+        for(Experiment e : ownExperiments){
+            List<ExperimentHasMaterial> experimentHasMaterials = this.experimentRepository.getExperimentHasMaterialsForExperiment(e);
+            for(ExperimentHasMaterial ehs : experimentHasMaterials){
+                this.experimentHasMaterialRepository.delete(ehs);
+            }
+        }
+        //delete Own experiments
+        for(Experiment e : ownExperiments){
+            this.experimentRepository.delete(e);
+        }
+
     }
 
     public void delete(RegisteredUser registeredUser) {

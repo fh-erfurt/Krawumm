@@ -80,6 +80,46 @@ public class ExperimentRepositoryImpl implements ExperimentRepositoryCustom {
         return results;
     }
 
+    @Override
+    public List<Rating> getRatingsForExperiment(Experiment data) {
+        TypedQuery<Rating> query =
+                em.createQuery("SELECT c FROM Rating c WHERE c.experiment.id = ?1", Rating.class);
+        query.setParameter(1, data.getId());
+        List<Rating> results = query.getResultList();
+
+        return results;
+    }
+
+    @Override
+    public List<Instruction> getInstructionsForExperiment(Experiment data) {
+        TypedQuery<Instruction> query =
+                em.createQuery("SELECT c FROM Instruction c WHERE c.experiment.id = ?1", Instruction.class);
+        query.setParameter(1, data.getId());
+        List<Instruction> results = query.getResultList();
+
+        return results;
+    }
+
+    @Override
+    public List<Pictures> getPicturesForExperiment(Experiment data) {
+        TypedQuery<Pictures> query =
+                em.createQuery("SELECT c FROM Pictures c WHERE c.experiment.id = ?1", Pictures.class);
+        query.setParameter(1, data.getId());
+        List<Pictures> results = query.getResultList();
+
+        return results;
+    }
+
+    @Override
+    public List<ExperimentHasMaterial> getExperimentHasMaterialsForExperiment(Experiment data) {
+        TypedQuery<ExperimentHasMaterial> query =
+                em.createQuery("SELECT c FROM ExperimentHasMaterial c WHERE c.experiment.id = ?1", ExperimentHasMaterial.class);
+        query.setParameter(1, data.getId());
+        List<ExperimentHasMaterial> results = query.getResultList();
+
+        return results;
+    }
+
     public List<Experiment> lookForStringInExperimentName(String search) {
         TypedQuery<Experiment> query =
                 em.createQuery("SELECT c FROM Experiment c WHERE c.experimentName LIKE CONCAT('%',?1,'%')", Experiment.class);
